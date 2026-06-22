@@ -1,6 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteShell } from "@/components/site-shell";
+import heroBottle from "@/assets/hero-bottle.jpg";
+import cellarDetail from "@/assets/cellar-detail.jpg";
+import influencer1 from "@/assets/influencer-1.jpg";
+import influencer2 from "@/assets/influencer-2.jpg";
+
 
 export const Route = createFileRoute("/membership")({
   head: () => ({
@@ -89,14 +94,14 @@ function MembershipPage() {
           </h1>
           <p className="max-w-[58ch] text-pretty text-lg text-muted-foreground">
             Access to Opus is subject to approval. Each application is reviewed individually by the
-            Membership Committee. Submissions are routed to{" "}
-            <a href="mailto:elena@grusdrinks.com" className="text-gold hover:underline">
-              elena@grusdrinks.com
-            </a>
-            .
+            Membership Committee.
           </p>
         </div>
       </section>
+
+      {/* MEMBERS CELLAR — celebrity auction wins */}
+      <MembersCellar />
+
 
       {/* TIERS */}
       <section className="border-y border-border bg-surface/30 px-6 py-24 lg:px-10">
@@ -321,3 +326,82 @@ function Field({
     </label>
   );
 }
+
+const memberBottles = [
+  {
+    title: "1982 Mouton Rothschild — Won by Denise Richards",
+    lot: "Auction Lot 014",
+    price: "$48,250",
+    img: heroBottle,
+  },
+  {
+    title: "Yamazaki 55-Year — Won by 50 Cent",
+    lot: "Auction Lot 023",
+    price: "$112,000",
+    img: cellarDetail,
+  },
+  {
+    title: "1996 DRC La Tâche — Won by Taylor Swift",
+    lot: "Auction Lot 017",
+    price: "$31,800",
+    img: influencer1,
+  },
+  {
+    title: "Pappy Van Winkle 23 — Won by Aaron Hibell",
+    lot: "Auction Lot 021",
+    price: "$12,400",
+    img: influencer2,
+  },
+];
+
+function MembersCellar() {
+  return (
+    <section className="border-b border-border px-6 py-24 lg:px-10">
+      <div className="mx-auto max-w-[1400px]">
+        <div className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div>
+            <span className="mb-3 block text-[10px] uppercase tracking-[0.4em] text-gold">
+              Members Only
+            </span>
+            <h2 className="font-display text-4xl md:text-5xl">
+              Buy bottles <span className="italic text-gold-gradient">won at auction by celebrities</span>.
+            </h2>
+          </div>
+          <p className="max-w-md text-sm text-muted-foreground">
+            A private resale cellar of bottles won and released by our celebrity members.
+            Available exclusively to approved Opus members.
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {memberBottles.map((b) => (
+            <article
+              key={b.title}
+              className="group overflow-hidden rounded-sm border border-border bg-surface/40 transition hover:border-gold/50"
+            >
+              <img
+                src={b.img}
+                alt={b.title}
+                loading="lazy"
+                className="aspect-[3/4] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="p-5">
+                <div className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+                  {b.lot}
+                </div>
+                <h3 className="mt-2 font-display text-lg leading-tight">{b.title}</h3>
+                <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
+                  <span className="font-display text-xl text-gold-gradient">{b.price}</span>
+                  <button className="rounded-sm gold-gradient px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-primary-foreground">
+                    Buy
+                  </button>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+

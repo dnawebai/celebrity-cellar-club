@@ -4,7 +4,6 @@ import type { ReactNode } from "react";
 const navLinks = [
   { to: "/auctions", label: "Auctions" },
   { to: "/marketplace", label: "Drops" },
-  { to: "/legacy", label: "Legacy" },
   { to: "/investment", label: "Invest" },
   { to: "/sommelier", label: "Sommelier AI" },
   { to: "/events", label: "Experiences" },
@@ -94,7 +93,6 @@ const footerLinks = {
     { to: "/membership", label: "Membership" },
     { to: "/auctions", label: "Live Auctions" },
     { to: "/marketplace", label: "Drops" },
-    { to: "/legacy", label: "Legacy Collection" },
     { to: "/events", label: "Experiences" },
   ],
   Platform: [

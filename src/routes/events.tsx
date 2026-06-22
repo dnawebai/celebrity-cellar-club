@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { SiteShell } from "@/components/site-shell";
 import vineyard from "@/assets/event-vineyard.jpg";
 import tasting from "@/assets/event-tasting.jpg";
@@ -38,9 +39,9 @@ const events = [
     location: "Virtual",
     date: "November 02, 2026",
     type: "Online",
-    title: "Johnson's Tequila Masterclass",
+    title: "Aaron Hibell Studio Tasting",
     description:
-      "Guided tasting of three founder's reserves with the Teremana team. Bottles shipped in advance to members.",
+      "Guided tasting of three founder's reserves with the Hibell team. Bottles shipped in advance to members.",
     img: tasting,
   },
   {
@@ -61,6 +62,16 @@ const auctions = [
 ];
 
 function EventsPage() {
+  const [activeEvent, setActiveEvent] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({ name: "", phone: "", email: "" });
+
+  function closeModal() {
+    setActiveEvent(null);
+    setSubmitted(false);
+    setForm({ name: "", phone: "", email: "" });
+  }
+
   return (
     <SiteShell>
       <section className="px-6 pt-32 pb-16">
@@ -98,7 +109,10 @@ function EventsPage() {
               <p className="mt-3 text-sm text-muted-foreground">{e.description}</p>
               <div className="mt-5 flex items-center justify-between border-t border-border pt-4">
                 <span className="text-xs text-muted-foreground">{e.date}</span>
-                <button className="text-[10px] uppercase tracking-widest text-accent hover:underline">
+                <button
+                  onClick={() => setActiveEvent(e.title)}
+                  className="text-[10px] uppercase tracking-widest text-accent hover:underline"
+                >
                   Reserve Seat →
                 </button>
               </div>
@@ -125,14 +139,128 @@ function EventsPage() {
                 <p className="text-[10px] uppercase tracking-widest text-accent">{a.date}</p>
                 <h3 className="mt-3 font-serif text-2xl italic">{a.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{a.lots} lots</p>
-                <button className="mt-6 w-full rounded-sm py-3 text-[10px] font-semibold uppercase tracking-widest ring-1 ring-border transition-all hover:ring-accent/60 hover:text-accent">
+                <Link
+                  to="/membership"
+                  className="mt-6 block w-full rounded-sm py-3 text-center text-[10px] font-semibold uppercase tracking-widest ring-1 ring-border transition-all hover:ring-accent/60 hover:text-accent"
+                >
                   Register Interest
-                </button>
+                </Link>
               </div>
             ))}
           </div>
         </div>
       </section>
+
+      {/* Reservation modal */}
+      {activeEvent && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 px-4 backdrop-blur-md"
+          onClick={closeModal}
+        >
+          <div
+            className="relative w-full max-w-md rounded-md border border-border bg-surface p-8 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={closeModal}
+              className="absolute right-4 top-4 text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground"
+            >
+              Close ✕
+            </button>
+            {submitted ? (
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-widest text-accent">
+                  Confirmed
+                </p>
+                <h3 className="mt-3 font-serif text-2xl italic">
+                  Your seat is reserved for {activeEvent}.
+                </h3>
+                <p className="mt-3 text-sm text-muted-foreground">
+                  A confirmation has been sent to {form.email}. We'll be in touch with
+                  arrival details.
+                </p>
+                <button
+                  onClick={closeModal}
+                  className="mt-6 w-full rounded-sm bg-accent py-3 text-[10px] font-semibold uppercase tracking-widest text-accent-foreground"
+                >
+                  Done
+                </button>
+              </div>
+            ) : (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  setSubmitted(true);
+                }}
+              >
+                <p className="text-[10px] font-semibold uppercase tracking-widest text-accent">
+                  Reserve a Seat
+                </p>
+                <h3 className="mt-2 font-serif text-2xl italic">{activeEvent}</h3>
+                <div className="mt-6 space-y-4">
+                  <Field
+                    label="Full Name"
+                    value={form.name}
+                    onChange={(v) => setForm({ ...form, name: v })}
+                    required
+                  />
+                  <Field
+                    label="Phone Number"
+                    type="tel"
+                    value={form.phone}
+                    onChange={(v) => setForm({ ...form, phone: v })}
+                    required
+                  />
+                  <Field
+                    label="Email"
+                    type="email"
+                    value={form.email}
+                    onChange={(v) => setForm({ ...form, email: v })}
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="mt-6 w-full rounded-sm bg-accent py-3 text-[10px] font-semibold uppercase tracking-widest text-accent-foreground transition-all hover:brightness-110"
+                >
+                  Confirm Reservation
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
     </SiteShell>
+  );
+}
+
+function Field({
+  label,
+  value,
+  onChange,
+  type = "text",
+  required,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  type?: string;
+  required?: boolean;
+}) {
+  return (
+    <label className="block">
+      <span className="mb-2 block text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
+        {label}
+        {required && <span className="ml-1 text-accent">*</span>}
+      </span>
+      <input
+        type={type}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        required={required}
+        maxLength={120}
+        className="w-full rounded-sm bg-background px-4 py-3 text-sm text-foreground ring-1 ring-border focus:outline-none focus:ring-accent/60"
+      />
+    </label>
   );
 }

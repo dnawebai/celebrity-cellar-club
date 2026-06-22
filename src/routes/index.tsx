@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
 import heroBottle from "@/assets/hero-bottle.jpg";
-import cellarDetail from "@/assets/cellar-detail.jpg";
+import qmiBottle from "@/assets/qmi-bottle.jpg";
 import influencer1 from "@/assets/influencer-1.jpg";
 import influencer2 from "@/assets/influencer-2.jpg";
 import influencer3 from "@/assets/influencer-3.jpg";
@@ -27,16 +27,16 @@ export const Route = createFileRoute("/")({
 });
 
 const influencers = [
-  { name: "Nicole Kidman", series: "Heritage Selection", img: influencer1, tag: "Bordeaux" },
-  { name: "Selena Gomez", series: "Modern Classics", img: influencer2, tag: "Champagne" },
-  { name: "Miley Cyrus", series: "The Vanguard", img: influencer3, tag: "Mezcal" },
-  { name: "Dwayne Johnson", series: "Founder's Reserve", img: influencer4, tag: "Tequila" },
+  { name: "Denise Richards", series: "Heritage Selection", img: influencer1, tag: "Napa Cab" },
+  { name: "Aaron Hibell", series: "Modern Classics", img: influencer2, tag: "Champagne" },
+  { name: "Taylor Swift", series: "The Vanguard", img: influencer3, tag: "Mezcal" },
+  { name: "50 Cent", series: "Founder's Reserve", img: influencer4, tag: "Cognac" },
 ];
 
 const liveAuctions = [
-  { lot: "Lot 014", title: "1982 Mouton Rothschild", region: "Pauillac", bid: "$48,250", bidders: 17, closes: "02h 14m" },
-  { lot: "Lot 017", title: "1996 DRC La Tâche", region: "Burgundy", bid: "$31,800", bidders: 24, closes: "04h 02m" },
-  { lot: "Lot 021", title: "Pappy Van Winkle 23", region: "Kentucky", bid: "$12,400", bidders: 39, closes: "06h 49m" },
+  { lot: "Lot 014", title: "1982 Mouton Rothschild", region: "Pauillac", bid: "$48,250", bidders: 17, closes: "2d 14h 06m" },
+  { lot: "Lot 017", title: "1996 DRC La Tâche", region: "Burgundy", bid: "$31,800", bidders: 24, closes: "4d 02h 18m" },
+  { lot: "Lot 021", title: "Pappy Van Winkle 23", region: "Kentucky", bid: "$12,400", bidders: 39, closes: "1d 06h 49m" },
 ];
 
 const stats = [
@@ -279,7 +279,7 @@ function HomePage() {
                     </div>
                   </div>
                   <Link
-                    to="/auctions"
+                    to="/membership"
                     className="block w-full rounded-full border border-foreground/20 px-4 py-3 text-center text-xs font-semibold transition group-hover:gold-gradient group-hover:border-transparent"
                   >
                     Place bid
@@ -398,23 +398,31 @@ function HomePage() {
               Open investment center →
             </Link>
           </div>
-          <div className="relative order-1 overflow-hidden rounded-3xl border border-border luxury-shadow lg:order-2">
+          <a
+            href="https://qmiwinery.com/"
+            target="_blank"
+            rel="noreferrer noopener"
+            className="relative order-1 block overflow-hidden rounded-3xl border border-border luxury-shadow transition hover:border-gold/50 lg:order-2"
+          >
             <img
-              src={cellarDetail}
-              alt="Private cellar"
+              src={qmiBottle}
+              alt="QMI Winery signature bottle — visit qmiwinery.com"
               loading="lazy"
               className="aspect-[4/5] w-full object-cover"
             />
             <div className="absolute inset-x-5 bottom-5 rounded-2xl border border-border bg-background/80 p-5 backdrop-blur-xl">
               <div className="mb-2 flex items-center justify-between text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
-                <span>Your cellar</span>
+                <span>Your cellar · QMI Winery</span>
                 <span style={{ color: "var(--color-lime)" }}>+$14,820 (30d)</span>
               </div>
               <div className="font-display text-3xl font-medium tracking-tight">
                 $128,460
               </div>
+              <div className="mt-2 text-[10px] uppercase tracking-[0.3em] text-gold">
+                Visit qmiwinery.com →
+              </div>
             </div>
-          </div>
+          </a>
         </div>
       </section>
 

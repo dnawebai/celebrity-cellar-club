@@ -14,7 +14,6 @@ import { Route as SommelierRouteImport } from './routes/sommelier'
 import { Route as ProducersRouteImport } from './routes/producers'
 import { Route as MembershipRouteImport } from './routes/membership'
 import { Route as MarketplaceRouteImport } from './routes/marketplace'
-import { Route as LegacyRouteImport } from './routes/legacy'
 import { Route as InvestmentRouteImport } from './routes/investment'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as DashboardRouteImport } from './routes/dashboard'
@@ -45,11 +44,6 @@ const MembershipRoute = MembershipRouteImport.update({
 const MarketplaceRoute = MarketplaceRouteImport.update({
   id: '/marketplace',
   path: '/marketplace',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LegacyRoute = LegacyRouteImport.update({
-  id: '/legacy',
-  path: '/legacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InvestmentRoute = InvestmentRouteImport.update({
@@ -90,7 +84,6 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/events': typeof EventsRoute
   '/investment': typeof InvestmentRoute
-  '/legacy': typeof LegacyRoute
   '/marketplace': typeof MarketplaceRoute
   '/membership': typeof MembershipRoute
   '/producers': typeof ProducersRoute
@@ -104,7 +97,6 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/events': typeof EventsRoute
   '/investment': typeof InvestmentRoute
-  '/legacy': typeof LegacyRoute
   '/marketplace': typeof MarketplaceRoute
   '/membership': typeof MembershipRoute
   '/producers': typeof ProducersRoute
@@ -119,7 +111,6 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/events': typeof EventsRoute
   '/investment': typeof InvestmentRoute
-  '/legacy': typeof LegacyRoute
   '/marketplace': typeof MarketplaceRoute
   '/membership': typeof MembershipRoute
   '/producers': typeof ProducersRoute
@@ -135,7 +126,6 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/events'
     | '/investment'
-    | '/legacy'
     | '/marketplace'
     | '/membership'
     | '/producers'
@@ -149,7 +139,6 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/events'
     | '/investment'
-    | '/legacy'
     | '/marketplace'
     | '/membership'
     | '/producers'
@@ -163,7 +152,6 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/events'
     | '/investment'
-    | '/legacy'
     | '/marketplace'
     | '/membership'
     | '/producers'
@@ -178,7 +166,6 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   EventsRoute: typeof EventsRoute
   InvestmentRoute: typeof InvestmentRoute
-  LegacyRoute: typeof LegacyRoute
   MarketplaceRoute: typeof MarketplaceRoute
   MembershipRoute: typeof MembershipRoute
   ProducersRoute: typeof ProducersRoute
@@ -221,13 +208,6 @@ declare module '@tanstack/react-router' {
       path: '/marketplace'
       fullPath: '/marketplace'
       preLoaderRoute: typeof MarketplaceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/legacy': {
-      id: '/legacy'
-      path: '/legacy'
-      fullPath: '/legacy'
-      preLoaderRoute: typeof LegacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/investment': {
@@ -282,7 +262,6 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   EventsRoute: EventsRoute,
   InvestmentRoute: InvestmentRoute,
-  LegacyRoute: LegacyRoute,
   MarketplaceRoute: MarketplaceRoute,
   MembershipRoute: MembershipRoute,
   ProducersRoute: ProducersRoute,

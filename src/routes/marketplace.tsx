@@ -26,28 +26,28 @@ export const Route = createFileRoute("/marketplace")({
 
 const profiles = [
   {
-    name: "Nicole Kidman",
+    name: "Denise Richards",
     series: "Heritage Selection",
-    bio: "Adelaide-born and Hollywood-honed; her collection favors old-vine Australian Shiraz and grower Champagne.",
+    bio: "Hollywood-born and California-raised; her collection favors old-vine Napa Cabernet and grower Champagne.",
     bottles: 12,
     img: influencer1,
   },
   {
-    name: "Selena Gomez",
+    name: "Aaron Hibell",
     series: "Modern Classics",
-    bio: "Texas roots, California palate. A rotating list of Provençal rosé and small-batch agave spirits.",
+    bio: "London electronic producer turned vigneron. A rotating list of Provençal rosé and small-batch agave spirits.",
     bottles: 8,
     img: influencer2,
   },
   {
-    name: "Miley Cyrus",
+    name: "Taylor Swift",
     series: "The Vanguard List",
     bio: "Independent producers and rule-breakers. Natural wines, single-barrel rye, and a midnight gin.",
     bottles: 6,
     img: influencer3,
   },
   {
-    name: "Dwayne Johnson",
+    name: "50 Cent",
     series: "Founder's Reserves",
     bio: "Aged tequila, blanc de blancs, and a personal stash of Bordeaux first-growths.",
     bottles: 14,
@@ -110,11 +110,14 @@ function MarketplacePage() {
                 </div>
 
                 <div className="mt-8 flex flex-wrap gap-4">
-                  <button className="rounded-sm bg-accent px-6 py-3 text-xs font-semibold uppercase tracking-widest text-accent-foreground transition-all hover:brightness-110">
-                    Buy Now — $200
-                  </button>
                   <Link
-                    to="/auctions"
+                    to="/membership"
+                    className="rounded-sm bg-accent px-6 py-3 text-xs font-semibold uppercase tracking-widest text-accent-foreground transition-all hover:brightness-110"
+                  >
+                    Buy Now — $200
+                  </Link>
+                  <Link
+                    to="/membership"
                     className="rounded-sm px-6 py-3 text-xs font-semibold uppercase tracking-widest ring-1 ring-border transition-all hover:ring-accent/60"
                   >
                     Join Auction
