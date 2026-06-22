@@ -8,17 +8,18 @@ import influencer3 from "@/assets/influencer-3.jpg";
 import influencer4 from "@/assets/influencer-4.jpg";
 import eventTasting from "@/assets/event-tasting.jpg";
 import eventVineyard from "@/assets/event-vineyard.jpg";
+import eventDinner from "@/assets/event-dinner.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "OPUS DRINKS — Where Great Beverages Become Legacy" },
+      { title: "OPUS DRINKS — Collect. Invest. Experience." },
       {
         name: "description",
         content:
-          "Luxury wine club, live auctions, celebrity-curated collections, and wine investment platform. Invitation-only membership for the world's most discerning collectors.",
+          "The members-only platform for the next generation of collectors. Live auctions, celebrity drops, AI sommelier, and a wine investment portfolio in one app.",
       },
-      { property: "og:title", content: "OPUS DRINKS — Where Great Beverages Become Legacy" },
+      { property: "og:title", content: "OPUS DRINKS — Collect. Invest. Experience." },
       { property: "og:image", content: heroBottle },
     ],
   }),
@@ -26,105 +27,160 @@ export const Route = createFileRoute("/")({
 });
 
 const influencers = [
-  { name: "Nicole Kidman", series: "Heritage Selection", img: influencer1 },
-  { name: "Selena Gomez", series: "Modern Classics", img: influencer2 },
-  { name: "Miley Cyrus", series: "The Vanguard List", img: influencer3 },
-  { name: "Dwayne Johnson", series: "Founder's Reserves", img: influencer4 },
+  { name: "Nicole Kidman", series: "Heritage Selection", img: influencer1, tag: "Bordeaux" },
+  { name: "Selena Gomez", series: "Modern Classics", img: influencer2, tag: "Champagne" },
+  { name: "Miley Cyrus", series: "The Vanguard", img: influencer3, tag: "Mezcal" },
+  { name: "Dwayne Johnson", series: "Founder's Reserve", img: influencer4, tag: "Tequila" },
 ];
 
 const liveAuctions = [
-  {
-    lot: "Lot 014",
-    title: "1982 Château Mouton Rothschild · Pauillac",
-    bid: "$48,250",
-    bidders: 17,
-    closes: "02h 14m",
-  },
-  {
-    lot: "Lot 017",
-    title: "1996 Domaine de la Romanée-Conti · La Tâche",
-    bid: "$31,800",
-    bidders: 24,
-    closes: "04h 02m",
-  },
-  {
-    lot: "Lot 021",
-    title: "Pappy Van Winkle 23-Year · Sealed Bottle",
-    bid: "$12,400",
-    bidders: 39,
-    closes: "06h 49m",
-  },
+  { lot: "Lot 014", title: "1982 Mouton Rothschild", region: "Pauillac", bid: "$48,250", bidders: 17, closes: "02h 14m" },
+  { lot: "Lot 017", title: "1996 DRC La Tâche", region: "Burgundy", bid: "$31,800", bidders: 24, closes: "04h 02m" },
+  { lot: "Lot 021", title: "Pappy Van Winkle 23", region: "Kentucky", bid: "$12,400", bidders: 39, closes: "06h 49m" },
 ];
 
 const stats = [
-  { value: "24,000+", label: "Active Members" },
-  { value: "$184M", label: "Lots Transacted" },
-  { value: "320+", label: "Allocated Producers" },
-  { value: "12.4%", label: "Avg. Annual Return" },
+  { value: "24K+", label: "Members" },
+  { value: "$184M", label: "Transacted" },
+  { value: "320+", label: "Producers" },
+  { value: "+12.4%", label: "YTD Return" },
+];
+
+const pillars = [
+  { n: "01", title: "Drops", body: "Limited-edition celebrity bottles. 100 per release. Numbered, signed, sealed." },
+  { n: "02", title: "Auctions", body: "Live bidding on grail bottles. Real-time data from the world's top auction houses." },
+  { n: "03", title: "Invest", body: "Track your cellar like a portfolio. AI forecasts, market indices, ROI reports." },
+  { n: "04", title: "Sommelier", body: "Your AI advisor. Pairings, vintages, allocation strategy — 24/7, in your pocket." },
 ];
 
 function HomePage() {
   return (
     <SiteShell>
-      {/* HERO */}
-      <section className="relative overflow-hidden">
+      {/* ============ HERO ============ */}
+      <section className="relative overflow-hidden border-b border-border">
         <div className="absolute inset-0 -z-10">
-          <img
-            src={heroBottle}
-            alt=""
-            className="h-full w-full object-cover opacity-40"
+          <img src={heroBottle} alt="" className="h-full w-full object-cover opacity-30" />
+          <div className="absolute inset-0 bg-gradient-to-br from-background via-background/85 to-background/40" />
+          <div
+            className="absolute -right-32 -top-32 size-[40rem] rounded-full blur-3xl opacity-40"
+            style={{ background: "radial-gradient(circle, oklch(0.92 0.21 125 / 0.4), transparent 60%)" }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/70 to-background" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
+          <div
+            className="absolute -bottom-32 -left-32 size-[36rem] rounded-full blur-3xl opacity-30"
+            style={{ background: "radial-gradient(circle, oklch(0.68 0.27 350 / 0.5), transparent 60%)" }}
+          />
         </div>
 
-        <div className="mx-auto max-w-[1400px] px-6 pt-40 pb-32 lg:px-10 lg:pt-48 lg:pb-44">
-          <span className="mb-10 inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.45em] text-gold animate-fade-up">
-            <span className="size-1.5 rounded-full bg-gold pulse-gold" />
-            Invitation Only · Est. 2023
-          </span>
-          <h1 className="mb-10 max-w-[18ch] font-display text-[3.5rem] leading-[0.95] text-balance md:text-[5.5rem] lg:text-[7rem] animate-fade-up">
-            Where great beverages become{" "}
-            <span className="italic text-gold-gradient">legacy</span>.
-          </h1>
-          <p className="mb-12 max-w-[58ch] text-pretty text-lg leading-relaxed text-muted-foreground animate-fade-up">
-            Access exclusive wines, celebrity collections, rare auctions, luxury experiences, and
-            collectible beverages unavailable anywhere else.
-          </p>
-          <div className="flex flex-wrap items-center gap-4 animate-fade-up">
-            <Link
-              to="/membership"
-              className="gold-gradient rounded-sm px-7 py-4 text-xs font-semibold uppercase tracking-[0.25em] text-primary-foreground shadow-lg shadow-black/40 transition-all hover:brightness-110"
-            >
-              Apply for Membership
-            </Link>
-            <Link
-              to="/auctions"
-              className="rounded-sm border border-foreground/30 bg-background/30 px-7 py-4 text-xs font-semibold uppercase tracking-[0.25em] text-foreground backdrop-blur transition-all hover:border-gold hover:text-gold"
-            >
-              Explore Auctions
-            </Link>
-            <button
-              type="button"
-              className="group inline-flex items-center gap-3 px-2 py-4 text-xs uppercase tracking-[0.25em] text-muted-foreground transition hover:text-foreground"
-            >
-              <span className="flex size-10 items-center justify-center rounded-full border border-foreground/30 transition group-hover:border-gold group-hover:text-gold">
-                ▶
-              </span>
-              Watch Introduction
-            </button>
+        <div className="mx-auto grid max-w-[1500px] gap-16 px-5 pb-24 pt-24 lg:grid-cols-12 lg:gap-10 lg:px-8 lg:pb-32 lg:pt-32">
+          <div className="lg:col-span-8">
+            <span className="mb-8 inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 px-3.5 py-1.5 text-[11px] uppercase tracking-[0.25em] text-muted-foreground backdrop-blur animate-fade-up">
+              <span
+                className="size-1.5 rounded-full pulse-gold"
+                style={{ backgroundColor: "var(--color-lime)" }}
+              />
+              Invitation only · Est. 2023
+            </span>
+
+            <h1 className="font-display text-[13vw] font-medium leading-[0.85] tracking-[-0.045em] sm:text-[10vw] lg:text-[8.5rem] animate-fade-up">
+              Collect.
+              <br />
+              Invest.
+              <br />
+              <span className="italic text-gold-gradient">Experience.</span>
+            </h1>
+
+            <p className="mt-10 max-w-[52ch] text-pretty text-lg leading-relaxed text-muted-foreground animate-fade-up">
+              The members-only platform where rare bottles become assets, celebrities
+              drop limited runs, and your cellar grows up alongside you.
+            </p>
+
+            <div className="mt-12 flex flex-wrap items-center gap-3 animate-fade-up">
+              <Link
+                to="/membership"
+                className="gold-gradient inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold tracking-tight transition-all hover:brightness-110 lime-glow"
+              >
+                Apply for membership <span className="opacity-60">→</span>
+              </Link>
+              <Link
+                to="/auctions"
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/50 px-6 py-3.5 text-sm font-semibold backdrop-blur transition hover:bg-surface"
+              >
+                Watch the floor live
+              </Link>
+            </div>
           </div>
+
+          <aside className="hidden flex-col gap-4 lg:col-span-4 lg:flex">
+            <div className="rounded-3xl border border-border bg-surface/60 p-6 backdrop-blur-xl luxury-shadow">
+              <div className="mb-4 flex items-center justify-between">
+                <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+                  Opus 50 Index
+                </span>
+                <span
+                  className="rounded-full px-2.5 py-0.5 text-[10px] font-bold"
+                  style={{ background: "oklch(0.92 0.21 125 / 0.18)", color: "var(--color-lime)" }}
+                >
+                  +12.4%
+                </span>
+              </div>
+              <div className="font-display text-5xl font-medium tracking-tight">
+                1,847<span className="text-muted-foreground/40">.62</span>
+              </div>
+              <svg viewBox="0 0 300 80" className="mt-4 w-full">
+                <polyline
+                  points="0,60 30,55 60,58 90,40 120,45 150,30 180,38 210,20 240,28 270,12 300,18"
+                  fill="none"
+                  stroke="var(--color-lime)"
+                  strokeWidth="2"
+                />
+                <polyline
+                  points="0,60 30,55 60,58 90,40 120,45 150,30 180,38 210,20 240,28 270,12 300,18 300,80 0,80"
+                  fill="url(#g)"
+                  opacity="0.25"
+                />
+                <defs>
+                  <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="var(--color-lime)" />
+                    <stop offset="100%" stopColor="var(--color-lime)" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+              </svg>
+              <div className="mt-2 grid grid-cols-3 gap-2 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                <div>1D <span className="text-foreground">+0.8%</span></div>
+                <div>1M <span className="text-foreground">+3.1%</span></div>
+                <div>YTD <span className="text-foreground">+12.4%</span></div>
+              </div>
+            </div>
+            <div className="rounded-3xl border border-border bg-surface/60 p-6 backdrop-blur-xl">
+              <div className="mb-3 flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+                <span className="size-1.5 rounded-full bg-red-500 blink" />
+                Live now
+              </div>
+              <div className="font-display text-2xl leading-tight">
+                Founder Tasting · Napa
+              </div>
+              <div className="mt-1 text-sm text-muted-foreground">
+                47 members watching · Vintage 2018 verticals
+              </div>
+              <Link
+                to="/events"
+                className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-gold-gradient"
+              >
+                Join stream →
+              </Link>
+            </div>
+          </aside>
         </div>
 
         {/* Stats strip */}
-        <div className="border-t border-border bg-background/60 backdrop-blur">
-          <div className="mx-auto grid max-w-[1400px] grid-cols-2 divide-x divide-border lg:grid-cols-4 lg:px-10">
+        <div className="border-t border-border bg-background/40 backdrop-blur">
+          <div className="mx-auto grid max-w-[1500px] grid-cols-2 divide-x divide-border lg:grid-cols-4 lg:px-8">
             {stats.map((s) => (
-              <div key={s.label} className="px-6 py-8">
-                <div className="font-display text-3xl text-gold-gradient md:text-4xl">
+              <div key={s.label} className="px-6 py-6">
+                <div className="font-display text-3xl font-medium tracking-tight md:text-4xl">
                   {s.value}
                 </div>
-                <div className="mt-2 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+                <div className="mt-1 text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
                   {s.label}
                 </div>
               </div>
@@ -133,211 +189,167 @@ function HomePage() {
         </div>
       </section>
 
-      {/* LIVE AUCTIONS */}
-      <section className="border-b border-border px-6 py-32 lg:px-10">
-        <div className="mx-auto max-w-[1400px]">
+      {/* ============ FOUR PILLARS ============ */}
+      <section className="border-b border-border px-5 py-24 lg:px-8 lg:py-32">
+        <div className="mx-auto max-w-[1500px]">
+          <div className="mb-16 flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
+            <h2 className="font-display text-5xl font-medium tracking-[-0.03em] md:text-7xl">
+              One app. <span className="italic text-gold-gradient">Four obsessions.</span>
+            </h2>
+            <p className="max-w-md text-base text-muted-foreground">
+              Most platforms pick a lane. We don't. Buy it, bid on it, hold it, learn it —
+              all under one membership.
+            </p>
+          </div>
+          <div className="grid gap-px overflow-hidden rounded-3xl border border-border bg-border md:grid-cols-2 lg:grid-cols-4">
+            {pillars.map((p) => (
+              <div
+                key={p.n}
+                className="group relative flex h-72 flex-col justify-between bg-background p-7 transition hover:bg-surface"
+              >
+                <span className="font-mono text-xs text-muted-foreground">{p.n}</span>
+                <div>
+                  <h3 className="font-display text-3xl font-medium tracking-tight">
+                    {p.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    {p.body}
+                  </p>
+                </div>
+                <span
+                  className="absolute right-7 top-7 size-2 rounded-full opacity-0 transition group-hover:opacity-100"
+                  style={{ backgroundColor: "var(--color-lime)" }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============ LIVE AUCTIONS ============ */}
+      <section className="border-b border-border px-5 py-24 lg:px-8 lg:py-32">
+        <div className="mx-auto max-w-[1500px]">
           <div className="mb-14 flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
             <div>
-              <span className="mb-4 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] text-gold">
-                <span className="size-1.5 rounded-full bg-gold pulse-gold" /> Live Now
+              <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-[11px] uppercase tracking-[0.25em]">
+                <span className="size-1.5 rounded-full bg-red-500 blink" /> Live floor
               </span>
-              <h2 className="font-display text-5xl text-balance md:text-6xl">
-                Tonight's <span className="italic">auction floor</span>.
+              <h2 className="font-display text-5xl font-medium tracking-[-0.03em] md:text-7xl">
+                Tonight's <span className="italic text-gold-gradient">grails</span>.
               </h2>
             </div>
             <Link
               to="/auctions"
-              className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground hover:text-gold"
+              className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-medium hover:bg-surface"
             >
-              All Auctions →
+              All auctions →
             </Link>
           </div>
-          <div className="grid gap-px overflow-hidden rounded-sm bg-border md:grid-cols-3">
+          <div className="grid gap-5 md:grid-cols-3">
             {liveAuctions.map((a) => (
-              <div key={a.lot} className="group bg-background p-8 transition hover:bg-surface">
-                <div className="mb-6 flex items-center justify-between text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-                  <span>{a.lot}</span>
-                  <span className="flex items-center gap-2 text-gold">
-                    <span className="size-1 rounded-full bg-gold pulse-gold" /> Closes {a.closes}
-                  </span>
-                </div>
-                <h3 className="mb-8 font-serif text-2xl leading-tight">{a.title}</h3>
-                <div className="mb-6 flex items-end justify-between border-t border-border pt-6">
-                  <div>
-                    <div className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-                      Current Bid
-                    </div>
-                    <div className="mt-1 font-display text-3xl text-gold-gradient">{a.bid}</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-                      Bidders
-                    </div>
-                    <div className="mt-1 font-display text-2xl">{a.bidders}</div>
-                  </div>
-                </div>
-                <Link
-                  to="/auctions"
-                  className="block w-full rounded-sm border border-foreground/30 px-4 py-3 text-center text-[10px] font-semibold uppercase tracking-[0.3em] transition group-hover:border-gold group-hover:text-gold"
-                >
-                  Place Bid
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* MEMBERSHIP TIERS */}
-      <section className="px-6 py-32 lg:px-10">
-        <div className="mx-auto max-w-[1400px]">
-          <div className="mb-16 max-w-3xl">
-            <span className="mb-4 block text-[10px] uppercase tracking-[0.4em] text-gold">
-              Membership
-            </span>
-            <h2 className="mb-6 font-display text-5xl text-balance md:text-6xl">
-              Three doors. <span className="italic">By committee only.</span>
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              Every application is reviewed individually. A non-refundable USD $99 application fee
-              accompanies submission to ensure the integrity of our community.
-            </p>
-          </div>
-
-          <div className="grid gap-6 lg:grid-cols-3">
-            {[
-              {
-                name: "Opus Member",
-                price: "$199",
-                cadence: "/ month",
-                features: [
-                  "4 premium bottles monthly",
-                  "Free U.S. shipping",
-                  "Auction floor access",
-                  "Education & Investment Center",
-                  "AI Sommelier",
-                ],
-                cta: "Apply",
-              },
-              {
-                name: "Opus Black",
-                price: "$499",
-                cadence: "/ month",
-                featured: true,
-                features: [
-                  "Everything in Opus Member",
-                  "Priority allocations",
-                  "VIP events & private tastings",
-                  "Celebrity event invitations",
-                  "Quarterly investment reports",
-                  "Luxury concierge",
-                ],
-                cta: "Apply",
-              },
-              {
-                name: "Founder Circle",
-                price: "Invitation",
-                cadence: "Only",
-                features: [
-                  "Private winery access",
-                  "Celebrity dinners",
-                  "Co-investment opportunities",
-                  "Bespoke luxury travel",
-                  "Private cellar consulting",
-                  "Direct access to Opus executives",
-                ],
-                cta: "Request Introduction",
-              },
-            ].map((t) => (
               <div
-                key={t.name}
-                className={`group relative flex flex-col rounded-sm p-10 ring-1 transition ${
-                  t.featured
-                    ? "bg-surface ring-gold luxury-shadow"
-                    : "bg-surface/40 ring-border hover:ring-gold/40"
-                }`}
+                key={a.lot}
+                className="group flex flex-col rounded-3xl border border-border bg-surface/40 p-7 transition hover:border-foreground/30 hover:bg-surface"
               >
-                {t.featured ? (
-                  <span className="absolute -top-3 left-10 rounded-sm gold-gradient px-3 py-1 text-[9px] font-bold uppercase tracking-[0.3em] text-primary-foreground">
-                    Most Selected
+                <div className="mb-6 flex items-center justify-between text-[10px] uppercase tracking-[0.25em]">
+                  <span className="text-muted-foreground">{a.lot} · {a.region}</span>
+                  <span className="text-gold flex items-center gap-1.5">
+                    <span className="size-1.5 rounded-full bg-red-500 blink" />
+                    {a.closes}
                   </span>
-                ) : null}
-                <div className="mb-2 text-[10px] uppercase tracking-[0.3em] text-gold">
-                  {t.name}
                 </div>
-                <div className="mb-8 font-display text-5xl">
-                  {t.price}
-                  <span className="ml-1 text-sm font-sans text-muted-foreground">{t.cadence}</span>
+                <h3 className="font-display text-3xl font-medium leading-tight tracking-tight">
+                  {a.title}
+                </h3>
+                <div className="mt-auto pt-10">
+                  <div className="mb-5 flex items-end justify-between">
+                    <div>
+                      <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
+                        Current bid
+                      </div>
+                      <div className="mt-1 font-display text-4xl font-medium tracking-tight text-gold-gradient">
+                        {a.bid}
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
+                        Bidders
+                      </div>
+                      <div className="mt-1 font-display text-2xl">{a.bidders}</div>
+                    </div>
+                  </div>
+                  <Link
+                    to="/auctions"
+                    className="block w-full rounded-full border border-foreground/20 px-4 py-3 text-center text-xs font-semibold transition group-hover:gold-gradient group-hover:border-transparent"
+                  >
+                    Place bid
+                  </Link>
                 </div>
-                <ul className="mb-10 flex-1 space-y-3 text-sm text-muted-foreground">
-                  {t.features.map((f) => (
-                    <li key={f} className="flex gap-3">
-                      <span className="mt-2 size-1 shrink-0 rounded-full bg-gold" />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  to="/membership"
-                  className={`block rounded-sm px-5 py-3 text-center text-[10px] font-semibold uppercase tracking-[0.3em] transition ${
-                    t.featured
-                      ? "gold-gradient text-primary-foreground hover:brightness-110"
-                      : "border border-foreground/30 hover:border-gold hover:text-gold"
-                  }`}
-                >
-                  {t.cta}
-                </Link>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CELEBRITY MARKETPLACE */}
-      <section className="border-y border-border bg-surface/30 px-6 py-32 lg:px-10">
-        <div className="mx-auto max-w-[1400px]">
-          <div className="mb-16 flex flex-col items-end justify-between gap-6 lg:flex-row">
+      {/* ============ DROPS ============ */}
+      <section className="relative overflow-hidden border-b border-border px-5 py-24 lg:px-8 lg:py-32">
+        <div
+          className="absolute -right-40 top-10 size-[30rem] rounded-full blur-3xl opacity-30"
+          style={{ background: "radial-gradient(circle, oklch(0.68 0.27 350 / 0.6), transparent 60%)" }}
+        />
+        <div className="mx-auto max-w-[1500px]">
+          <div className="mb-14 flex flex-col items-end justify-between gap-6 lg:flex-row">
             <div className="max-w-2xl">
-              <span className="mb-4 block text-[10px] uppercase tracking-[0.4em] text-gold">
-                Beverages by Influencers
+              <span className="mb-4 inline-flex rounded-full border border-border bg-surface px-3 py-1 text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
+                Celebrity drops
               </span>
-              <h2 className="font-display text-5xl text-balance md:text-6xl">
-                Curated by <span className="italic">globally recognized icons</span>.
+              <h2 className="font-display text-5xl font-medium tracking-[-0.03em] md:text-7xl">
+                100 bottles.
+                <br />
+                <span className="italic text-magenta-gradient">A whole lot of envy.</span>
               </h2>
-              <p className="mt-4 text-muted-foreground">
-                Every month, celebrities release serialized collectible bottles. Only 100 per
-                edition. Each includes certificate of authenticity, exclusive packaging, and an
-                investment score.
+              <p className="mt-5 text-base text-muted-foreground">
+                Numbered editions co-created with the people you actually follow.
+                Drops every two weeks. Members get first 24 hours.
               </p>
             </div>
             <Link
               to="/marketplace"
-              className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground hover:text-gold"
+              className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-medium hover:bg-surface"
             >
-              View Marketplace →
+              All drops →
             </Link>
           </div>
-          <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-4 md:gap-5 lg:grid-cols-4">
             {influencers.map((i, idx) => (
               <Link key={i.name} to="/marketplace" className="group">
-                <div className="relative overflow-hidden rounded-sm ring-1 ring-border transition-all group-hover:ring-gold/50">
+                <div className="relative overflow-hidden rounded-3xl border border-border transition group-hover:border-foreground/30">
                   <img
                     src={i.img}
                     alt={i.name}
                     loading="lazy"
                     width={800}
-                    height={1200}
-                    className="aspect-[3/4] w-full object-cover transition-transform duration-1000 group-hover:scale-[1.04]"
+                    height={1000}
+                    className="aspect-[4/5] w-full object-cover transition-transform duration-1000 group-hover:scale-[1.05]"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+                  <span
+                    className="absolute left-4 top-4 rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] backdrop-blur"
+                    style={{ background: "oklch(0.10 0.012 280 / 0.7)" }}
+                  >
+                    {i.tag}
+                  </span>
                   <div className="absolute bottom-0 left-0 right-0 p-5">
-                    <div className="mb-1 text-[9px] uppercase tracking-[0.3em] text-gold">
-                      Edition {String(idx + 1).padStart(3, "0")} / 100
+                    <div
+                      className="mb-1 text-[10px] uppercase tracking-[0.25em]"
+                      style={{ color: "var(--color-lime)" }}
+                    >
+                      Drop {String(idx + 1).padStart(3, "0")} · ed. 100
                     </div>
-                    <h3 className="font-serif text-2xl">{i.name}</h3>
-                    <p className="mt-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                      {i.series}
-                    </p>
+                    <h3 className="font-display text-2xl font-medium leading-tight tracking-tight">
+                      {i.name}
+                    </h3>
+                    <p className="mt-0.5 text-xs text-muted-foreground">{i.series}</p>
                   </div>
                 </div>
               </Link>
@@ -346,110 +358,151 @@ function HomePage() {
         </div>
       </section>
 
-      {/* INVESTMENT */}
-      <section className="px-6 py-32 lg:px-10">
-        <div className="mx-auto grid max-w-[1400px] gap-16 lg:grid-cols-2 lg:items-center">
-          <div className="overflow-hidden rounded-sm ring-1 ring-border">
-            <img
-              src={cellarDetail}
-              alt="Private cellar"
-              loading="lazy"
-              className="aspect-[4/5] w-full object-cover"
-            />
-          </div>
-          <div>
-            <span className="mb-4 block text-[10px] uppercase tracking-[0.4em] text-gold">
-              Investment Platform
+      {/* ============ INVEST ============ */}
+      <section className="border-b border-border px-5 py-24 lg:px-8 lg:py-32">
+        <div className="mx-auto grid max-w-[1500px] gap-16 lg:grid-cols-2 lg:items-center">
+          <div className="order-2 lg:order-1">
+            <span className="mb-4 inline-flex rounded-full border border-border bg-surface px-3 py-1 text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
+              Investment platform
             </span>
-            <h2 className="mb-6 font-display text-5xl text-balance md:text-6xl">
-              Transforming bottles into <span className="italic">assets</span>.
+            <h2 className="mb-6 font-display text-5xl font-medium tracking-[-0.03em] md:text-7xl">
+              Your cellar is a <span className="italic text-gold-gradient">portfolio</span>.
             </h2>
             <p className="mb-10 text-lg text-muted-foreground">
-              Track market value, producer rankings, auction analytics, and AI forecasting for every
-              bottle in your cellar. The world's first complete portfolio platform built for fine
-              wine and spirits.
+              Track market value, producer rankings, and AI forecasts on every bottle
+              you own. The first investment platform built for fine wine and spirits —
+              designed for the people who'd rather hold than sip.
             </p>
-            <div className="grid gap-6 sm:grid-cols-2">
+            <div className="grid gap-4 sm:grid-cols-2">
               {[
-                { k: "+12.4%", v: "Avg. annual return on Founder Tier portfolios" },
+                { k: "+12.4%", v: "Avg. YTD return on Founder portfolios" },
                 { k: "1,840", v: "Producers tracked across 17 regions" },
-                { k: "Real-time", v: "Auction data from Sotheby's, Christie's, Acker" },
-                { k: "AI", v: "Forecasting and cellaring recommendations" },
+                { k: "Real-time", v: "Sotheby's, Christie's, Acker data feed" },
+                { k: "AI", v: "Vintage forecasts & cellaring strategy" },
               ].map((m) => (
-                <div key={m.v} className="rounded-sm border border-border bg-surface/50 p-6">
-                  <div className="mb-1 font-display text-3xl text-gold-gradient">{m.k}</div>
+                <div
+                  key={m.v}
+                  className="rounded-2xl border border-border bg-surface/50 p-5"
+                >
+                  <div className="mb-1 font-display text-3xl font-medium tracking-tight text-gold-gradient">
+                    {m.k}
+                  </div>
                   <div className="text-xs leading-relaxed text-muted-foreground">{m.v}</div>
                 </div>
               ))}
             </div>
             <Link
               to="/investment"
-              className="mt-10 inline-block border-b border-gold pb-1 text-[11px] uppercase tracking-[0.3em] text-gold"
+              className="mt-10 inline-flex items-center gap-2 rounded-full border border-foreground/30 px-5 py-2.5 text-sm font-semibold hover:gold-gradient hover:border-transparent"
             >
-              Open Investment Center →
+              Open investment center →
             </Link>
+          </div>
+          <div className="relative order-1 overflow-hidden rounded-3xl border border-border luxury-shadow lg:order-2">
+            <img
+              src={cellarDetail}
+              alt="Private cellar"
+              loading="lazy"
+              className="aspect-[4/5] w-full object-cover"
+            />
+            <div className="absolute inset-x-5 bottom-5 rounded-2xl border border-border bg-background/80 p-5 backdrop-blur-xl">
+              <div className="mb-2 flex items-center justify-between text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
+                <span>Your cellar</span>
+                <span style={{ color: "var(--color-lime)" }}>+$14,820 (30d)</span>
+              </div>
+              <div className="font-display text-3xl font-medium tracking-tight">
+                $128,460
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* EVENTS */}
-      <section className="border-t border-border bg-surface/30 px-6 py-32 lg:px-10">
-        <div className="mx-auto max-w-[1400px]">
+      {/* ============ EXPERIENCES ============ */}
+      <section className="border-b border-border px-5 py-24 lg:px-8 lg:py-32">
+        <div className="mx-auto max-w-[1500px]">
           <div className="mb-14 flex flex-col items-end justify-between gap-6 lg:flex-row">
             <div>
-              <span className="mb-4 block text-[10px] uppercase tracking-[0.4em] text-gold">
+              <span className="mb-4 inline-flex rounded-full border border-border bg-surface px-3 py-1 text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
                 Experiences
               </span>
-              <h2 className="font-display text-5xl text-balance md:text-6xl">
-                Beyond the <span className="italic">bottle</span>.
+              <h2 className="font-display text-5xl font-medium tracking-[-0.03em] md:text-7xl">
+                Beyond the <span className="italic text-gold-gradient">bottle</span>.
               </h2>
             </div>
             <Link
               to="/events"
-              className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground hover:text-gold"
+              className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-medium hover:bg-surface"
             >
-              All Experiences →
+              All experiences →
             </Link>
           </div>
-          <div className="grid gap-6 lg:grid-cols-2">
+          <div className="grid gap-5 md:grid-cols-3">
             {[
-              { img: eventVineyard, title: "Harvest at Château Margaux", date: "October · Bordeaux" },
-              { img: eventTasting, title: "Founders Dinner with Nicole Kidman", date: "November · Aspen" },
+              { img: eventVineyard, kicker: "Napa · Oct 12", title: "Private harvest at Opus One" },
+              { img: eventTasting, kicker: "NYC · Oct 19", title: "Burgundy vertical · 12 vintages" },
+              { img: eventDinner, kicker: "Miami · Nov 02", title: "Chef's table × Founder Circle" },
             ].map((e) => (
-              <div
-                key={e.title}
-                className="group relative overflow-hidden rounded-sm ring-1 ring-border"
-              >
-                <img
-                  src={e.img}
-                  alt={e.title}
-                  loading="lazy"
-                  className="aspect-[16/10] w-full object-cover transition-transform duration-1000 group-hover:scale-[1.03]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-8">
-                  <div className="mb-2 text-[10px] uppercase tracking-[0.3em] text-gold">
-                    {e.date}
+              <Link key={e.title} to="/events" className="group">
+                <div className="relative overflow-hidden rounded-3xl border border-border">
+                  <img
+                    src={e.img}
+                    alt={e.title}
+                    loading="lazy"
+                    className="aspect-[5/6] w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <div
+                      className="mb-2 text-[10px] uppercase tracking-[0.25em]"
+                      style={{ color: "var(--color-lime)" }}
+                    >
+                      {e.kicker}
+                    </div>
+                    <h3 className="font-display text-2xl font-medium leading-tight tracking-tight">
+                      {e.title}
+                    </h3>
                   </div>
-                  <h3 className="font-display text-3xl md:text-4xl">{e.title}</h3>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* QUOTE */}
-      <section className="px-6 py-40 lg:px-10">
-        <div className="mx-auto max-w-3xl text-center">
-          <div className="mb-10 font-serif text-6xl italic text-gold-gradient">"</div>
-          <p className="font-display text-3xl leading-snug text-balance italic md:text-4xl">
-            The 2018 Reserve is arguably the finest production we have seen in a decade. Opus has
-            redefined what membership means in luxury beverage.
+      {/* ============ CTA ============ */}
+      <section className="relative overflow-hidden px-5 py-32 lg:px-8 lg:py-40">
+        <div
+          className="absolute inset-0 -z-10 opacity-50"
+          style={{
+            background:
+              "radial-gradient(circle at 30% 50%, oklch(0.92 0.21 125 / 0.25), transparent 50%), radial-gradient(circle at 70% 50%, oklch(0.68 0.27 350 / 0.25), transparent 50%)",
+          }}
+        />
+        <div className="mx-auto max-w-[1500px] text-center">
+          <h2 className="mx-auto max-w-5xl font-display text-6xl font-medium leading-[0.9] tracking-[-0.04em] md:text-[9rem]">
+            Apply. Get in.
+            <br />
+            <span className="italic text-gold-gradient">Get rare.</span>
+          </h2>
+          <p className="mx-auto mt-8 max-w-xl text-lg text-muted-foreground">
+            $99 application fee. Reviewed individually. Approved members unlock
+            allocations within 48 hours.
           </p>
-          <p className="mt-10 text-[10px] uppercase tracking-[0.4em] text-muted-foreground">
-            — Opus Membership Committee
-          </p>
+          <div className="mt-12 flex flex-wrap justify-center gap-3">
+            <Link
+              to="/membership"
+              className="gold-gradient inline-flex items-center gap-2 rounded-full px-7 py-4 text-sm font-semibold lime-glow"
+            >
+              Start application →
+            </Link>
+            <Link
+              to="/sommelier"
+              className="inline-flex items-center gap-2 rounded-full border border-foreground/20 bg-surface/50 px-7 py-4 text-sm font-semibold backdrop-blur hover:bg-surface"
+            >
+              Try the AI Sommelier
+            </Link>
+          </div>
         </div>
       </section>
     </SiteShell>
