@@ -10,15 +10,31 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SponsorsRouteImport } from './routes/sponsors'
+import { Route as SommelierRouteImport } from './routes/sommelier'
+import { Route as ProducersRouteImport } from './routes/producers'
 import { Route as MembershipRouteImport } from './routes/membership'
 import { Route as MarketplaceRouteImport } from './routes/marketplace'
+import { Route as LegacyRouteImport } from './routes/legacy'
+import { Route as InvestmentRouteImport } from './routes/investment'
 import { Route as EventsRouteImport } from './routes/events'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as CharityRouteImport } from './routes/charity'
 import { Route as AuctionsRouteImport } from './routes/auctions'
 import { Route as IndexRouteImport } from './routes/index'
 
 const SponsorsRoute = SponsorsRouteImport.update({
   id: '/sponsors',
   path: '/sponsors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SommelierRoute = SommelierRouteImport.update({
+  id: '/sommelier',
+  path: '/sommelier',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProducersRoute = ProducersRouteImport.update({
+  id: '/producers',
+  path: '/producers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MembershipRoute = MembershipRouteImport.update({
@@ -31,9 +47,29 @@ const MarketplaceRoute = MarketplaceRouteImport.update({
   path: '/marketplace',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LegacyRoute = LegacyRouteImport.update({
+  id: '/legacy',
+  path: '/legacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InvestmentRoute = InvestmentRouteImport.update({
+  id: '/investment',
+  path: '/investment',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EventsRoute = EventsRouteImport.update({
   id: '/events',
   path: '/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CharityRoute = CharityRouteImport.update({
+  id: '/charity',
+  path: '/charity',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuctionsRoute = AuctionsRouteImport.update({
@@ -50,26 +86,44 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auctions': typeof AuctionsRoute
+  '/charity': typeof CharityRoute
+  '/dashboard': typeof DashboardRoute
   '/events': typeof EventsRoute
+  '/investment': typeof InvestmentRoute
+  '/legacy': typeof LegacyRoute
   '/marketplace': typeof MarketplaceRoute
   '/membership': typeof MembershipRoute
+  '/producers': typeof ProducersRoute
+  '/sommelier': typeof SommelierRoute
   '/sponsors': typeof SponsorsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auctions': typeof AuctionsRoute
+  '/charity': typeof CharityRoute
+  '/dashboard': typeof DashboardRoute
   '/events': typeof EventsRoute
+  '/investment': typeof InvestmentRoute
+  '/legacy': typeof LegacyRoute
   '/marketplace': typeof MarketplaceRoute
   '/membership': typeof MembershipRoute
+  '/producers': typeof ProducersRoute
+  '/sommelier': typeof SommelierRoute
   '/sponsors': typeof SponsorsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/auctions': typeof AuctionsRoute
+  '/charity': typeof CharityRoute
+  '/dashboard': typeof DashboardRoute
   '/events': typeof EventsRoute
+  '/investment': typeof InvestmentRoute
+  '/legacy': typeof LegacyRoute
   '/marketplace': typeof MarketplaceRoute
   '/membership': typeof MembershipRoute
+  '/producers': typeof ProducersRoute
+  '/sommelier': typeof SommelierRoute
   '/sponsors': typeof SponsorsRoute
 }
 export interface FileRouteTypes {
@@ -77,34 +131,58 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auctions'
+    | '/charity'
+    | '/dashboard'
     | '/events'
+    | '/investment'
+    | '/legacy'
     | '/marketplace'
     | '/membership'
+    | '/producers'
+    | '/sommelier'
     | '/sponsors'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auctions'
+    | '/charity'
+    | '/dashboard'
     | '/events'
+    | '/investment'
+    | '/legacy'
     | '/marketplace'
     | '/membership'
+    | '/producers'
+    | '/sommelier'
     | '/sponsors'
   id:
     | '__root__'
     | '/'
     | '/auctions'
+    | '/charity'
+    | '/dashboard'
     | '/events'
+    | '/investment'
+    | '/legacy'
     | '/marketplace'
     | '/membership'
+    | '/producers'
+    | '/sommelier'
     | '/sponsors'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuctionsRoute: typeof AuctionsRoute
+  CharityRoute: typeof CharityRoute
+  DashboardRoute: typeof DashboardRoute
   EventsRoute: typeof EventsRoute
+  InvestmentRoute: typeof InvestmentRoute
+  LegacyRoute: typeof LegacyRoute
   MarketplaceRoute: typeof MarketplaceRoute
   MembershipRoute: typeof MembershipRoute
+  ProducersRoute: typeof ProducersRoute
+  SommelierRoute: typeof SommelierRoute
   SponsorsRoute: typeof SponsorsRoute
 }
 
@@ -115,6 +193,20 @@ declare module '@tanstack/react-router' {
       path: '/sponsors'
       fullPath: '/sponsors'
       preLoaderRoute: typeof SponsorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sommelier': {
+      id: '/sommelier'
+      path: '/sommelier'
+      fullPath: '/sommelier'
+      preLoaderRoute: typeof SommelierRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/producers': {
+      id: '/producers'
+      path: '/producers'
+      fullPath: '/producers'
+      preLoaderRoute: typeof ProducersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/membership': {
@@ -131,11 +223,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MarketplaceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/legacy': {
+      id: '/legacy'
+      path: '/legacy'
+      fullPath: '/legacy'
+      preLoaderRoute: typeof LegacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/investment': {
+      id: '/investment'
+      path: '/investment'
+      fullPath: '/investment'
+      preLoaderRoute: typeof InvestmentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/events': {
       id: '/events'
       path: '/events'
       fullPath: '/events'
       preLoaderRoute: typeof EventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/charity': {
+      id: '/charity'
+      path: '/charity'
+      fullPath: '/charity'
+      preLoaderRoute: typeof CharityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auctions': {
@@ -158,9 +278,15 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuctionsRoute: AuctionsRoute,
+  CharityRoute: CharityRoute,
+  DashboardRoute: DashboardRoute,
   EventsRoute: EventsRoute,
+  InvestmentRoute: InvestmentRoute,
+  LegacyRoute: LegacyRoute,
   MarketplaceRoute: MarketplaceRoute,
   MembershipRoute: MembershipRoute,
+  ProducersRoute: ProducersRoute,
+  SommelierRoute: SommelierRoute,
   SponsorsRoute: SponsorsRoute,
 }
 export const routeTree = rootRouteImport
