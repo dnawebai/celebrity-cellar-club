@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { SiteShell } from "@/components/site-shell";
 import heroBottle from "@/assets/hero-bottle.jpg";
@@ -251,12 +251,18 @@ function LotCard({ a }: { a: Auction }) {
           </div>
 
           <div className="mt-auto flex gap-2">
-            <button className="flex-1 rounded-sm gold-gradient px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-primary-foreground">
+            <Link
+              to="/membership"
+              className="flex-1 rounded-sm gold-gradient px-4 py-3 text-center text-[10px] font-semibold uppercase tracking-[0.3em] text-primary-foreground"
+            >
               Place Bid
-            </button>
-            <button className="rounded-sm border border-border px-4 py-3 text-[10px] uppercase tracking-[0.3em] text-muted-foreground hover:border-gold hover:text-gold">
+            </Link>
+            <Link
+              to="/membership"
+              className="rounded-sm border border-border px-4 py-3 text-[10px] uppercase tracking-[0.3em] text-muted-foreground hover:border-gold hover:text-gold"
+            >
               Watch
-            </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -282,9 +288,12 @@ function UpcomingCalendar() {
           <div className="col-span-6 font-display text-xl">{u.title}</div>
           <div className="col-span-2 text-muted-foreground">{u.lots}</div>
           <div className="col-span-2 text-right">
-            <button className="rounded-sm border border-border px-3 py-1.5 text-[10px] uppercase tracking-[0.3em] hover:border-gold hover:text-gold">
+            <Link
+              to="/membership"
+              className="inline-block rounded-sm border border-border px-3 py-1.5 text-[10px] uppercase tracking-[0.3em] hover:border-gold hover:text-gold"
+            >
               Reserve
-            </button>
+            </Link>
           </div>
         </div>
       ))}
