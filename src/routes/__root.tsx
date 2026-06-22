@@ -77,17 +77,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Opus Drinks Club — Exclusive Access. Exceptional Bottles." },
+      { title: "OPUS DRINKS — Where Great Beverages Become Legacy" },
       {
         name: "description",
         content:
-          "An invitation-only members club for rare wines, spirits, and celebrity-curated beverages. Serving 24,000+ collectors across the United States.",
+          "Invitation-only luxury membership, live auctions, celebrity beverage marketplace, and wine investment platform for collectors and connoisseurs.",
       },
-      { property: "og:title", content: "Opus Drinks Club" },
+      { property: "og:title", content: "OPUS DRINKS — Where Great Beverages Become Legacy" },
       {
         property: "og:description",
         content:
-          "Invitation-only access to rare wines, spirits, and celebrity-curated allocations.",
+          "Luxury membership, live auctions, celebrity collections, and wine investment for the world's most discerning collectors.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -98,7 +98,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..600&family=Inter:wght@300;400;500;600&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap",
       },
     ],
   }),

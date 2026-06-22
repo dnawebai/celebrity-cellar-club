@@ -1,20 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { SiteShell } from "@/components/site-shell";
+import heroBottle from "@/assets/hero-bottle.jpg";
+import cellar from "@/assets/cellar-detail.jpg";
 
 export const Route = createFileRoute("/auctions")({
   head: () => ({
     meta: [
-      { title: "Current Auctions — Opus Drinks Club" },
+      { title: "Live Auctions — Opus Drinks" },
       {
         name: "description",
         content:
-          "Live member-only auctions for rare wines and spirits curated by globally recognized influencers.",
-      },
-      { property: "og:title", content: "Current Auctions — Opus Drinks Club" },
-      {
-        property: "og:description",
-        content: "Live member-only auctions for rare wines and spirits.",
+          "Sotheby's-style live auctions for rare wines and spirits. Place bids, view investment ratings, and track auction history.",
       },
     ],
   }),
@@ -22,68 +19,94 @@ export const Route = createFileRoute("/auctions")({
 });
 
 type Auction = {
-  curator: string;
-  product: string;
+  lot: string;
+  title: string;
+  region: string;
   bid: number;
-  bids: number;
-  bottles: number;
+  reserve: number;
+  bidders: number;
   endsAt: number;
-  reserveMet: boolean;
+  estimate: string;
+  rating: "AAA" | "AA+" | "AA" | "A+";
+  img: string;
 };
 
 const now = Date.now();
-const HOUR = 1000 * 60 * 60;
+const H = 3_600_000;
 
-const initial: Auction[] = [
+const live: Auction[] = [
   {
-    curator: "Kidman",
-    product: "1982 Château Margaux (1.5L)",
-    bid: 4250,
-    bids: 18,
-    bottles: 2,
-    endsAt: now + 4 * HOUR + 22 * 60_000,
-    reserveMet: true,
+    lot: "Lot 014",
+    title: "1982 Château Mouton Rothschild",
+    region: "Pauillac · Bordeaux",
+    bid: 48250,
+    reserve: 45000,
+    bidders: 17,
+    endsAt: now + 2 * H + 14 * 60_000,
+    estimate: "$52,000 – $68,000",
+    rating: "AAA",
+    img: heroBottle,
   },
   {
-    curator: "Gomez",
-    product: "Macallan 25-Year Sherry Oak",
-    bid: 2800,
-    bids: 12,
-    bottles: 1,
-    endsAt: now + 11 * HOUR + 5 * 60_000,
-    reserveMet: true,
+    lot: "Lot 017",
+    title: "1996 DRC La Tâche · 750ml",
+    region: "Vosne-Romanée · Burgundy",
+    bid: 31800,
+    reserve: 28000,
+    bidders: 24,
+    endsAt: now + 4 * H + 2 * 60_000,
+    estimate: "$34,000 – $42,000",
+    rating: "AAA",
+    img: cellar,
   },
   {
-    curator: "Johnson",
-    product: "Teremana Founder's Cask — Numbered",
-    bid: 1850,
-    bids: 9,
-    bottles: 8,
-    endsAt: now + 18 * HOUR + 45 * 60_000,
-    reserveMet: false,
+    lot: "Lot 021",
+    title: "Pappy Van Winkle 23-Year Sealed",
+    region: "Kentucky · United States",
+    bid: 12400,
+    reserve: 12500,
+    bidders: 39,
+    endsAt: now + 6 * H + 49 * 60_000,
+    estimate: "$14,000 – $18,000",
+    rating: "AA+",
+    img: heroBottle,
   },
   {
-    curator: "Cyrus",
-    product: "Midnight Gin — Single Botanical Edition",
-    bid: 620,
-    bids: 24,
-    bottles: 24,
-    endsAt: now + 2 * HOUR + 12 * 60_000,
-    reserveMet: true,
+    lot: "Lot 023",
+    title: "Macallan 25-Year Sherry Oak",
+    region: "Speyside · Scotland",
+    bid: 8200,
+    reserve: 7500,
+    bidders: 12,
+    endsAt: now + 11 * H,
+    estimate: "$9,500 – $11,000",
+    rating: "AA",
+    img: cellar,
   },
   {
-    curator: "Kidman",
-    product: "Penfolds Grange 2008 — Library Release",
+    lot: "Lot 028",
+    title: "Penfolds Grange 2008 Library",
+    region: "South Australia",
     bid: 3400,
-    bids: 21,
-    bottles: 4,
-    endsAt: now + 30 * HOUR,
-    reserveMet: true,
+    reserve: 3000,
+    bidders: 21,
+    endsAt: now + 30 * H,
+    estimate: "$3,800 – $4,500",
+    rating: "A+",
+    img: heroBottle,
   },
 ];
 
+const upcoming = [
+  { date: "Dec 12", title: "Holiday Library Release", lots: 24 },
+  { date: "Jan 18", title: "Winter Spirits Collection", lots: 18 },
+  { date: "Feb 22", title: "Founder Circle Cellar Liquidation", lots: 11 },
+  { date: "Mar 14", title: "Spring Champagne Vault", lots: 36 },
+];
+
 function AuctionsPage() {
-  const [tick, setTick] = useState(0);
+  const [tab, setTab] = useState<"live" | "upcoming" | "past">("live");
+  const [, setTick] = useState(0);
   useEffect(() => {
     const id = setInterval(() => setTick((t) => t + 1), 1000);
     return () => clearInterval(id);
@@ -91,88 +114,204 @@ function AuctionsPage() {
 
   return (
     <SiteShell>
-      <section className="px-6 pt-32 pb-16">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-accent">
-            <span className="relative flex size-1.5">
-              <span className="absolute inset-0 animate-ping rounded-full bg-accent opacity-60" />
-              <span className="relative size-1.5 rounded-full bg-accent" />
-            </span>
-            Live Now
-          </div>
-          <h1 className="mt-6 max-w-[20ch] font-serif text-5xl italic leading-[1.05] text-balance md:text-6xl">
-            Current Auctions
+      {/* HERO */}
+      <section className="border-b border-border px-6 pt-32 pb-20 lg:px-10">
+        <div className="mx-auto max-w-[1400px]">
+          <span className="mb-6 inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.4em] text-gold">
+            <span className="size-1.5 rounded-full bg-gold pulse-gold" /> Live Auction Floor
+          </span>
+          <h1 className="mb-6 max-w-[18ch] font-display text-5xl text-balance md:text-7xl">
+            The Opus <span className="italic text-gold-gradient">Auction House</span>.
           </h1>
-          <p className="mt-6 max-w-[56ch] text-pretty text-lg text-muted-foreground">
-            Member-only bidding on rare allocations. Bids may be placed directly from your account
-            dashboard.
+          <p className="max-w-[58ch] text-lg text-muted-foreground">
+            Member-only bidding on rare allocations from the world's most respected cellars and
+            distilleries. All lots authenticated, insured, and white-glove shipped.
           </p>
-        </div>
-      </section>
-
-      <section className="px-6 pb-24">
-        <div className="mx-auto max-w-7xl overflow-hidden rounded-md ring-1 ring-border">
-          <div className="hidden grid-cols-12 gap-4 border-b border-border bg-surface/50 px-8 py-4 text-[10px] font-medium uppercase tracking-widest text-muted-foreground md:grid">
-            <div className="col-span-2">Curator</div>
-            <div className="col-span-4">Allocation</div>
-            <div className="col-span-2 text-right">Current Bid</div>
-            <div className="col-span-2 text-right">Time Left</div>
-            <div className="col-span-2 text-right">Status</div>
-          </div>
-          <div className="divide-y divide-border">
-            {initial.map((a) => (
-              <div
-                key={a.product}
-                className="grid grid-cols-2 items-center gap-4 px-8 py-6 transition-colors hover:bg-surface/30 md:grid-cols-12"
+          <div className="mt-10 flex gap-1 rounded-sm border border-border bg-surface/40 p-1 text-[11px] uppercase tracking-[0.25em] w-fit">
+            {(["live", "upcoming", "past"] as const).map((t) => (
+              <button
+                key={t}
+                onClick={() => setTab(t)}
+                className={`rounded-sm px-5 py-2.5 transition ${
+                  tab === t
+                    ? "bg-gold text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
               >
-                <div className="md:col-span-2">
-                  <p className="text-[10px] uppercase tracking-widest text-muted-foreground md:hidden">
-                    Curator
-                  </p>
-                  <p className="font-serif text-lg italic">{a.curator}</p>
-                </div>
-                <div className="md:col-span-4">
-                  <p className="text-sm font-medium">{a.product}</p>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    {a.bottles} bottle{a.bottles === 1 ? "" : "s"} remaining · {a.bids} bids
-                  </p>
-                </div>
-                <div className="md:col-span-2 md:text-right">
-                  <p className="text-[10px] uppercase tracking-widest text-muted-foreground md:hidden">
-                    Bid
-                  </p>
-                  <p className="font-mono text-base text-accent">
-                    ${a.bid.toLocaleString()}
-                  </p>
-                </div>
-                <div className="md:col-span-2 md:text-right">
-                  <p className="text-[10px] uppercase tracking-widest text-muted-foreground md:hidden">
-                    Time Left
-                  </p>
-                  <p
-                    key={tick + a.product}
-                    className="font-mono text-xs tabular-nums text-foreground"
-                  >
-                    {formatRemaining(a.endsAt)}
-                  </p>
-                </div>
-                <div className="flex items-center justify-end md:col-span-2">
-                  <span
-                    className={`rounded-full px-3 py-1 text-[10px] uppercase tracking-widest ring-1 ${
-                      a.reserveMet
-                        ? "bg-accent/10 text-accent ring-accent/30"
-                        : "bg-destructive/10 text-destructive ring-destructive/30"
-                    }`}
-                  >
-                    {a.reserveMet ? "Reserve Met" : "No Reserve"}
-                  </span>
-                </div>
-              </div>
+                {t === "live" ? "Live Now" : t === "upcoming" ? "Upcoming" : "Completed"}
+              </button>
             ))}
           </div>
         </div>
       </section>
+
+      {/* CONTENT */}
+      <section className="px-6 py-20 lg:px-10">
+        <div className="mx-auto max-w-[1400px]">
+          {tab === "live" ? (
+            <div className="grid gap-6 lg:grid-cols-2">
+              {live.map((a) => (
+                <LotCard key={a.lot} a={a} />
+              ))}
+            </div>
+          ) : tab === "upcoming" ? (
+            <UpcomingCalendar />
+          ) : (
+            <PastResults />
+          )}
+        </div>
+      </section>
+
+      {/* NOTIFICATIONS */}
+      <section className="border-t border-border bg-surface/30 px-6 py-24 lg:px-10">
+        <div className="mx-auto grid max-w-[1400px] gap-12 lg:grid-cols-2 lg:items-center">
+          <div>
+            <span className="mb-3 block text-[10px] uppercase tracking-[0.4em] text-gold">
+              Stay informed
+            </span>
+            <h2 className="mb-4 font-display text-4xl md:text-5xl">
+              Never miss <span className="italic">a closing bell</span>.
+            </h2>
+            <p className="text-muted-foreground">
+              Receive SMS and email alerts for auctions you've reserved, allocations you're tracking,
+              and final five-minute closing windows on any lot.
+            </p>
+          </div>
+          <form className="flex flex-col gap-3 sm:flex-row" onSubmit={(e) => e.preventDefault()}>
+            <input
+              type="email"
+              placeholder="member@email.com"
+              className="flex-1 rounded-sm bg-surface px-4 py-3 text-sm ring-1 ring-border focus:outline-none focus:ring-gold/60"
+            />
+            <button className="rounded-sm gold-gradient px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-primary-foreground">
+              Subscribe
+            </button>
+          </form>
+        </div>
+      </section>
     </SiteShell>
+  );
+}
+
+function LotCard({ a }: { a: Auction }) {
+  const met = a.bid >= a.reserve;
+  return (
+    <article className="group overflow-hidden rounded-sm border border-border bg-surface/40 transition hover:border-gold/40">
+      <div className="grid md:grid-cols-[260px_1fr]">
+        <div className="relative overflow-hidden">
+          <img
+            src={a.img}
+            alt={a.title}
+            loading="lazy"
+            className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+          />
+          <span className="absolute top-3 left-3 rounded-sm bg-background/80 px-2 py-1 text-[9px] uppercase tracking-[0.3em] text-gold backdrop-blur">
+            {a.rating}
+          </span>
+        </div>
+        <div className="flex flex-col p-7">
+          <div className="mb-3 flex items-center justify-between text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+            <span>{a.lot}</span>
+            <span className="flex items-center gap-2 text-gold">
+              <span className="size-1 rounded-full bg-gold pulse-gold" />
+              {formatRemaining(a.endsAt)}
+            </span>
+          </div>
+          <h3 className="font-display text-2xl leading-tight">{a.title}</h3>
+          <p className="mt-1 text-xs uppercase tracking-[0.2em] text-muted-foreground">
+            {a.region}
+          </p>
+
+          <div className="my-5 grid grid-cols-2 gap-4 border-y border-border py-4">
+            <div>
+              <div className="text-[9px] uppercase tracking-[0.3em] text-muted-foreground">
+                Current Bid
+              </div>
+              <div className="mt-1 font-display text-2xl text-gold-gradient">
+                ${a.bid.toLocaleString()}
+              </div>
+            </div>
+            <div>
+              <div className="text-[9px] uppercase tracking-[0.3em] text-muted-foreground">
+                Est. Future Value
+              </div>
+              <div className="mt-1 font-mono text-sm">{a.estimate}</div>
+            </div>
+          </div>
+
+          <div className="mb-4 flex items-center justify-between text-xs text-muted-foreground">
+            <span>{a.bidders} bidders</span>
+            <span
+              className={`rounded-sm px-2 py-1 text-[9px] uppercase tracking-[0.3em] ${
+                met ? "bg-gold/15 text-gold" : "bg-burgundy/30 text-foreground"
+              }`}
+            >
+              {met ? "Reserve Met" : "Below Reserve"}
+            </span>
+          </div>
+
+          <div className="mt-auto flex gap-2">
+            <button className="flex-1 rounded-sm gold-gradient px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-primary-foreground">
+              Place Bid
+            </button>
+            <button className="rounded-sm border border-border px-4 py-3 text-[10px] uppercase tracking-[0.3em] text-muted-foreground hover:border-gold hover:text-gold">
+              Watch
+            </button>
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function UpcomingCalendar() {
+  return (
+    <div className="overflow-hidden rounded-sm border border-border">
+      <div className="grid grid-cols-12 border-b border-border bg-surface/60 px-6 py-3 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+        <div className="col-span-2">Date</div>
+        <div className="col-span-6">Auction</div>
+        <div className="col-span-2">Lots</div>
+        <div className="col-span-2 text-right">Action</div>
+      </div>
+      {upcoming.map((u) => (
+        <div
+          key={u.title}
+          className="grid grid-cols-12 items-center border-b border-border bg-background/40 px-6 py-5 text-sm last:border-0 hover:bg-surface/40"
+        >
+          <div className="col-span-2 font-mono text-gold">{u.date}</div>
+          <div className="col-span-6 font-display text-xl">{u.title}</div>
+          <div className="col-span-2 text-muted-foreground">{u.lots}</div>
+          <div className="col-span-2 text-right">
+            <button className="rounded-sm border border-border px-3 py-1.5 text-[10px] uppercase tracking-[0.3em] hover:border-gold hover:text-gold">
+              Reserve
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function PastResults() {
+  const past = [
+    { title: "1990 Krug Clos d'Ambonnay", sold: "$28,400", change: "+18%" },
+    { title: "Yamazaki 55 Year", sold: "$795,000", change: "+42%" },
+    { title: "1945 Romanée-Conti", sold: "$558,000", change: "+27%" },
+    { title: "Macallan Fine & Rare 1926", sold: "$1.2M", change: "+34%" },
+  ];
+  return (
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      {past.map((p) => (
+        <div key={p.title} className="rounded-sm border border-border bg-surface/40 p-6">
+          <div className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+            Hammered
+          </div>
+          <div className="mt-2 font-display text-3xl text-gold-gradient">{p.sold}</div>
+          <h3 className="mt-3 font-serif text-lg">{p.title}</h3>
+          <div className="mt-3 text-xs text-gold">{p.change} vs estimate</div>
+        </div>
+      ))}
+    </div>
   );
 }
 
