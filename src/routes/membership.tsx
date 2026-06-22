@@ -89,14 +89,14 @@ function MembershipPage() {
           </h1>
           <p className="max-w-[58ch] text-pretty text-lg text-muted-foreground">
             Access to Opus is subject to approval. Each application is reviewed individually by the
-            Membership Committee. Submissions are routed to{" "}
-            <a href="mailto:elena@grusdrinks.com" className="text-gold hover:underline">
-              elena@grusdrinks.com
-            </a>
-            .
+            Membership Committee.
           </p>
         </div>
       </section>
+
+      {/* MEMBERS CELLAR — celebrity auction wins */}
+      <MembersCellar />
+
 
       {/* TIERS */}
       <section className="border-y border-border bg-surface/30 px-6 py-24 lg:px-10">
