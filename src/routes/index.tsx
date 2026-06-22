@@ -412,11 +412,11 @@ function HomePage() {
             />
             <div className="absolute inset-x-5 bottom-5 rounded-2xl border border-border bg-background/80 p-5 backdrop-blur-xl">
               <div className="mb-2 flex items-center justify-between text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
-                <span>Your cellar · QMI Winery</span>
-                <span style={{ color: "var(--color-lime)" }}>+$14,820 (30d)</span>
+                <span>QMI Winery · Signature</span>
+                <span style={{ color: "var(--color-lime)" }}>+8.4% (30d)</span>
               </div>
               <div className="font-display text-3xl font-medium tracking-tight">
-                $128,460
+                $2,800
               </div>
               <div className="mt-2 text-[10px] uppercase tracking-[0.3em] text-gold">
                 Visit qmiwinery.com →
