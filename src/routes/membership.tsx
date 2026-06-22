@@ -1,6 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteShell } from "@/components/site-shell";
+import heroBottle from "@/assets/hero-bottle.jpg";
+import cellarDetail from "@/assets/cellar-detail.jpg";
+import influencer1 from "@/assets/influencer-1.jpg";
+import influencer2 from "@/assets/influencer-2.jpg";
+
 
 export const Route = createFileRoute("/membership")({
   head: () => ({
