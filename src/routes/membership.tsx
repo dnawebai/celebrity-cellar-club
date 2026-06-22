@@ -1,11 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteShell } from "@/components/site-shell";
-import heroBottle from "@/assets/hero-bottle.jpg";
-import cellarDetail from "@/assets/cellar-detail.jpg";
-import influencer1 from "@/assets/influencer-1.jpg";
-import influencer2 from "@/assets/influencer-2.jpg";
-
+import celebBranson from "@/assets/celeb-branson.jpg";
+import celebMouton from "@/assets/celeb-mouton.jpg";
+import celebSancerre from "@/assets/celeb-sancerre.jpg";
+import celebPappy from "@/assets/celeb-pappy.jpg";
 
 export const Route = createFileRoute("/membership")({
   head: () => ({
@@ -23,6 +22,7 @@ export const Route = createFileRoute("/membership")({
 
 const tiers = [
   {
+    id: "member",
     name: "Opus Member",
     price: "$199",
     cadence: "/ month",
@@ -37,6 +37,7 @@ const tiers = [
     ],
   },
   {
+    id: "black",
     name: "Opus Black",
     price: "$499",
     cadence: "/ month",
@@ -52,6 +53,7 @@ const tiers = [
     ],
   },
   {
+    id: "founder",
     name: "Founder Circle",
     price: "Invitation",
     cadence: "Only",
@@ -77,9 +79,43 @@ const categories = [
   "Vintage Cognac",
 ];
 
+const celebrityCollection = [
+  {
+    celebrity: "50 Cent",
+    bottle: "Branson Cognac",
+    lot: "Signature Release",
+    price: "$25,000",
+    img: celebBranson,
+  },
+  {
+    celebrity: "Denise Richards",
+    bottle: "1982 Mouton Rothschild",
+    lot: "Lot 100",
+    price: "$175,000",
+    img: celebMouton,
+  },
+  {
+    celebrity: "Taylor Swift",
+    bottle: "Domaine de Terres Blanches Sancerre",
+    lot: "Lot 100",
+    price: "$300,000",
+    img: celebSancerre,
+  },
+  {
+    celebrity: "Aaron Hibell",
+    bottle: "Pappy Van Winkle 23",
+    lot: "Lot 100",
+    price: "$500,000",
+    img: celebPappy,
+  },
+];
+
+type Tier = (typeof tiers)[number];
+
 function MembershipPage() {
   const [submitted, setSubmitted] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
+  const [subscribeTier, setSubscribeTier] = useState<Tier | null>(null);
 
   return (
     <SiteShell>
@@ -99,9 +135,8 @@ function MembershipPage() {
         </div>
       </section>
 
-      {/* MEMBERS CELLAR — celebrity auction wins */}
-      <MembersCellar />
-
+      {/* CELEBRITIES' COLLECTION */}
+      <CelebritiesCollection />
 
       {/* TIERS */}
       <section className="border-y border-border bg-surface/30 px-6 py-24 lg:px-10">
@@ -117,9 +152,7 @@ function MembershipPage() {
               <div
                 key={t.name}
                 className={`relative flex flex-col rounded-sm p-10 ring-1 ${
-                  t.featured
-                    ? "bg-surface ring-gold luxury-shadow"
-                    : "bg-surface/40 ring-border"
+                  t.featured ? "bg-surface ring-gold luxury-shadow" : "bg-surface/40 ring-border"
                 }`}
               >
                 {t.featured ? (
@@ -140,9 +173,22 @@ function MembershipPage() {
                     </li>
                   ))}
                 </ul>
+                <button
+                  onClick={() => setSubscribeTier(t)}
+                  className={`mt-8 w-full rounded-sm py-3.5 text-[11px] font-semibold uppercase tracking-[0.3em] transition ${
+                    t.featured
+                      ? "gold-gradient text-primary-foreground hover:brightness-110"
+                      : "border border-gold/60 text-gold hover:bg-gold/10"
+                  }`}
+                >
+                  {t.id === "founder" ? "Request invitation" : `Subscribe — ${t.price}${t.cadence}`}
+                </button>
               </div>
             ))}
           </div>
+          <p className="mt-8 text-center text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
+            Subscriptions begin with a $99 application fee · ID & U.S. residence verification required
+          </p>
         </div>
       </section>
 
@@ -285,6 +331,10 @@ function MembershipPage() {
           </aside>
         </div>
       </section>
+
+      {subscribeTier ? (
+        <SubscribeModal tier={subscribeTier} onClose={() => setSubscribeTier(null)} />
+      ) : null}
     </SiteShell>
   );
 }
@@ -327,34 +377,7 @@ function Field({
   );
 }
 
-const memberBottles = [
-  {
-    title: "1982 Mouton Rothschild — Won by Denise Richards",
-    lot: "Auction Lot 014",
-    price: "$48,250",
-    img: heroBottle,
-  },
-  {
-    title: "Yamazaki 55-Year — Won by 50 Cent",
-    lot: "Auction Lot 023",
-    price: "$112,000",
-    img: cellarDetail,
-  },
-  {
-    title: "1996 DRC La Tâche — Won by Taylor Swift",
-    lot: "Auction Lot 017",
-    price: "$31,800",
-    img: influencer1,
-  },
-  {
-    title: "Pappy Van Winkle 23 — Won by Aaron Hibell",
-    lot: "Auction Lot 021",
-    price: "$12,400",
-    img: influencer2,
-  },
-];
-
-function MembersCellar() {
+function CelebritiesCollection() {
   return (
     <section className="border-b border-border px-6 py-24 lg:px-10">
       <div className="mx-auto max-w-[1400px]">
@@ -364,7 +387,7 @@ function MembersCellar() {
               Members Only
             </span>
             <h2 className="font-display text-4xl md:text-5xl">
-              Buy bottles <span className="italic text-gold-gradient">won at auction by celebrities</span>.
+              The <span className="italic text-gold-gradient">Celebrities' Collection</span>.
             </h2>
           </div>
           <p className="max-w-md text-sm text-muted-foreground">
@@ -374,22 +397,25 @@ function MembersCellar() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {memberBottles.map((b) => (
+          {celebrityCollection.map((b) => (
             <article
-              key={b.title}
+              key={b.celebrity}
               className="group overflow-hidden rounded-sm border border-border bg-surface/40 transition hover:border-gold/50"
             >
               <img
                 src={b.img}
-                alt={b.title}
+                alt={`${b.bottle} — released by ${b.celebrity}`}
                 loading="lazy"
+                width={800}
+                height={1000}
                 className="aspect-[3/4] w-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="p-5">
                 <div className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-                  {b.lot}
+                  {b.lot} · Released by
                 </div>
-                <h3 className="mt-2 font-display text-lg leading-tight">{b.title}</h3>
+                <div className="mt-1 font-display text-lg text-gold-gradient">{b.celebrity}</div>
+                <h3 className="mt-2 font-display text-lg leading-tight">{b.bottle}</h3>
                 <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
                   <span className="font-display text-xl text-gold-gradient">{b.price}</span>
                   <button className="rounded-sm gold-gradient px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-primary-foreground">
@@ -405,3 +431,140 @@ function MembersCellar() {
   );
 }
 
+function SubscribeModal({ tier, onClose }: { tier: Tier; onClose: () => void }) {
+  const [step, setStep] = useState<"form" | "review">("form");
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-background/85 p-4 backdrop-blur-md"
+      onClick={onClose}
+    >
+      <div
+        className="relative max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-sm border border-gold/40 bg-background p-8 luxury-shadow md:p-10"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          className="absolute right-5 top-5 text-2xl text-muted-foreground hover:text-foreground"
+          aria-label="Close"
+        >
+          ×
+        </button>
+
+        <div className="mb-2 text-[10px] uppercase tracking-[0.4em] text-gold">
+          Subscribe · {tier.name}
+        </div>
+        <h3 className="mb-2 font-display text-3xl md:text-4xl">
+          Become a member.
+        </h3>
+        <p className="mb-6 text-sm text-muted-foreground">
+          Subscription <span className="text-foreground">{tier.price}{tier.cadence}</span>. A
+          one-time <span className="text-foreground">$99 application fee</span> is charged today
+          so the Membership Committee can verify your ID and U.S. residence per applicable U.S.
+          regulations. Subscription billing begins only after approval.
+        </p>
+
+        {step === "form" ? (
+          <form
+            className="space-y-5"
+            onSubmit={(e) => {
+              e.preventDefault();
+              setStep("review");
+            }}
+          >
+            <div className="grid grid-cols-2 gap-4">
+              <Field label="Legal First Name" name="firstName" required />
+              <Field label="Legal Last Name" name="lastName" required />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <Field label="Email" type="email" name="email" required />
+              <Field label="Phone" type="tel" name="phone" required />
+            </div>
+            <Field label="Date of Birth" type="date" name="dob" required />
+            <Field label="Street Address (U.S.)" name="address" required />
+            <div className="grid grid-cols-3 gap-4">
+              <Field label="City" name="city" required />
+              <Field label="State" name="state" placeholder="CA" required />
+              <Field label="ZIP" name="zip" required />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <Field label="Government ID Number" name="idNumber" placeholder="Driver's license / Passport" required />
+              <Field label="ID Issuing State / Country" name="idIssuer" required />
+            </div>
+
+            <div className="rounded-sm border border-gold/30 bg-surface/40 p-4 text-xs text-muted-foreground">
+              <p className="mb-2 text-[10px] uppercase tracking-[0.3em] text-gold">
+                Compliance · U.S. residents only
+              </p>
+              You must be 21+ and a legal U.S. resident. Opus will verify your identity, age, and
+              U.S. residency against federal and state rules governing the sale of alcoholic
+              beverages before any subscription begins.
+            </div>
+
+            <div className="space-y-3 text-xs text-muted-foreground">
+              <label className="flex items-start gap-3">
+                <input type="checkbox" required className="mt-0.5 size-4 accent-[color:var(--color-gold)]" />
+                <span>I confirm I am 21 years of age or older and a legal resident of the United States.</span>
+              </label>
+              <label className="flex items-start gap-3">
+                <input type="checkbox" required className="mt-0.5 size-4 accent-[color:var(--color-gold)]" />
+                <span>
+                  I authorize the non-refundable $99 USD application fee and consent to ID,
+                  age, and U.S. residence verification.
+                </span>
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full rounded-sm gold-gradient py-4 text-xs font-semibold uppercase tracking-[0.3em] text-primary-foreground transition hover:brightness-110"
+            >
+              Continue to payment — $99
+            </button>
+          </form>
+        ) : (
+          <div className="space-y-6">
+            <div className="rounded-sm border border-border bg-surface/40 p-5 text-sm">
+              <div className="flex items-center justify-between border-b border-border pb-3 text-muted-foreground">
+                <span>Application fee (today)</span>
+                <span className="text-foreground">$99.00</span>
+              </div>
+              <div className="flex items-center justify-between pt-3 text-muted-foreground">
+                <span>{tier.name} · billed after approval</span>
+                <span className="text-foreground">{tier.price}{tier.cadence}</span>
+              </div>
+            </div>
+
+            <div className="rounded-sm border border-gold/40 bg-surface p-5 text-sm">
+              <p className="mb-2 text-[10px] uppercase tracking-[0.3em] text-gold">Secure checkout · Stripe</p>
+              <p className="text-muted-foreground">
+                Payments are processed by Stripe. Once Stripe is enabled on this project, this
+                step will hand off to a Stripe Checkout session for the $99 verification fee and
+                set up the {tier.name} subscription on approval.
+              </p>
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => setStep("form")}
+                className="flex-1 rounded-sm border border-border py-3.5 text-[11px] font-semibold uppercase tracking-[0.3em] text-muted-foreground hover:text-foreground"
+              >
+                Back
+              </button>
+              <button
+                onClick={() => {
+                  alert(
+                    "Stripe is not enabled yet. Ask Lovable to enable Stripe payments to complete checkout.",
+                  );
+                }}
+                className="flex-1 rounded-sm gold-gradient py-3.5 text-[11px] font-semibold uppercase tracking-[0.3em] text-primary-foreground hover:brightness-110"
+              >
+                Pay $99 with Stripe
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
