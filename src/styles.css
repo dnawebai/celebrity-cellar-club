@@ -5,16 +5,17 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * OPUS DRINKS — Luxury Auction House
- * Black · Ivory · Gold · Deep Burgundy
+ * OPUS DRINKS — Next-Gen Luxury
+ * Built for 21–35: collectors, founders, creators.
+ * Ink black canvas · Bone · Electric Lime · Hot Magenta · Oxblood
  */
 
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
+  --radius-sm: calc(var(--radius) - 6px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-xl: calc(var(--radius) + 8px);
+  --radius-2xl: calc(var(--radius) + 16px);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -36,63 +37,67 @@
   --color-burgundy-foreground: var(--burgundy-foreground);
   --color-ivory: var(--ivory);
   --color-gold: var(--gold);
+  --color-magenta: var(--magenta);
+  --color-lime: var(--lime);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  --font-serif: "Cormorant Garamond", "EB Garamond", ui-serif, Georgia, serif;
-  --font-display: "Cormorant Garamond", ui-serif, Georgia, serif;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-serif: "Fraunces", "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Geist", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", "JetBrains Mono", ui-monospace, monospace;
 }
 
 :root {
-  --radius: 0.25rem;
+  --radius: 1rem;
 
-  /* True black canvas */
-  --background: oklch(0.09 0.003 60);
-  --foreground: oklch(0.95 0.012 85);
+  /* Deep ink canvas with a touch of warmth */
+  --background: oklch(0.10 0.012 280);
+  --foreground: oklch(0.97 0.008 90);
 
-  /* Ivory + surfaces */
-  --ivory: oklch(0.95 0.012 85);
-  --surface: oklch(0.12 0.004 60);
-  --surface-2: oklch(0.15 0.005 60);
+  /* Bone + glassy surfaces */
+  --ivory: oklch(0.97 0.008 90);
+  --surface: oklch(0.14 0.014 280);
+  --surface-2: oklch(0.18 0.018 280);
 
-  --card: oklch(0.12 0.004 60);
-  --card-foreground: oklch(0.95 0.012 85);
-  --popover: oklch(0.11 0.004 60);
-  --popover-foreground: oklch(0.95 0.012 85);
+  --card: oklch(0.14 0.014 280);
+  --card-foreground: oklch(0.97 0.008 90);
+  --popover: oklch(0.12 0.014 280);
+  --popover-foreground: oklch(0.97 0.008 90);
 
-  /* Gold — primary accent */
-  --gold: oklch(0.80 0.135 88);
-  --primary: oklch(0.80 0.135 88);
-  --primary-foreground: oklch(0.09 0.003 60);
+  /* Electric Lime — primary accent (the new "gold") */
+  --lime: oklch(0.92 0.21 125);
+  --gold: oklch(0.92 0.21 125);
+  --primary: oklch(0.92 0.21 125);
+  --primary-foreground: oklch(0.10 0.012 280);
 
-  --accent: oklch(0.80 0.135 88);
-  --accent-foreground: oklch(0.09 0.003 60);
+  --accent: oklch(0.92 0.21 125);
+  --accent-foreground: oklch(0.10 0.012 280);
 
-  /* Deep burgundy — secondary accent */
-  --burgundy: oklch(0.34 0.12 22);
-  --burgundy-foreground: oklch(0.95 0.012 85);
-  --secondary: oklch(0.34 0.12 22);
-  --secondary-foreground: oklch(0.95 0.012 85);
+  /* Hot magenta — secondary accent */
+  --magenta: oklch(0.68 0.27 350);
+  --burgundy: oklch(0.42 0.18 18);
+  --burgundy-foreground: oklch(0.97 0.008 90);
+  --secondary: oklch(0.68 0.27 350);
+  --secondary-foreground: oklch(0.97 0.008 90);
 
-  --muted: oklch(0.18 0.005 60);
-  --muted-foreground: oklch(0.65 0.012 75);
+  --muted: oklch(0.20 0.012 280);
+  --muted-foreground: oklch(0.70 0.014 90);
 
-  --destructive: oklch(0.55 0.18 25);
+  --destructive: oklch(0.62 0.22 25);
   --destructive-foreground: oklch(0.98 0.005 80);
 
-  --border: oklch(1 0 0 / 8%);
-  --input: oklch(1 0 0 / 10%);
-  --ring: oklch(0.80 0.135 88 / 45%);
+  --border: oklch(1 0 0 / 9%);
+  --input: oklch(1 0 0 / 11%);
+  --ring: oklch(0.92 0.21 125 / 55%);
 }
 
 .dark {
-  --background: oklch(0.09 0.003 60);
-  --foreground: oklch(0.95 0.012 85);
+  --background: oklch(0.10 0.012 280);
+  --foreground: oklch(0.97 0.008 90);
 }
 
 @layer base {
@@ -113,17 +118,19 @@
   }
 
   ::selection {
-    background-color: color-mix(in oklab, var(--color-gold) 35%, transparent);
-    color: var(--color-foreground);
+    background-color: var(--color-lime);
+    color: var(--color-background);
   }
 
   .font-serif {
     font-family: var(--font-serif);
-    font-feature-settings: "liga", "dlig";
+    font-feature-settings: "liga", "dlig", "ss01";
+    font-variation-settings: "SOFT" 50, "WONK" 0;
   }
   .font-display {
     font-family: var(--font-display);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.035em;
+    font-feature-settings: "ss01";
   }
   .font-mono {
     font-family: var(--font-mono);
@@ -131,11 +138,24 @@
 }
 
 @layer utilities {
+  /* Lime gradient replaces gold — same class names so all routes inherit */
   .gold-gradient {
-    background: linear-gradient(135deg, oklch(0.88 0.13 90), oklch(0.72 0.14 75));
+    background: linear-gradient(135deg, oklch(0.94 0.22 130), oklch(0.86 0.22 115));
+    color: var(--color-background);
   }
   .text-gold-gradient {
-    background: linear-gradient(135deg, oklch(0.90 0.13 92), oklch(0.70 0.14 70));
+    background: linear-gradient(135deg, oklch(0.96 0.22 130), oklch(0.82 0.22 115));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-gold { color: var(--color-lime); }
+  .bg-gold { background-color: var(--color-lime); }
+  .magenta-gradient {
+    background: linear-gradient(135deg, oklch(0.72 0.28 350), oklch(0.55 0.25 330));
+  }
+  .text-magenta-gradient {
+    background: linear-gradient(135deg, oklch(0.78 0.28 350), oklch(0.55 0.25 330));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -144,25 +164,72 @@
     border-color: oklch(1 0 0 / 12%);
   }
   .ring-gold {
-    --tw-ring-color: oklch(0.80 0.135 88 / 40%);
+    --tw-ring-color: oklch(0.92 0.21 125 / 50%);
   }
   .luxury-shadow {
-    box-shadow: 0 30px 80px -20px oklch(0 0 0 / 0.8), 0 0 0 1px oklch(1 0 0 / 0.05);
+    box-shadow:
+      0 30px 80px -20px oklch(0 0 0 / 0.7),
+      0 0 0 1px oklch(1 0 0 / 0.06),
+      inset 0 1px 0 oklch(1 0 0 / 0.04);
+  }
+  .lime-glow {
+    box-shadow:
+      0 0 40px -6px oklch(0.92 0.21 125 / 0.55),
+      0 0 0 1px oklch(0.92 0.21 125 / 0.4);
   }
   .grain {
-    background-image: radial-gradient(oklch(1 0 0 / 0.015) 1px, transparent 1px);
+    background-image: radial-gradient(oklch(1 0 0 / 0.018) 1px, transparent 1px);
     background-size: 3px 3px;
+  }
+  .noise::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(oklch(1 0 0 / 0.025) 1px, transparent 1px);
+    background-size: 2px 2px;
+    mix-blend-mode: overlay;
+  }
+
+  /* Pill button base */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    padding: 0.875rem 1.5rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    transition: all 0.25s ease;
   }
 
   @keyframes opus-fade-up {
-    from { opacity: 0; transform: translateY(16px); }
+    from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  .animate-fade-up { animation: opus-fade-up 0.8s ease-out both; }
+  .animate-fade-up { animation: opus-fade-up 0.9s cubic-bezier(.2,.8,.2,1) both; }
 
   @keyframes opus-pulse-gold {
-    0%, 100% { box-shadow: 0 0 0 0 oklch(0.80 0.135 88 / 0.5); }
-    50% { box-shadow: 0 0 0 8px oklch(0.80 0.135 88 / 0); }
+    0%, 100% { box-shadow: 0 0 0 0 oklch(0.92 0.21 125 / 0.55); }
+    50% { box-shadow: 0 0 0 10px oklch(0.92 0.21 125 / 0); }
   }
   .pulse-gold { animation: opus-pulse-gold 2s ease-in-out infinite; }
+
+  @keyframes opus-marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .marquee-track {
+    display: inline-flex;
+    gap: 3rem;
+    white-space: nowrap;
+    animation: opus-marquee 40s linear infinite;
+  }
+
+  @keyframes opus-blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0.3; }
+  }
+  .blink { animation: opus-blink 1.2s steps(1) infinite; }
 }
