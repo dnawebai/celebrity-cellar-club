@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
+import { formatMembers, getActiveMembers } from "@/lib/members";
 import heroBottle from "@/assets/hero-bottle.jpg";
 import qmiBottle from "@/assets/qmi-bottle.jpg";
 import influencer1 from "@/assets/drop-denise.jpg";
@@ -64,7 +65,7 @@ const liveAuctions = [
 ];
 
 const stats = [
-  { value: "24K+", label: "Members" },
+  { value: `${formatMembers(getActiveMembers())}+`, label: "Members" },
   { value: "$184M", label: "Transacted" },
   { value: "320+", label: "Producers" },
   { value: "+12.4%", label: "YTD Return" },
