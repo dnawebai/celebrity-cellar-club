@@ -12,7 +12,7 @@ const navLinks = [
 
 const tickerItems = [
   "◆ Lot 014 · ’82 Mouton Rothschild · $48,250",
-  "◆ Drop 0027 · Selena Gomez Reserve · 100 ed.",
+  "◆ Drop 0027 · Provence Rosé · 100 ed.",
   "◆ Opus 50 Index · +12.4% YTD",
   "◆ Live: Founder Tasting · Napa · Fri 9PM",
   "◆ New Allocation · Domaine Leflaive 2019",

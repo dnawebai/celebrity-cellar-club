@@ -391,8 +391,8 @@ function CelebritiesCollection() {
             </h2>
           </div>
           <p className="max-w-md text-sm text-muted-foreground">
-            A private resale cellar of bottles won and released by our celebrity members.
-            Available exclusively to approved Opus members.
+            A private cellar of premium bottles inspired by beverages publicly associated with
+            cultural icons. Never an endorsement. Available exclusively to approved Opus members.
           </p>
         </div>
 
@@ -404,7 +404,7 @@ function CelebritiesCollection() {
             >
               <img
                 src={b.img}
-                alt={`${b.bottle} — released by ${b.celebrity}`}
+                alt={b.bottle}
                 loading="lazy"
                 width={800}
                 height={1000}
@@ -412,10 +412,13 @@ function CelebritiesCollection() {
               />
               <div className="p-5">
                 <div className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-                  {b.lot} · Released by
+                  {b.lot} · Inspired by
                 </div>
                 <div className="mt-1 font-display text-lg text-gold-gradient">{b.celebrity}</div>
                 <h3 className="mt-2 font-display text-lg leading-tight">{b.bottle}</h3>
+                <p className="mt-1 text-[10px] text-muted-foreground">
+                  Inspired by {b.celebrity}'s reported favorite drink. Not an endorsement.
+                </p>
                 <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
                   <span className="font-display text-xl text-gold-gradient">{b.price}</span>
                   <button className="rounded-sm gold-gradient px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-primary-foreground">
