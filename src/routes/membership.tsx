@@ -68,16 +68,6 @@ const tiers = [
   },
 ];
 
-const categories = [
-  "Bordeaux",
-  "Burgundy",
-  "Champagne",
-  "Napa Cabernet",
-  "Italian Reserve",
-  "Rare Whisky",
-  "Aged Tequila",
-  "Vintage Cognac",
-];
 
 const celebrityCollection = [
   {
@@ -114,7 +104,7 @@ type Tier = (typeof tiers)[number];
 
 function MembershipPage() {
   const [submitted, setSubmitted] = useState(false);
-  const [selected, setSelected] = useState<string[]>([]);
+  
   const [subscribeTier, setSubscribeTier] = useState<Tier | null>(null);
 
   return (
@@ -253,34 +243,6 @@ function MembershipPage() {
                   required
                   placeholder="Tell the Committee what draws you to the club…"
                 />
-                <div>
-                  <span className="mb-3 block text-[10px] font-medium uppercase tracking-[0.3em] text-muted-foreground">
-                    Preferred Beverage Categories
-                  </span>
-                  <div className="flex flex-wrap gap-2">
-                    {categories.map((c) => {
-                      const active = selected.includes(c);
-                      return (
-                        <button
-                          key={c}
-                          type="button"
-                          onClick={() =>
-                            setSelected((s) =>
-                              s.includes(c) ? s.filter((x) => x !== c) : [...s, c],
-                            )
-                          }
-                          className={`rounded-sm border px-3 py-2 text-xs uppercase tracking-[0.2em] transition ${
-                            active
-                              ? "border-gold bg-gold/10 text-gold"
-                              : "border-border text-muted-foreground hover:border-gold/50"
-                          }`}
-                        >
-                          {c}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
 
                 <div className="flex items-start gap-3 rounded-sm border border-border bg-surface/40 p-4 text-xs text-muted-foreground">
                   <input
