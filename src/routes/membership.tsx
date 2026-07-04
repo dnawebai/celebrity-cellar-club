@@ -424,7 +424,7 @@ function CelebritiesCollection() {
                     href="#membership-plans"
                     className="text-[10px] font-semibold uppercase tracking-[0.3em] text-gold-gradient underline-offset-4 hover:underline"
                   >
-                    Information Request
+                    Request Information
                   </a>
                   <a
                     href="#membership-plans"
