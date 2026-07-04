@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
+import { formatMembers, getActiveMembers } from "@/lib/members";
 
 const navLinks = [
   { to: "/auctions", label: "Auctions" },
@@ -127,7 +128,7 @@ export function SiteFooter() {
                 className="size-1.5 rounded-full pulse-gold"
                 style={{ backgroundColor: "var(--color-lime)" }}
               />
-              24,000+ Active Members
+              {formatMembers(getActiveMembers())}+ Active Members
             </div>
             <p className="mb-8 text-sm leading-relaxed text-muted-foreground">
               Built in California. Shipping nationwide. Allocations across Bordeaux,
