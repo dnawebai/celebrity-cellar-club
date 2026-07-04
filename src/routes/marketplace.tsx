@@ -1,57 +1,106 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
-import influencer1 from "@/assets/influencer-1.jpg";
-import influencer2 from "@/assets/influencer-2.jpg";
-import influencer3 from "@/assets/influencer-3.jpg";
-import influencer4 from "@/assets/influencer-4.jpg";
+import napaCab from "@/assets/drop-denise.jpg";
+import champagne from "@/assets/drop-hibell.jpg";
+import mezcal from "@/assets/drop-taylor.jpg";
+import cognac from "@/assets/drop-50cent.jpg";
+import rose from "@/assets/drop-rose.jpg";
+import kombucha from "@/assets/drop-kombucha.jpg";
+import champagneLux from "@/assets/drop-champagne-lux.jpg";
+import cabernet from "@/assets/drop-cabernet.jpg";
 
 export const Route = createFileRoute("/marketplace")({
   head: () => ({
     meta: [
-      { title: "Opus by Influencers — Member Marketplace" },
+      { title: "Opus Marketplace — Beverages Inspired by Icons" },
       {
         name: "description",
         content:
-          "A private marketplace of celebrity-curated wines and spirits, available exclusively to Opus Club members.",
+          "A private marketplace of premium beverages inspired by the reported favorites of cultural icons. Available exclusively to Opus Club members.",
       },
-      { property: "og:title", content: "Opus by Influencers — Member Marketplace" },
+      { property: "og:title", content: "Opus Marketplace — Beverages Inspired by Icons" },
       {
         property: "og:description",
-        content: "Celebrity-curated wines and spirits, exclusive to Opus members.",
+        content: "Premium beverages inspired by cultural icons, exclusive to Opus members.",
       },
     ],
   }),
   component: MarketplacePage,
 });
 
-const profiles = [
+type Profile = {
+  inspiredBy: string;
+  beverage: string;
+  category: string;
+  note: string;
+  img: string;
+  confirmed: boolean;
+};
+
+const profiles: Profile[] = [
   {
-    name: "Denise Richards",
-    series: "Heritage Selection",
-    bio: "Hollywood-born and California-raised; her collection favors old-vine Napa Cabernet and grower Champagne.",
-    bottles: 12,
-    img: influencer1,
+    inspiredBy: "50 Cent",
+    beverage: "Branson Cognac",
+    category: "Cognac · France",
+    note: "Publicly co-founded and championed by the artist across interviews and press releases.",
+    img: cognac,
+    confirmed: true,
   },
   {
-    name: "Aaron Hibell",
-    series: "Modern Classics",
-    bio: "London electronic producer turned vigneron. A rotating list of Provençal rosé and small-batch agave spirits.",
-    bottles: 8,
-    img: influencer2,
+    inspiredBy: "Nicole Kidman",
+    beverage: "Prestige Cuvée Champagne",
+    category: "Champagne · France",
+    note: "Widely reported in interviews as a personal favorite for celebrations.",
+    img: champagneLux,
+    confirmed: true,
   },
   {
-    name: "Taylor Swift",
-    series: "The Vanguard List",
-    bio: "Independent producers and rule-breakers. Natural wines, single-barrel rye, and a midnight gin.",
-    bottles: 6,
-    img: influencer3,
+    inspiredBy: "Pink",
+    beverage: "Two Wolves-Style Cabernet",
+    category: "Red Wine · California",
+    note: "Publicly associated with her family's Two Wolves winery and Cabernet program.",
+    img: cabernet,
+    confirmed: true,
   },
   {
-    name: "50 Cent",
-    series: "Founder's Reserves",
-    bio: "Aged tequila, blanc de blancs, and a personal stash of Bordeaux first-growths.",
-    bottles: 14,
-    img: influencer4,
+    inspiredBy: "Selena Gomez",
+    beverage: "Provence Rosé",
+    category: "Rosé · France",
+    note: "Publicly mentioned rosé as a preferred pour in lifestyle interviews.",
+    img: rose,
+    confirmed: true,
+  },
+  {
+    inspiredBy: "Taylor Swift",
+    beverage: "Artisan Mezcal Reserve",
+    category: "Agave Spirits · Mexico",
+    note: "Mezcal and agave cocktails have been mentioned in press coverage of her celebrations.",
+    img: mezcal,
+    confirmed: true,
+  },
+  {
+    inspiredBy: "Demi Moore",
+    beverage: "Craft Kombucha",
+    category: "Fermented Tea · USA",
+    note: "Publicly sober; kombucha frequently referenced in wellness interviews.",
+    img: kombucha,
+    confirmed: true,
+  },
+  {
+    inspiredBy: "Denise Richards",
+    beverage: "Napa Valley Cabernet",
+    category: "Red Wine · California",
+    note: "Favorite beverage not publicly confirmed — pairing shown as a California classic.",
+    img: napaCab,
+    confirmed: false,
+  },
+  {
+    inspiredBy: "Aaron Hibell",
+    beverage: "Grand Cru Champagne",
+    category: "Champagne · France",
+    note: "Favorite beverage not publicly confirmed.",
+    img: champagne,
+    confirmed: false,
   },
 ];
 
@@ -61,66 +110,61 @@ function MarketplacePage() {
       <section className="px-6 pt-32 pb-16">
         <div className="mx-auto max-w-7xl">
           <span className="mb-6 block font-mono text-[10px] uppercase tracking-[0.4em] text-accent">
-            Members Only · Opus by Influencers
+            Members Only · Inspired by Icons
           </span>
-          <h1 className="max-w-[20ch] font-serif text-5xl italic leading-[1.05] text-balance md:text-7xl">
-            A private marketplace, curated by icons.
+          <h1 className="max-w-[22ch] font-serif text-5xl italic leading-[1.05] text-balance md:text-7xl">
+            The beverages behind the icons.
           </h1>
-          <p className="mt-8 max-w-[56ch] text-pretty text-lg text-muted-foreground">
-            Each month, Opus partners with globally recognized celebrities, athletes, and
-            entrepreneurs to feature beverages they personally enjoy. Bottles are released by
-            allocation at <span className="text-foreground">$200 each</span> and shipped to members
-            in the United States.
+          <p className="mt-8 max-w-[62ch] text-pretty text-lg text-muted-foreground">
+            Each release is inspired by drinks publicly associated with cultural icons — never
+            endorsed, never sponsored. We honor the beverage, not the likeness. Bottles released
+            by allocation from <span className="text-foreground">$200</span>, shipped to members in
+            the United States.
+          </p>
+          <p className="mt-4 max-w-[62ch] text-xs text-muted-foreground/70">
+            Opus Drinks is not affiliated with, endorsed by, or sponsored by any of the individuals
+            referenced. Beverage associations are drawn from publicly available interviews and
+            reputable media coverage.
           </p>
         </div>
       </section>
 
       <section className="px-6 py-16">
-        <div className="mx-auto max-w-7xl space-y-24">
-          {profiles.map((p, i) => (
+        <div className="mx-auto grid max-w-7xl gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {profiles.map((p) => (
             <article
-              key={p.name}
-              className={`grid items-center gap-12 lg:grid-cols-12 ${
-                i % 2 === 1 ? "lg:[&>div:first-child]:order-2" : ""
-              }`}
+              key={p.inspiredBy}
+              className="group flex flex-col overflow-hidden rounded-sm border border-border bg-surface/40 shadow-sm transition hover:border-accent/60 hover:shadow-lg"
             >
-              <div className="lg:col-span-5">
-                <div className="overflow-hidden rounded-sm ring-1 ring-border">
-                  <img
-                    src={p.img}
-                    alt={`${p.name} portrait`}
-                    loading="lazy"
-                    width={800}
-                    height={1200}
-                    className="aspect-[4/5] w-full object-cover"
-                  />
-                </div>
+              <div className="overflow-hidden bg-black">
+                <img
+                  src={p.img}
+                  alt={`${p.beverage} — ${p.category}`}
+                  loading="lazy"
+                  width={800}
+                  height={1000}
+                  className="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
               </div>
-              <div className="lg:col-span-7">
+              <div className="flex flex-1 flex-col p-5">
                 <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-accent">
-                  {p.series}
+                  {p.category}
                 </span>
-                <h2 className="mt-3 font-serif text-4xl italic md:text-5xl">{p.name}</h2>
-                <p className="mt-5 max-w-[52ch] text-pretty text-muted-foreground">{p.bio}</p>
-
-                <div className="mt-8 grid grid-cols-3 gap-6 rounded-md bg-surface p-6 ring-1 ring-border">
-                  <Cell label="Bottles" value={`${p.bottles}`} />
-                  <Cell label="Per Bottle" value="$200" />
-                  <Cell label="Status" value="Live" accent />
-                </div>
-
-                <div className="mt-8 flex flex-wrap gap-4">
+                <h2 className="mt-2 font-serif text-2xl italic leading-tight">{p.beverage}</h2>
+                <p className="mt-3 text-xs text-muted-foreground">
+                  {p.confirmed
+                    ? `Inspired by ${p.inspiredBy}'s reported favorite drink.`
+                    : `Inspired by ${p.inspiredBy}. Favorite beverage not publicly confirmed.`}
+                </p>
+                <p className="mt-2 text-[11px] leading-relaxed text-muted-foreground/70">
+                  {p.note}
+                </p>
+                <div className="mt-auto pt-5">
                   <Link
                     to="/membership"
-                    className="rounded-sm bg-accent px-6 py-3 text-xs font-semibold uppercase tracking-widest text-accent-foreground transition-all hover:brightness-110"
+                    className="block w-full rounded-sm bg-accent px-4 py-2.5 text-center text-[11px] font-semibold uppercase tracking-widest text-accent-foreground transition-all hover:brightness-110"
                   >
-                    Buy Now — $200
-                  </Link>
-                  <Link
-                    to="/membership"
-                    className="rounded-sm px-6 py-3 text-xs font-semibold uppercase tracking-widest ring-1 ring-border transition-all hover:ring-accent/60"
-                  >
-                    Join Auction
+                    Members Only — Join
                   </Link>
                 </div>
               </div>
@@ -130,23 +174,11 @@ function MarketplacePage() {
       </section>
 
       <section className="border-t border-border px-6 py-24 text-center">
-        <p className="font-serif text-2xl italic text-muted-foreground">
-          New collections announced monthly.
+        <p className="mx-auto max-w-[52ch] font-serif text-2xl italic text-muted-foreground">
+          New beverages announced monthly. No celebrity likeness, portrait, signature, or
+          promotional material is used on this platform.
         </p>
       </section>
     </SiteShell>
-  );
-}
-
-function Cell({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
-  return (
-    <div>
-      <p className="text-[10px] uppercase tracking-widest text-muted-foreground">{label}</p>
-      <p
-        className={`mt-2 font-serif text-2xl italic ${accent ? "text-accent" : ""}`}
-      >
-        {value}
-      </p>
-    </div>
   );
 }

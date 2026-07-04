@@ -27,10 +27,34 @@ export const Route = createFileRoute("/")({
 });
 
 const influencers = [
-  { name: "Denise Richards", series: "Heritage Selection", img: influencer1, tag: "Napa Cab" },
-  { name: "Aaron Hibell", series: "Modern Classics", img: influencer2, tag: "Champagne" },
-  { name: "Taylor Swift", series: "The Vanguard", img: influencer3, tag: "Mezcal" },
-  { name: "50 Cent", series: "Founder's Reserve", img: influencer4, tag: "Cognac" },
+  {
+    beverage: "Napa Valley Cabernet",
+    inspiredBy: "Denise Richards",
+    confirmed: false,
+    img: influencer1,
+    tag: "Red Wine",
+  },
+  {
+    beverage: "Grand Cru Champagne",
+    inspiredBy: "Aaron Hibell",
+    confirmed: false,
+    img: influencer2,
+    tag: "Champagne",
+  },
+  {
+    beverage: "Artisan Mezcal",
+    inspiredBy: "Taylor Swift",
+    confirmed: true,
+    img: influencer3,
+    tag: "Agave",
+  },
+  {
+    beverage: "Branson Cognac",
+    inspiredBy: "50 Cent",
+    confirmed: true,
+    img: influencer4,
+    tag: "Cognac",
+  },
 ];
 
 const liveAuctions = [
@@ -322,11 +346,11 @@ function HomePage() {
           </div>
           <div className="grid grid-cols-2 gap-4 md:gap-5 lg:grid-cols-4">
             {influencers.map((i, idx) => (
-              <Link key={i.name} to="/marketplace" className="group">
+              <Link key={i.beverage} to="/marketplace" className="group">
                 <div className="relative overflow-hidden rounded-3xl border border-border transition group-hover:border-foreground/30">
                   <img
                     src={i.img}
-                    alt={i.name}
+                    alt={i.beverage}
                     loading="lazy"
                     width={800}
                     height={1000}
@@ -347,9 +371,13 @@ function HomePage() {
                       Drop {String(idx + 1).padStart(3, "0")} · ed. 100
                     </div>
                     <h3 className="font-display text-2xl font-medium leading-tight tracking-tight">
-                      {i.name}
+                      {i.beverage}
                     </h3>
-                    <p className="mt-0.5 text-xs text-muted-foreground">{i.series}</p>
+                    <p className="mt-0.5 text-xs text-muted-foreground">
+                      {i.confirmed
+                        ? `Inspired by ${i.inspiredBy}'s reported favorite drink`
+                        : `Inspired by ${i.inspiredBy} · not publicly confirmed`}
+                    </p>
                   </div>
                 </div>
               </Link>
