@@ -419,11 +419,19 @@ function CelebritiesCollection() {
                 <p className="mt-1 text-[10px] text-muted-foreground">
                   Inspired by {b.celebrity}'s reported favorite drink. Not an endorsement.
                 </p>
-                <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
-                  <span className="font-display text-xl text-gold-gradient">{b.price}</span>
-                  <button className="rounded-sm gold-gradient px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-primary-foreground">
+                <div className="mt-4 flex items-center justify-between gap-2 border-t border-border pt-4">
+                  <a
+                    href="#membership-plans"
+                    className="text-[10px] font-semibold uppercase tracking-[0.3em] text-gold-gradient underline-offset-4 hover:underline"
+                  >
+                    Information Request
+                  </a>
+                  <a
+                    href="#membership-plans"
+                    className="rounded-sm gold-gradient px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-primary-foreground"
+                  >
                     Buy
-                  </button>
+                  </a>
                 </div>
               </div>
             </article>
