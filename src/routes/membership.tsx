@@ -104,7 +104,7 @@ type Tier = (typeof tiers)[number];
 
 function MembershipPage() {
   const [submitted, setSubmitted] = useState(false);
-  const [selected, setSelected] = useState<string[]>([]);
+  
   const [subscribeTier, setSubscribeTier] = useState<Tier | null>(null);
 
   return (
