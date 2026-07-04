@@ -20,6 +20,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CharityRouteImport } from './routes/charity'
 import { Route as AuctionsRouteImport } from './routes/auctions'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminMembersRouteImport } from './routes/admin.members'
 
 const SponsorsRoute = SponsorsRouteImport.update({
   id: '/sponsors',
@@ -76,6 +77,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminMembersRoute = AdminMembersRouteImport.update({
+  id: '/admin/members',
+  path: '/admin/members',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -89,6 +95,7 @@ export interface FileRoutesByFullPath {
   '/producers': typeof ProducersRoute
   '/sommelier': typeof SommelierRoute
   '/sponsors': typeof SponsorsRoute
+  '/admin/members': typeof AdminMembersRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -102,6 +109,7 @@ export interface FileRoutesByTo {
   '/producers': typeof ProducersRoute
   '/sommelier': typeof SommelierRoute
   '/sponsors': typeof SponsorsRoute
+  '/admin/members': typeof AdminMembersRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -116,6 +124,7 @@ export interface FileRoutesById {
   '/producers': typeof ProducersRoute
   '/sommelier': typeof SommelierRoute
   '/sponsors': typeof SponsorsRoute
+  '/admin/members': typeof AdminMembersRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -131,6 +140,7 @@ export interface FileRouteTypes {
     | '/producers'
     | '/sommelier'
     | '/sponsors'
+    | '/admin/members'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -144,6 +154,7 @@ export interface FileRouteTypes {
     | '/producers'
     | '/sommelier'
     | '/sponsors'
+    | '/admin/members'
   id:
     | '__root__'
     | '/'
@@ -157,6 +168,7 @@ export interface FileRouteTypes {
     | '/producers'
     | '/sommelier'
     | '/sponsors'
+    | '/admin/members'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -171,6 +183,7 @@ export interface RootRouteChildren {
   ProducersRoute: typeof ProducersRoute
   SommelierRoute: typeof SommelierRoute
   SponsorsRoute: typeof SponsorsRoute
+  AdminMembersRoute: typeof AdminMembersRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -252,6 +265,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/members': {
+      id: '/admin/members'
+      path: '/admin/members'
+      fullPath: '/admin/members'
+      preLoaderRoute: typeof AdminMembersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -267,6 +287,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProducersRoute: ProducersRoute,
   SommelierRoute: SommelierRoute,
   SponsorsRoute: SponsorsRoute,
+  AdminMembersRoute: AdminMembersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
