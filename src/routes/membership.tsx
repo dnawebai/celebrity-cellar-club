@@ -68,16 +68,6 @@ const tiers = [
   },
 ];
 
-const categories = [
-  "Bordeaux",
-  "Burgundy",
-  "Champagne",
-  "Napa Cabernet",
-  "Italian Reserve",
-  "Rare Whisky",
-  "Aged Tequila",
-  "Vintage Cognac",
-];
 
 const celebrityCollection = [
   {
