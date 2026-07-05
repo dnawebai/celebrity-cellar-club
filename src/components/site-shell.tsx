@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { formatMembers, getActiveMembers } from "@/lib/members";
+import { formatMembers, getActiveMembers, getNextFridayUtc, WEEKLY_INCREMENT_MIN, WEEKLY_INCREMENT_MAX } from "@/lib/members";
 
 const navLinks = [
   { to: "/auctions", label: "Auctions" },
