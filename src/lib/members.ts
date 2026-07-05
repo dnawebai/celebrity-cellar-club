@@ -53,6 +53,17 @@ export function formatMembers(n: number): string {
   return n.toLocaleString("en-US");
 }
 
+// Next Friday 00:00 UTC strictly after `now`. On Friday itself, returns next week's Friday.
+export function getNextFridayUtc(now: Date = new Date()): Date {
+  const nowUtc = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+  const day = new Date(nowUtc).getUTCDay();
+  const daysUntilFriday = ((5 - day + 7) % 7) || 7;
+  return new Date(nowUtc + daysUntilFriday * 24 * 60 * 60 * 1000);
+}
+
+export const WEEKLY_INCREMENT_MIN = 10;
+export const WEEKLY_INCREMENT_MAX = 23;
+
 // ---- Validation suite for the deterministic increment logic. ----
 export type ValidationResult = { name: string; passed: boolean; detail: string };
 
