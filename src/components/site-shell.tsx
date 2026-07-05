@@ -130,6 +130,18 @@ export function SiteFooter() {
               />
               {formatMembers(getActiveMembers())}+ Active Members
             </div>
+            <p className="mb-6 text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
+              Next update ·{" "}
+              <span className="text-foreground">
+                {getNextFridayUtc().toLocaleDateString("en-US", {
+                  weekday: "long",
+                  month: "short",
+                  day: "numeric",
+                  timeZone: "UTC",
+                })}
+              </span>{" "}
+              · +{WEEKLY_INCREMENT_MIN}–{WEEKLY_INCREMENT_MAX} new members
+            </p>
             <p className="mb-8 text-sm leading-relaxed text-muted-foreground">
               Built in California. Shipping nationwide. Allocations across Bordeaux,
               Burgundy, Napa, Tuscany, Champagne, and rare spirits worldwide.
