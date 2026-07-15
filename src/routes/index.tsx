@@ -76,6 +76,12 @@ const pillars = [
 ];
 
 function HomePage() {
+  const stats = [
+    { value: `${formatMembers(getActiveMembers())}+`, label: "Members" },
+    { value: "$184M", label: "Transacted" },
+    { value: "320+", label: "Producers" },
+    { value: "+12.4%", label: "YTD Return" },
+  ];
   return (
     <SiteShell>
       {/* ============ HERO ============ */}
