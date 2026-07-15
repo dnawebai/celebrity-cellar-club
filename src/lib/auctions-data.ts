@@ -439,8 +439,9 @@ export function formatMoney(n: number, c: Auction["currency"]): string {
 }
 
 export function findAuction(id: string): Auction | undefined {
-  return auctions.find((a) => a.id === id);
+  return getAuctions().find((a) => a.id === id);
 }
+
 
 export function lotsForAuction(auctionId: string): Lot[] {
   return lots.filter((l) => l.auctionId === auctionId);
