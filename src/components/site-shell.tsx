@@ -105,18 +105,13 @@ export function SiteHeader() {
           ) : (
             <>
               <Link
-                to="/auth"
-                className="hidden rounded-full px-4 py-2 text-[12px] font-medium text-muted-foreground transition hover:bg-surface hover:text-foreground md:inline-flex"
-              >
-                Sign in
-              </Link>
-              <Link
                 to="/membership"
                 className="gold-gradient inline-flex items-center gap-1.5 rounded-full px-5 py-2.5 text-[12px] font-semibold tracking-tight transition-all hover:brightness-110"
               >
                 Apply <span className="opacity-60">→</span>
               </Link>
             </>
+
           )}
         </div>
       </div>
