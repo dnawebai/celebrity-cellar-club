@@ -20,7 +20,7 @@ export const Route = createFileRoute("/calendar")({
 });
 
 function CalendarPage() {
-  const sorted = [...auctions].sort(
+  const sorted = [...getAuctions()].sort(
     (a, b) => new Date(a.startsAtUtc).getTime() - new Date(b.startsAtUtc).getTime(),
   );
 
