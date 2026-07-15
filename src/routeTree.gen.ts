@@ -9,30 +9,28 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as WatchlistRouteImport } from './routes/watchlist'
 import { Route as SponsorsRouteImport } from './routes/sponsors'
 import { Route as SommelierRouteImport } from './routes/sommelier'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ProducersRouteImport } from './routes/producers'
 import { Route as MembershipRouteImport } from './routes/membership'
 import { Route as MarketplaceRouteImport } from './routes/marketplace'
 import { Route as InvestmentRouteImport } from './routes/investment'
 import { Route as EventsRouteImport } from './routes/events'
-import { Route as DashboardRouteImport } from './routes/dashboard'
-import { Route as ConciergeRouteImport } from './routes/concierge'
 import { Route as CharityRouteImport } from './routes/charity'
 import { Route as CalendarRouteImport } from './routes/calendar'
-import { Route as BidsRouteImport } from './routes/bids'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuctionsRouteImport } from './routes/auctions'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuctionsAuctionIdRouteImport } from './routes/auctions.$auctionId'
 import { Route as AdminMembersRouteImport } from './routes/admin.members'
+import { Route as AuthenticatedWatchlistRouteImport } from './routes/_authenticated/watchlist'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedConciergeRouteImport } from './routes/_authenticated/concierge'
+import { Route as AuthenticatedBidsRouteImport } from './routes/_authenticated/bids'
 import { Route as AuctionsAuctionIdLotsLotIdRouteImport } from './routes/auctions.$auctionId.lots.$lotId'
 
-const WatchlistRoute = WatchlistRouteImport.update({
-  id: '/watchlist',
-  path: '/watchlist',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SponsorsRoute = SponsorsRouteImport.update({
   id: '/sponsors',
   path: '/sponsors',
@@ -41,6 +39,11 @@ const SponsorsRoute = SponsorsRouteImport.update({
 const SommelierRoute = SommelierRouteImport.update({
   id: '/sommelier',
   path: '/sommelier',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProducersRoute = ProducersRouteImport.update({
@@ -68,16 +71,6 @@ const EventsRoute = EventsRouteImport.update({
   path: '/events',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ConciergeRoute = ConciergeRouteImport.update({
-  id: '/concierge',
-  path: '/concierge',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CharityRoute = CharityRouteImport.update({
   id: '/charity',
   path: '/charity',
@@ -88,14 +81,18 @@ const CalendarRoute = CalendarRouteImport.update({
   path: '/calendar',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BidsRoute = BidsRouteImport.update({
-  id: '/bids',
-  path: '/bids',
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuctionsRoute = AuctionsRouteImport.update({
   id: '/auctions',
   path: '/auctions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -113,6 +110,26 @@ const AdminMembersRoute = AdminMembersRouteImport.update({
   path: '/admin/members',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedWatchlistRoute = AuthenticatedWatchlistRouteImport.update({
+  id: '/watchlist',
+  path: '/watchlist',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedConciergeRoute = AuthenticatedConciergeRouteImport.update({
+  id: '/concierge',
+  path: '/concierge',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedBidsRoute = AuthenticatedBidsRouteImport.update({
+  id: '/bids',
+  path: '/bids',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuctionsAuctionIdLotsLotIdRoute =
   AuctionsAuctionIdLotsLotIdRouteImport.update({
     id: '/lots/$lotId',
@@ -123,19 +140,21 @@ const AuctionsAuctionIdLotsLotIdRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auctions': typeof AuctionsRouteWithChildren
-  '/bids': typeof BidsRoute
+  '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
   '/charity': typeof CharityRoute
-  '/concierge': typeof ConciergeRoute
-  '/dashboard': typeof DashboardRoute
   '/events': typeof EventsRoute
   '/investment': typeof InvestmentRoute
   '/marketplace': typeof MarketplaceRoute
   '/membership': typeof MembershipRoute
   '/producers': typeof ProducersRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/sommelier': typeof SommelierRoute
   '/sponsors': typeof SponsorsRoute
-  '/watchlist': typeof WatchlistRoute
+  '/bids': typeof AuthenticatedBidsRoute
+  '/concierge': typeof AuthenticatedConciergeRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/watchlist': typeof AuthenticatedWatchlistRoute
   '/admin/members': typeof AdminMembersRoute
   '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
   '/auctions/$auctionId/lots/$lotId': typeof AuctionsAuctionIdLotsLotIdRoute
@@ -143,19 +162,21 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auctions': typeof AuctionsRouteWithChildren
-  '/bids': typeof BidsRoute
+  '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
   '/charity': typeof CharityRoute
-  '/concierge': typeof ConciergeRoute
-  '/dashboard': typeof DashboardRoute
   '/events': typeof EventsRoute
   '/investment': typeof InvestmentRoute
   '/marketplace': typeof MarketplaceRoute
   '/membership': typeof MembershipRoute
   '/producers': typeof ProducersRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/sommelier': typeof SommelierRoute
   '/sponsors': typeof SponsorsRoute
-  '/watchlist': typeof WatchlistRoute
+  '/bids': typeof AuthenticatedBidsRoute
+  '/concierge': typeof AuthenticatedConciergeRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/watchlist': typeof AuthenticatedWatchlistRoute
   '/admin/members': typeof AdminMembersRoute
   '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
   '/auctions/$auctionId/lots/$lotId': typeof AuctionsAuctionIdLotsLotIdRoute
@@ -163,20 +184,23 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auctions': typeof AuctionsRouteWithChildren
-  '/bids': typeof BidsRoute
+  '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
   '/charity': typeof CharityRoute
-  '/concierge': typeof ConciergeRoute
-  '/dashboard': typeof DashboardRoute
   '/events': typeof EventsRoute
   '/investment': typeof InvestmentRoute
   '/marketplace': typeof MarketplaceRoute
   '/membership': typeof MembershipRoute
   '/producers': typeof ProducersRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/sommelier': typeof SommelierRoute
   '/sponsors': typeof SponsorsRoute
-  '/watchlist': typeof WatchlistRoute
+  '/_authenticated/bids': typeof AuthenticatedBidsRoute
+  '/_authenticated/concierge': typeof AuthenticatedConciergeRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/watchlist': typeof AuthenticatedWatchlistRoute
   '/admin/members': typeof AdminMembersRoute
   '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
   '/auctions/$auctionId/lots/$lotId': typeof AuctionsAuctionIdLotsLotIdRoute
@@ -186,18 +210,20 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auctions'
-    | '/bids'
+    | '/auth'
     | '/calendar'
     | '/charity'
-    | '/concierge'
-    | '/dashboard'
     | '/events'
     | '/investment'
     | '/marketplace'
     | '/membership'
     | '/producers'
+    | '/reset-password'
     | '/sommelier'
     | '/sponsors'
+    | '/bids'
+    | '/concierge'
+    | '/dashboard'
     | '/watchlist'
     | '/admin/members'
     | '/auctions/$auctionId'
@@ -206,18 +232,20 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auctions'
-    | '/bids'
+    | '/auth'
     | '/calendar'
     | '/charity'
-    | '/concierge'
-    | '/dashboard'
     | '/events'
     | '/investment'
     | '/marketplace'
     | '/membership'
     | '/producers'
+    | '/reset-password'
     | '/sommelier'
     | '/sponsors'
+    | '/bids'
+    | '/concierge'
+    | '/dashboard'
     | '/watchlist'
     | '/admin/members'
     | '/auctions/$auctionId'
@@ -225,20 +253,23 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/auctions'
-    | '/bids'
+    | '/auth'
     | '/calendar'
     | '/charity'
-    | '/concierge'
-    | '/dashboard'
     | '/events'
     | '/investment'
     | '/marketplace'
     | '/membership'
     | '/producers'
+    | '/reset-password'
     | '/sommelier'
     | '/sponsors'
-    | '/watchlist'
+    | '/_authenticated/bids'
+    | '/_authenticated/concierge'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/watchlist'
     | '/admin/members'
     | '/auctions/$auctionId'
     | '/auctions/$auctionId/lots/$lotId'
@@ -246,32 +277,24 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuctionsRoute: typeof AuctionsRouteWithChildren
-  BidsRoute: typeof BidsRoute
+  AuthRoute: typeof AuthRoute
   CalendarRoute: typeof CalendarRoute
   CharityRoute: typeof CharityRoute
-  ConciergeRoute: typeof ConciergeRoute
-  DashboardRoute: typeof DashboardRoute
   EventsRoute: typeof EventsRoute
   InvestmentRoute: typeof InvestmentRoute
   MarketplaceRoute: typeof MarketplaceRoute
   MembershipRoute: typeof MembershipRoute
   ProducersRoute: typeof ProducersRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SommelierRoute: typeof SommelierRoute
   SponsorsRoute: typeof SponsorsRoute
-  WatchlistRoute: typeof WatchlistRoute
   AdminMembersRoute: typeof AdminMembersRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/watchlist': {
-      id: '/watchlist'
-      path: '/watchlist'
-      fullPath: '/watchlist'
-      preLoaderRoute: typeof WatchlistRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/sponsors': {
       id: '/sponsors'
       path: '/sponsors'
@@ -284,6 +307,13 @@ declare module '@tanstack/react-router' {
       path: '/sommelier'
       fullPath: '/sommelier'
       preLoaderRoute: typeof SommelierRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/producers': {
@@ -321,20 +351,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/concierge': {
-      id: '/concierge'
-      path: '/concierge'
-      fullPath: '/concierge'
-      preLoaderRoute: typeof ConciergeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/charity': {
       id: '/charity'
       path: '/charity'
@@ -349,11 +365,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CalendarRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/bids': {
-      id: '/bids'
-      path: '/bids'
-      fullPath: '/bids'
-      preLoaderRoute: typeof BidsRouteImport
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auctions': {
@@ -361,6 +377,13 @@ declare module '@tanstack/react-router' {
       path: '/auctions'
       fullPath: '/auctions'
       preLoaderRoute: typeof AuctionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -384,6 +407,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminMembersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/watchlist': {
+      id: '/_authenticated/watchlist'
+      path: '/watchlist'
+      fullPath: '/watchlist'
+      preLoaderRoute: typeof AuthenticatedWatchlistRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/concierge': {
+      id: '/_authenticated/concierge'
+      path: '/concierge'
+      fullPath: '/concierge'
+      preLoaderRoute: typeof AuthenticatedConciergeRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/bids': {
+      id: '/_authenticated/bids'
+      path: '/bids'
+      fullPath: '/bids'
+      preLoaderRoute: typeof AuthenticatedBidsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/auctions/$auctionId/lots/$lotId': {
       id: '/auctions/$auctionId/lots/$lotId'
       path: '/lots/$lotId'
@@ -393,6 +444,23 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedBidsRoute: typeof AuthenticatedBidsRoute
+  AuthenticatedConciergeRoute: typeof AuthenticatedConciergeRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedWatchlistRoute: typeof AuthenticatedWatchlistRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedBidsRoute: AuthenticatedBidsRoute,
+  AuthenticatedConciergeRoute: AuthenticatedConciergeRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedWatchlistRoute: AuthenticatedWatchlistRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 interface AuctionsAuctionIdRouteChildren {
   AuctionsAuctionIdLotsLotIdRoute: typeof AuctionsAuctionIdLotsLotIdRoute
@@ -419,20 +487,19 @@ const AuctionsRouteWithChildren = AuctionsRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuctionsRoute: AuctionsRouteWithChildren,
-  BidsRoute: BidsRoute,
+  AuthRoute: AuthRoute,
   CalendarRoute: CalendarRoute,
   CharityRoute: CharityRoute,
-  ConciergeRoute: ConciergeRoute,
-  DashboardRoute: DashboardRoute,
   EventsRoute: EventsRoute,
   InvestmentRoute: InvestmentRoute,
   MarketplaceRoute: MarketplaceRoute,
   MembershipRoute: MembershipRoute,
   ProducersRoute: ProducersRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SommelierRoute: SommelierRoute,
   SponsorsRoute: SponsorsRoute,
-  WatchlistRoute: WatchlistRoute,
   AdminMembersRoute: AdminMembersRoute,
 }
 export const routeTree = rootRouteImport

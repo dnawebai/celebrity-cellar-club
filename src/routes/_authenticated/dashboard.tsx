@@ -3,7 +3,7 @@ import { SiteShell } from "@/components/site-shell";
 import heroBottle from "@/assets/hero-bottle.jpg";
 import cellar from "@/assets/cellar-detail.jpg";
 
-export const Route = createFileRoute("/dashboard")({
+export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
     meta: [
       { title: "Member Dashboard — Opus Drinks" },

@@ -1,54 +1,85 @@
-# Opus Drinks — Auctions Marketplace Rebuild
+# Phase 2 — Real Auth + $99 Membership on Lovable Cloud
 
-This plan rebuilds the `/auctions` experience into a proper multi-house aggregator (Sotheby's Wine, Christie's, Acker, Iron Gate, +future partners) fronted by the Opus Drinks brand, gated behind $99 membership, with two clearly-labeled bidding modes and honest demo-data disclosures.
+Lovable Cloud is enabled. This plan turns the current demo interface into a live membership platform: real accounts, a $99 payment, member-only gating, and an admin surface. Auction house partner feeds stay out of scope (Phase 3).
 
-Given the massive spec, I'll deliver **Phase 1 (frontend + demo data)** now, structured so Phases 2–4 (real feeds, integrated bidding, payments/portfolio) can slot in without redesign. Backend (Supabase, Stripe, Realtime, admin console) is called out but NOT built this turn — we'll enable Lovable Cloud and layer it in follow-up turns to keep this change reviewable.
+## What we're building
 
-## Scope this turn
+1. **Accounts & sign-in** — Email/password plus Sign in with Google.
+2. **Profile & compliance record** — Name, DOB (21+ check), country/state, ID doc reference, subscription status.
+3. **$99 membership payment** via Lovable's built-in Stripe integration (one-time, monthly, or annual — configurable).
+4. **Member gating** — the blur/paywall on lots, watchlist, bids, concierge only lifts for `status = active`.
+5. **Admin console** — restricted to `admin` role: view members, mark verifications, comp memberships, adjust baseline counter.
 
-**Frontend rebuild of the auction surface** — no backend wiring, no fabricated live data, no fake bid buttons.
+## Data model (migrations)
 
-### Files touched
-- `src/routes/auctions.tsx` — full rewrite: aggregator marketplace (hero, filters, live/upcoming/closing-soon/past tabs, auction cards showing "via partner" internally-typed but publicly Opus-branded, demo-data banner).
-- `src/routes/auctions.$auctionId.tsx` — new auction detail page (cover, dates, lots grid, register CTA gated to membership, calendar export stub, concierge CTA).
-- `src/routes/auctions.$auctionId.lots.$lotId.tsx` — new lot detail page (all spec fields present as sections, only populated when data exists; Bidding Panel component picks Mode 1 vs Mode 2 from `auction.biddingMode`).
-- `src/routes/calendar.tsx` — new auction calendar (month/week/list views, ICS export stub).
-- `src/routes/watchlist.tsx` — new (member-gated; empty-state + saved-search cards).
-- `src/routes/bids.tsx` — new "My Bids" with tabs (Active/Highest/Outbid/Won/Lost/Pending/Completed) — empty-state until backend.
-- `src/routes/concierge.tsx` — new Opus Concierge request page (form, request-type picker, case tracking placeholder).
-- `src/lib/auctions-data.ts` — new: typed demo dataset (`AuctionHouse`, `Auction`, `Lot`, `BiddingMode`), with `sourceId` retained internally per spec.
-- `src/components/site-shell.tsx` — extend nav (Live, Upcoming, Calendar, Wine Lots, Spirits, My Bids, Watchlist, Concierge, Membership); collapse into a grouped mega-menu on desktop, drawer on mobile.
-- `src/components/demo-data-banner.tsx` — new: persistent, dismissible "Demonstration data — no live auction feeds connected" strip, per spec's "never represent demo data as current auction data".
-- `src/components/bidding-panel.tsx` — new: renders Mode 1 (Bid / Max Bid / two-step confirm) vs Mode 2 (Watchlist / Request Concierge Bid / Open Partner Site) based on `auction.biddingMode`. Never renders a live-bid button when mode is external.
-- `src/components/member-gate.tsx` — new: wraps deep content, blurs + shows "Join Opus Drinks — $99" CTA for non-members. Uses simple client-side flag until Cloud/auth lands.
+```text
+profiles            one row per auth user
+  id (uuid, = auth.users.id)
+  full_name, display_name
+  date_of_birth (date, must be ≥ 21)
+  country, region
+  created_at, updated_at
 
-### Design
-- Deep forest green background (`--background`), warm ivory surfaces, refined gold accents. Update `src/styles.css` tokens.
-- Cormorant / Fraunces serif headings retained; Geist sans for data.
-- Large editorial photography, generous spacing, subtle motion (fade-up on scroll, no flashy transitions).
+user_roles          separate table (prevents privilege escalation)
+  user_id, role enum('admin','member','applicant')
+  has_role() SECURITY DEFINER helper for RLS
 
-### Bidding modes (visible, honest)
-- Each auction has `biddingMode: "integrated" | "external"`. All demo auctions ship as `"external"` this turn — no fake live bid buttons anywhere. When Phase 3 lands, admin flips the flag per partner.
-- External mode shows: Watchlist · Request Concierge Bid · Open Auction Page (opens partner URL in new tab).
-- Integrated mode UI is built but disabled behind a `FEATURE_INTEGRATED_BIDDING = false` flag until a real API is wired.
+memberships         current subscription state
+  user_id (PK), tier, status ('pending' | 'active' | 'past_due' | 'cancelled')
+  billing_cycle ('one_time' | 'monthly' | 'annual')
+  price_cents (default 9900)
+  started_at, current_period_end, cancelled_at
+  stripe_customer_id, stripe_subscription_id
 
-### Compliance copy
-- Footer legal notice from spec verbatim.
-- 21+ / geographic-restriction reminder on membership CTA.
-- No third-party house logos on public pages; internal `sourceId` only.
+id_verifications    KYC/age docs
+  id, user_id, doc_type, doc_ref, status ('submitted'|'approved'|'rejected'), reviewed_by, reviewed_at
 
-## Explicitly deferred (call out to user, propose next turns)
+auction_source_log  compliance audit — every rendered auction/lot logs its
+  internal source house (Sotheby's, Christie's, Acker, Iron Gate) even though
+  the public label stays "Authorised Auction Partner".
+```
 
-1. **Lovable Cloud (Supabase)** — required for members, memberships, bids, watchlists, alerts, orders, audit logs, RLS, roles. Next turn.
-2. **Stripe** — $99 membership (configurable one-time / monthly / annual). Turn after Cloud.
-3. **Partner feed ingestion** — Sotheby's/Christie's/Acker/Iron Gate. Requires signed API/feed agreements; will scaffold `partner_integrations` table + admin config UI only, no scraping.
-4. **Realtime bid updates, KYC/AML, Resend/Twilio, PostHog, Sentry** — later phases.
-5. **Admin dashboard** — after Cloud + roles.
+All tables get RLS + GRANTs. Users see only their own rows; admins see all via `has_role(auth.uid(),'admin')`.
+
+## Auth & routing
+
+- New `/auth` route: sign in / sign up (email + Google), password reset, `/reset-password` page.
+- Move `/watchlist`, `/bids`, `/concierge`, `/dashboard`, and lot detail pages under `_authenticated/`.
+- Public routes (`/`, `/marketplace`, `/auctions`, `/auctions/$id`, `/membership`) stay public but show inline "Sign in to bid / save".
+- Header shows Sign in when logged out, avatar menu + Sign out when logged in.
+
+## $99 payment flow
+
+- Lovable Stripe integration (no BYO keys). One product with three prices: one-time $99, monthly $99, annual $99 — user picks on the membership page.
+- `POST /api/public/hooks/stripe` webhook (signature-verified) flips `memberships.status` to `active` on successful checkout, `past_due`/`cancelled` on downstream events.
+- Success returns to `/dashboard` with a "Welcome" state; failure returns to `/membership` with an error.
+
+## Member counter
+
+Replace the deterministic Friday counter with `SELECT count(*) FROM memberships WHERE status='active'` fetched via a public server fn, cached 60s. Baseline offset stays configurable from admin.
+
+## Admin console (`/_authenticated/_admin`)
+
+- `has_role='admin'` layout gate.
+- Members list (search, filter by status), ID verification queue (approve/reject), baseline counter, source-log audit view.
+
+## Out of scope this phase
+
+- Real auction house API integrations (still demo data, banner stays).
+- Integrated in-platform bidding (`FEATURE_INTEGRATED_BIDDING` stays off).
+- Producer portal and AI Sommelier backends (UI only for now).
 
 ## Technical notes
-- All routes SSR-safe; member-only depth is client-gated for now (public shell renders teasers with head/meta for SEO on marketplace and category pages).
-- Times stored/authored as UTC ISO strings in demo data; displayed in browser locale via `Intl.DateTimeFormat`.
-- `head()` per route with unique titles/descriptions for SEO pages (fine wine, Bordeaux, Burgundy, Champagne, whisky) — added as filter deep-links on the marketplace, not separate route explosion, to keep this turn scoped.
 
-## Confirm to proceed
-Reply **"go"** to build Phase 1 as above, or tell me which pieces to cut/add. If you want me to enable Lovable Cloud and start Phase 2 (auth + membership schema) in the same turn, say **"go + cloud"**.
+- All privileged writes go through `createServerFn` with `requireSupabaseAuth`; admin ops verify role via `has_role` before loading `supabaseAdmin`.
+- Stripe webhook lives at `src/routes/api/public/hooks/stripe.ts`, HMAC verified against `STRIPE_WEBHOOK_SECRET`.
+- Root route wires `onAuthStateChange` → `router.invalidate()`.
+- Sign-out clears query cache and navigates to `/auth`.
+
+## Questions before I start
+
+1. **Billing cycle default** — should the membership page default to **one-time $99**, **monthly $99**, or show all three side-by-side and let the user pick?
+2. **ID verification** — do you want a real provider (Stripe Identity / Persona) wired now, or a manual admin-review queue for launch (file upload → admin approves)?
+3. **Google sign-in** — OK to enable alongside email/password? (It's the default.)
+
+Reply with answers (or "your call, go") and I'll build it.

@@ -1,6 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { SiteShell } from "@/components/site-shell";
+import { useAuth } from "@/hooks/use-auth";
+import { saveProfile, submitVerification, selectBillingAndActivate } from "@/lib/membership.functions";
 import celebBranson from "@/assets/celeb-branson.jpg";
 import celebMouton from "@/assets/celeb-mouton.jpg";
 import celebSancerre from "@/assets/celeb-sancerre.jpg";
@@ -308,6 +312,7 @@ function Field({
   textarea,
   required,
   placeholder,
+  onChange,
 }: {
   label: string;
   name: string;
@@ -315,6 +320,7 @@ function Field({
   textarea?: boolean;
   required?: boolean;
   placeholder?: string;
+  onChange?: (value: string) => void;
 }) {
   const base =
     "w-full rounded-sm bg-surface px-4 py-3 text-sm text-foreground ring-1 ring-border placeholder:text-muted-foreground/50 transition focus:outline-none focus:ring-gold/60";
@@ -325,7 +331,14 @@ function Field({
         {required && <span className="ml-1 text-gold">*</span>}
       </span>
       {textarea ? (
-        <textarea name={name} rows={4} placeholder={placeholder} className={base} required={required} />
+        <textarea
+          name={name}
+          rows={4}
+          placeholder={placeholder}
+          className={base}
+          required={required}
+          onChange={(e) => onChange?.(e.target.value)}
+        />
       ) : (
         <input
           type={type}
@@ -333,6 +346,7 @@ function Field({
           required={required}
           placeholder={placeholder}
           className={base}
+          onChange={(e) => onChange?.(e.target.value)}
         />
       )}
     </label>
@@ -405,7 +419,85 @@ function CelebritiesCollection() {
 }
 
 function SubscribeModal({ tier, onClose }: { tier: Tier; onClose: () => void }) {
-  const [step, setStep] = useState<"form" | "review">("form");
+  const [step, setStep] = useState<"form" | "review" | "done">("form");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+  const [billing, setBilling] = useState<"one_time" | "monthly" | "annual">("one_time");
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    dob: "",
+    address: "",
+    city: "",
+    state: "",
+    zip: "",
+    country: "United States",
+    idType: "drivers_license" as "passport" | "drivers_license" | "national_id",
+    idNumber: "",
+    idIssuer: "",
+  });
+
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
+  const qc = useQueryClient();
+  const saveProfileFn = useServerFn(saveProfile);
+  const submitVerificationFn = useServerFn(submitVerification);
+  const activateFn = useServerFn(selectBillingAndActivate);
+
+  if (!loading && !user) {
+    return (
+      <div
+        className="fixed inset-0 z-[100] flex items-center justify-center bg-background/85 p-4 backdrop-blur-md"
+        onClick={onClose}
+      >
+        <div
+          className="max-w-md rounded-sm border border-gold/40 bg-background p-8 text-center"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <h3 className="mb-3 font-display text-2xl">Sign in to continue</h3>
+          <p className="mb-6 text-sm text-muted-foreground">
+            Create your account or sign in to apply for {tier.name}.
+          </p>
+          <button
+            onClick={() => navigate({ to: "/auth" })}
+            className="w-full rounded-sm gold-gradient py-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-primary-foreground"
+          >
+            Continue to sign in
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  async function onActivate() {
+    setBusy(true);
+    setErr(null);
+    try {
+      await saveProfileFn({
+        data: {
+          full_name: `${form.firstName} ${form.lastName}`.trim(),
+          display_name: form.firstName,
+          date_of_birth: form.dob,
+          country: form.country,
+          region: form.state,
+        },
+      });
+      await submitVerificationFn({
+        data: {
+          doc_type: form.idType,
+          doc_ref: `${form.idType}:${form.idNumber}:${form.idIssuer}`,
+          residence_doc_ref: `${form.address}, ${form.city}, ${form.state} ${form.zip}`,
+        },
+      });
+      await activateFn({ data: { billing_cycle: billing } });
+      qc.invalidateQueries();
+      setStep("done");
+    } catch (e: unknown) {
+      setErr(e instanceof Error ? e.message : "Something went wrong");
+    } finally {
+      setBusy(false);
+    }
+  }
 
   return (
     <div
@@ -427,17 +519,13 @@ function SubscribeModal({ tier, onClose }: { tier: Tier; onClose: () => void }) 
         <div className="mb-2 text-[10px] uppercase tracking-[0.4em] text-gold">
           Subscribe · {tier.name}
         </div>
-        <h3 className="mb-2 font-display text-3xl md:text-4xl">
-          Become a member.
-        </h3>
+        <h3 className="mb-2 font-display text-3xl md:text-4xl">Become a member.</h3>
         <p className="mb-6 text-sm text-muted-foreground">
-          Subscription <span className="text-foreground">{tier.price}{tier.cadence}</span>. A
-          one-time <span className="text-foreground">$99 application fee</span> is charged today
-          so the Membership Committee can verify your ID and U.S. residence per applicable U.S.
-          regulations. Subscription billing begins only after approval.
+          $99 membership fee. Choose one-time, monthly, or annual. Opus verifies your ID,
+          age (21+), and U.S. residence before your membership activates.
         </p>
 
-        {step === "form" ? (
+        {step === "form" && (
           <form
             className="space-y-5"
             onSubmit={(e) => {
@@ -446,45 +534,68 @@ function SubscribeModal({ tier, onClose }: { tier: Tier; onClose: () => void }) 
             }}
           >
             <div className="grid grid-cols-2 gap-4">
-              <Field label="Legal First Name" name="firstName" required />
-              <Field label="Legal Last Name" name="lastName" required />
+              <Field label="Legal First Name" name="firstName" required
+                onChange={(v) => setForm((f) => ({ ...f, firstName: v }))} />
+              <Field label="Legal Last Name" name="lastName" required
+                onChange={(v) => setForm((f) => ({ ...f, lastName: v }))} />
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <Field label="Email" type="email" name="email" required />
-              <Field label="Phone" type="tel" name="phone" required />
-            </div>
-            <Field label="Date of Birth" type="date" name="dob" required />
-            <Field label="Street Address (U.S.)" name="address" required />
+            <Field label="Date of Birth" type="date" name="dob" required
+              onChange={(v) => setForm((f) => ({ ...f, dob: v }))} />
+            <Field label="Street Address (U.S.)" name="address" required
+              onChange={(v) => setForm((f) => ({ ...f, address: v }))} />
             <div className="grid grid-cols-3 gap-4">
-              <Field label="City" name="city" required />
-              <Field label="State" name="state" placeholder="CA" required />
-              <Field label="ZIP" name="zip" required />
+              <Field label="City" name="city" required
+                onChange={(v) => setForm((f) => ({ ...f, city: v }))} />
+              <Field label="State" name="state" placeholder="CA" required
+                onChange={(v) => setForm((f) => ({ ...f, state: v }))} />
+              <Field label="ZIP" name="zip" required
+                onChange={(v) => setForm((f) => ({ ...f, zip: v }))} />
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <Field label="Government ID Number" name="idNumber" placeholder="Driver's license / Passport" required />
-              <Field label="ID Issuing State / Country" name="idIssuer" required />
+              <Field label="Government ID Number" name="idNumber" required
+                onChange={(v) => setForm((f) => ({ ...f, idNumber: v }))} />
+              <Field label="ID Issuing State / Country" name="idIssuer" required
+                onChange={(v) => setForm((f) => ({ ...f, idIssuer: v }))} />
+            </div>
+
+            <div>
+              <p className="mb-2 text-[10px] uppercase tracking-[0.3em] text-gold">
+                Billing cycle · $99
+              </p>
+              <div className="grid grid-cols-3 gap-2">
+                {(["one_time", "monthly", "annual"] as const).map((b) => (
+                  <button
+                    key={b}
+                    type="button"
+                    onClick={() => setBilling(b)}
+                    className={`rounded-sm border px-3 py-3 text-[11px] uppercase tracking-[0.2em] transition ${
+                      billing === b
+                        ? "border-gold bg-surface text-foreground"
+                        : "border-border text-muted-foreground hover:border-gold/50"
+                    }`}
+                  >
+                    {b === "one_time" ? "One-time" : b === "monthly" ? "Monthly" : "Annual"}
+                  </button>
+                ))}
+              </div>
             </div>
 
             <div className="rounded-sm border border-gold/30 bg-surface/40 p-4 text-xs text-muted-foreground">
               <p className="mb-2 text-[10px] uppercase tracking-[0.3em] text-gold">
                 Compliance · U.S. residents only
               </p>
-              You must be 21+ and a legal U.S. resident. Opus will verify your identity, age, and
-              U.S. residency against federal and state rules governing the sale of alcoholic
-              beverages before any subscription begins.
+              You must be 21+ and a legal U.S. resident. Opus verifies your identity, age, and
+              residence against federal and state rules governing alcohol sales.
             </div>
 
             <div className="space-y-3 text-xs text-muted-foreground">
               <label className="flex items-start gap-3">
                 <input type="checkbox" required className="mt-0.5 size-4 accent-[color:var(--color-gold)]" />
-                <span>I confirm I am 21 years of age or older and a legal resident of the United States.</span>
+                <span>I confirm I am 21+ and a legal U.S. resident.</span>
               </label>
               <label className="flex items-start gap-3">
                 <input type="checkbox" required className="mt-0.5 size-4 accent-[color:var(--color-gold)]" />
-                <span>
-                  I authorize the non-refundable $99 USD application fee and consent to ID,
-                  age, and U.S. residence verification.
-                </span>
+                <span>I authorize the $99 membership fee and consent to ID/age/residence verification.</span>
               </label>
             </div>
 
@@ -492,49 +603,64 @@ function SubscribeModal({ tier, onClose }: { tier: Tier; onClose: () => void }) 
               type="submit"
               className="w-full rounded-sm gold-gradient py-4 text-xs font-semibold uppercase tracking-[0.3em] text-primary-foreground transition hover:brightness-110"
             >
-              Continue to payment — $99
+              Review & activate
             </button>
           </form>
-        ) : (
+        )}
+
+        {step === "review" && (
           <div className="space-y-6">
             <div className="rounded-sm border border-border bg-surface/40 p-5 text-sm">
               <div className="flex items-center justify-between border-b border-border pb-3 text-muted-foreground">
-                <span>Application fee (today)</span>
+                <span>Membership · {billing === "one_time" ? "One-time" : billing === "monthly" ? "Monthly" : "Annual"}</span>
                 <span className="text-foreground">$99.00</span>
               </div>
-              <div className="flex items-center justify-between pt-3 text-muted-foreground">
-                <span>{tier.name} · billed after approval</span>
-                <span className="text-foreground">{tier.price}{tier.cadence}</span>
+              <div className="pt-3 text-xs text-muted-foreground">
+                Real Stripe checkout activates once payments are enabled on this project.
+                For now, activation records your membership immediately for testing.
               </div>
             </div>
 
-            <div className="rounded-sm border border-gold/40 bg-surface p-5 text-sm">
-              <p className="mb-2 text-[10px] uppercase tracking-[0.3em] text-gold">Secure checkout · Stripe</p>
-              <p className="text-muted-foreground">
-                Payments are processed by Stripe. Once Stripe is enabled on this project, this
-                step will hand off to a Stripe Checkout session for the $99 verification fee and
-                set up the {tier.name} subscription on approval.
-              </p>
-            </div>
+            {err && <p className="text-sm text-red-400">{err}</p>}
 
             <div className="flex gap-3">
               <button
                 onClick={() => setStep("form")}
-                className="flex-1 rounded-sm border border-border py-3.5 text-[11px] font-semibold uppercase tracking-[0.3em] text-muted-foreground hover:text-foreground"
+                disabled={busy}
+                className="flex-1 rounded-sm border border-border py-3.5 text-[11px] font-semibold uppercase tracking-[0.3em] text-muted-foreground hover:text-foreground disabled:opacity-50"
               >
                 Back
               </button>
               <button
-                onClick={() => {
-                  alert(
-                    "Stripe is not enabled yet. Ask Lovable to enable Stripe payments to complete checkout.",
-                  );
-                }}
-                className="flex-1 rounded-sm gold-gradient py-3.5 text-[11px] font-semibold uppercase tracking-[0.3em] text-primary-foreground hover:brightness-110"
+                onClick={onActivate}
+                disabled={busy}
+                className="flex-1 rounded-sm gold-gradient py-3.5 text-[11px] font-semibold uppercase tracking-[0.3em] text-primary-foreground hover:brightness-110 disabled:opacity-60"
               >
-                Pay $99 with Stripe
+                {busy ? "Activating…" : "Activate membership"}
               </button>
             </div>
+          </div>
+        )}
+
+        {step === "done" && (
+          <div className="text-center">
+            <div className="mb-3 text-[10px] uppercase tracking-[0.4em] text-gold">
+              Membership active
+            </div>
+            <h3 className="mb-3 font-display text-3xl">Welcome to Opus Drinks.</h3>
+            <p className="mb-6 text-sm text-muted-foreground">
+              Your membership is active. Head to your dashboard to explore auctions, drops,
+              and your collector portfolio.
+            </p>
+            <button
+              onClick={() => {
+                onClose();
+                navigate({ to: "/dashboard" });
+              }}
+              className="rounded-sm gold-gradient px-8 py-3.5 text-[11px] font-semibold uppercase tracking-[0.3em] text-primary-foreground"
+            >
+              Go to dashboard
+            </button>
           </div>
         )}
       </div>

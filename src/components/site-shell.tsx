@@ -1,5 +1,8 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate, useRouter } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
 import type { ReactNode } from "react";
+import { useAuth } from "@/hooks/use-auth";
+import { supabase } from "@/integrations/supabase/client";
 import { formatMembers, getActiveMembers, getNextFridayUtc, WEEKLY_INCREMENT_MIN, WEEKLY_INCREMENT_MAX } from "@/lib/members";
 
 const navLinks = [
@@ -37,6 +40,19 @@ export function SiteTicker() {
 }
 
 export function SiteHeader() {
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
+  const router = useRouter();
+  const qc = useQueryClient();
+
+  async function onSignOut() {
+    await qc.cancelQueries();
+    qc.clear();
+    await supabase.auth.signOut();
+    router.invalidate();
+    navigate({ to: "/auth", replace: true });
+  }
+
   return (
     <header className="fixed top-0 z-50 w-full border-b border-border bg-background/75 backdrop-blur-2xl">
       <div className="mx-auto flex h-16 max-w-[1500px] items-center justify-between px-5 lg:px-8">
@@ -71,18 +87,37 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Link
-            to="/dashboard"
-            className="hidden rounded-full px-4 py-2 text-[12px] font-medium text-muted-foreground transition hover:bg-surface hover:text-foreground md:inline-flex"
-          >
-            Sign in
-          </Link>
-          <Link
-            to="/membership"
-            className="gold-gradient inline-flex items-center gap-1.5 rounded-full px-5 py-2.5 text-[12px] font-semibold tracking-tight transition-all hover:brightness-110"
-          >
-            Apply <span className="opacity-60">→</span>
-          </Link>
+          {loading ? null : user ? (
+            <>
+              <Link
+                to="/dashboard"
+                className="hidden rounded-full px-4 py-2 text-[12px] font-medium text-muted-foreground transition hover:bg-surface hover:text-foreground md:inline-flex"
+              >
+                Dashboard
+              </Link>
+              <button
+                onClick={onSignOut}
+                className="rounded-full border border-border px-4 py-2 text-[12px] font-medium text-muted-foreground transition hover:border-gold hover:text-gold"
+              >
+                Sign out
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/auth"
+                className="hidden rounded-full px-4 py-2 text-[12px] font-medium text-muted-foreground transition hover:bg-surface hover:text-foreground md:inline-flex"
+              >
+                Sign in
+              </Link>
+              <Link
+                to="/membership"
+                className="gold-gradient inline-flex items-center gap-1.5 rounded-full px-5 py-2.5 text-[12px] font-semibold tracking-tight transition-all hover:brightness-110"
+              >
+                Apply <span className="opacity-60">→</span>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>
