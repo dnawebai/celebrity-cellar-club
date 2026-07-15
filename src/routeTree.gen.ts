@@ -40,6 +40,7 @@ import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/em
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
 import { Route as AuctionsAuctionIdLotsLotIdRouteImport } from './routes/auctions.$auctionId.lots.$lotId'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
+import { Route as ApiPublicCronExpiryRemindersRouteImport } from './routes/api/public/cron/expiry-reminders'
 
 const SponsorsRoute = SponsorsRouteImport.update({
   id: '/sponsors',
@@ -202,6 +203,12 @@ const ApiPublicPaymentsWebhookRoute =
     path: '/api/public/payments/webhook',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicCronExpiryRemindersRoute =
+  ApiPublicCronExpiryRemindersRouteImport.update({
+    id: '/api/public/cron/expiry-reminders',
+    path: '/api/public/cron/expiry-reminders',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -227,6 +234,7 @@ export interface FileRoutesByFullPath {
   '/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
   '/checkout/return': typeof AuthenticatedCheckoutReturnRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
+  '/api/public/cron/expiry-reminders': typeof ApiPublicCronExpiryRemindersRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/auctions/$auctionId/lots/$lotId': typeof AuctionsAuctionIdLotsLotIdRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
@@ -259,6 +267,7 @@ export interface FileRoutesByTo {
   '/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
   '/checkout/return': typeof AuthenticatedCheckoutReturnRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
+  '/api/public/cron/expiry-reminders': typeof ApiPublicCronExpiryRemindersRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/auctions/$auctionId/lots/$lotId': typeof AuctionsAuctionIdLotsLotIdRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
@@ -293,6 +302,7 @@ export interface FileRoutesById {
   '/_authenticated/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
   '/_authenticated/checkout/return': typeof AuthenticatedCheckoutReturnRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
+  '/api/public/cron/expiry-reminders': typeof ApiPublicCronExpiryRemindersRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/auctions/$auctionId/lots/$lotId': typeof AuctionsAuctionIdLotsLotIdRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
@@ -327,6 +337,7 @@ export interface FileRouteTypes {
     | '/checkout/membership'
     | '/checkout/return'
     | '/lovable/email/suppression'
+    | '/api/public/cron/expiry-reminders'
     | '/api/public/payments/webhook'
     | '/auctions/$auctionId/lots/$lotId'
     | '/lovable/email/auth/preview'
@@ -359,6 +370,7 @@ export interface FileRouteTypes {
     | '/checkout/membership'
     | '/checkout/return'
     | '/lovable/email/suppression'
+    | '/api/public/cron/expiry-reminders'
     | '/api/public/payments/webhook'
     | '/auctions/$auctionId/lots/$lotId'
     | '/lovable/email/auth/preview'
@@ -392,6 +404,7 @@ export interface FileRouteTypes {
     | '/_authenticated/checkout/membership'
     | '/_authenticated/checkout/return'
     | '/lovable/email/suppression'
+    | '/api/public/cron/expiry-reminders'
     | '/api/public/payments/webhook'
     | '/auctions/$auctionId/lots/$lotId'
     | '/lovable/email/auth/preview'
@@ -419,6 +432,7 @@ export interface RootRouteChildren {
   AdminMembersRoute: typeof AdminMembersRoute
   EmailUnsubscribeRoute: typeof EmailUnsubscribeRoute
   LovableEmailSuppressionRoute: typeof LovableEmailSuppressionRoute
+  ApiPublicCronExpiryRemindersRoute: typeof ApiPublicCronExpiryRemindersRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
   LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
@@ -646,6 +660,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/cron/expiry-reminders': {
+      id: '/api/public/cron/expiry-reminders'
+      path: '/api/public/cron/expiry-reminders'
+      fullPath: '/api/public/cron/expiry-reminders'
+      preLoaderRoute: typeof ApiPublicCronExpiryRemindersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -711,6 +732,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminMembersRoute: AdminMembersRoute,
   EmailUnsubscribeRoute: EmailUnsubscribeRoute,
   LovableEmailSuppressionRoute: LovableEmailSuppressionRoute,
+  ApiPublicCronExpiryRemindersRoute: ApiPublicCronExpiryRemindersRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
   LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
   LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,
