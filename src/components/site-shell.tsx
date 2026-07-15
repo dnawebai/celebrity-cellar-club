@@ -1,5 +1,8 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate, useRouter } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
 import type { ReactNode } from "react";
+import { useAuth } from "@/hooks/use-auth";
+import { supabase } from "@/integrations/supabase/client";
 import { formatMembers, getActiveMembers, getNextFridayUtc, WEEKLY_INCREMENT_MIN, WEEKLY_INCREMENT_MAX } from "@/lib/members";
 
 const navLinks = [
