@@ -1,6 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { SiteShell } from "@/components/site-shell";
+import { useAuth } from "@/hooks/use-auth";
+import { saveProfile, submitVerification, selectBillingAndActivate } from "@/lib/membership.functions";
 import celebBranson from "@/assets/celeb-branson.jpg";
 import celebMouton from "@/assets/celeb-mouton.jpg";
 import celebSancerre from "@/assets/celeb-sancerre.jpg";
