@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
 import { MemberGate } from "@/components/member-gate";
-import { DemoDataBanner } from "@/components/demo-data-banner";
+
 
 export const Route = createFileRoute("/_authenticated/watchlist")({
   head: () => ({
@@ -17,7 +17,7 @@ export const Route = createFileRoute("/_authenticated/watchlist")({
 function WatchlistPage() {
   return (
     <SiteShell>
-      <DemoDataBanner />
+      
       <section className="px-6 pt-24 pb-16 lg:px-10">
         <div className="mx-auto max-w-[1000px]">
           <span className="mb-4 inline-block text-[10px] uppercase tracking-[0.4em] text-gold">

@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { SiteShell } from "@/components/site-shell";
-import { DemoDataBanner } from "@/components/demo-data-banner";
+
 import {
   getAuctions,
   formatCountdown,
@@ -74,7 +74,7 @@ function AuctionsPage() {
 
   return (
     <SiteShell>
-      <DemoDataBanner />
+      
 
       <section className="border-b border-border px-6 pt-24 pb-16 lg:px-10">
         <div className="mx-auto max-w-[1400px]">

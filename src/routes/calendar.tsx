@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
-import { DemoDataBanner } from "@/components/demo-data-banner";
+
 import { getAuctions } from "@/lib/auctions-data";
 
 export const Route = createFileRoute("/calendar")({
@@ -26,7 +26,7 @@ function CalendarPage() {
 
   return (
     <SiteShell>
-      <DemoDataBanner />
+      
 
       <section className="border-b border-border px-6 pt-24 pb-16 lg:px-10">
         <div className="mx-auto max-w-[1400px]">
