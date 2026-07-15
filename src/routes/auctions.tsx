@@ -3,12 +3,13 @@ import { useEffect, useMemo, useState } from "react";
 import { SiteShell } from "@/components/site-shell";
 import { DemoDataBanner } from "@/components/demo-data-banner";
 import {
-  auctions,
+  getAuctions,
   formatCountdown,
   formatMoney,
   type Auction,
   type AuctionStatus,
 } from "@/lib/auctions-data";
+
 
 export const Route = createFileRoute("/auctions")({
   head: () => ({
