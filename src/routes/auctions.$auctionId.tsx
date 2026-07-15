@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
-import { DemoDataBanner } from "@/components/demo-data-banner";
+
 import {
   findAuction,
   formatCountdown,
@@ -67,7 +67,7 @@ function AuctionDetail() {
 
   return (
     <SiteShell>
-      <DemoDataBanner />
+      
 
       <section className="grid gap-0 border-b border-border lg:grid-cols-2">
         <div className="relative aspect-[4/3] overflow-hidden">

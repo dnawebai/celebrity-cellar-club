@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteShell } from "@/components/site-shell";
-import { DemoDataBanner } from "@/components/demo-data-banner";
+
 
 export const Route = createFileRoute("/_authenticated/concierge")({
   head: () => ({
@@ -41,7 +41,7 @@ function ConciergePage() {
 
   return (
     <SiteShell>
-      <DemoDataBanner />
+      
 
       <section className="border-b border-border px-6 pt-24 pb-16 lg:px-10">
         <div className="mx-auto max-w-[1200px]">

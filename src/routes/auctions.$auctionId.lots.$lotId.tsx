@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
-import { DemoDataBanner } from "@/components/demo-data-banner";
+
 import { BiddingPanel } from "@/components/bidding-panel";
 import {
   findAuction,
@@ -68,7 +68,7 @@ function LotDetail() {
 
   return (
     <SiteShell>
-      <DemoDataBanner />
+      
 
       <div className="px-6 pt-16 pb-4 lg:px-10">
         <div className="mx-auto max-w-[1400px] text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
