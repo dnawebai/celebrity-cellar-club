@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
 import { DemoDataBanner } from "@/components/demo-data-banner";
-import { auctions } from "@/lib/auctions-data";
+import { getAuctions } from "@/lib/auctions-data";
 
 export const Route = createFileRoute("/calendar")({
   head: () => ({
