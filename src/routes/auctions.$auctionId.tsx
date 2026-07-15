@@ -142,7 +142,7 @@ function AuctionDetail() {
             </p>
           ) : (
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {lots.map((l) => (
+              {lots.map((l: import("@/lib/auctions-data").Lot) => (
                 <Link
                   key={l.id}
                   to="/auctions/$auctionId/lots/$lotId"

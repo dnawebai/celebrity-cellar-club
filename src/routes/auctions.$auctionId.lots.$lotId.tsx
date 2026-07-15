@@ -139,7 +139,7 @@ function LotDetail() {
                   Critic Scores
                 </div>
                 <ul className="space-y-2 text-sm">
-                  {lot.criticScores.map((s) => (
+                  {lot.criticScores.map((s: { critic: string; score: string }) => (
                     <li key={s.critic} className="flex justify-between">
                       <span className="text-muted-foreground">{s.critic}</span>
                       <span className="font-mono text-gold">{s.score}</span>
