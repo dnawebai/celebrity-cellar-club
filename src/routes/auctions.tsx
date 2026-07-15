@@ -188,13 +188,16 @@ function AuctionCard({ a }: { a: Auction }) {
     timeStyle: "short",
   });
   return (
-    <Link
-      to="/auctions/$auctionId"
-      params={{ auctionId: a.id }}
-      className="group block overflow-hidden rounded-sm border border-border bg-surface/40 transition hover:border-gold/40"
-    >
+    <div className="group block overflow-hidden rounded-sm border border-border bg-surface/40 transition hover:border-gold/40">
       <div className="grid md:grid-cols-[280px_1fr]">
-        <div className="relative aspect-[4/5] overflow-hidden md:aspect-auto">
+        {/* Image → $99 membership checkout. Bidding is member-only, so the
+            hero image is the invitation to join. */}
+        <Link
+          to="/membership"
+          search={{ intent: "checkout", auction: a.id }}
+          aria-label={`Join Opus Drinks — $99 to unlock ${a.title}`}
+          className="relative block aspect-[4/5] overflow-hidden md:aspect-auto"
+        >
           <img
             src={a.coverImage}
             alt={a.title}
@@ -204,8 +207,21 @@ function AuctionCard({ a }: { a: Auction }) {
           <span className="absolute top-3 left-3 rounded-sm bg-background/80 px-2 py-1 text-[9px] uppercase tracking-[0.3em] text-gold backdrop-blur">
             {a.status === "closing-soon" ? "Closing soon" : a.status}
           </span>
-        </div>
-        <div className="flex flex-col p-7">
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-background/95 via-background/60 to-transparent p-4">
+            <div className="text-[10px] uppercase tracking-[0.35em] text-gold">
+              Unlock · $99 membership
+            </div>
+            <div className="mt-1 text-[11px] text-foreground/90">
+              Bid across every partner house with one account
+            </div>
+          </div>
+        </Link>
+
+        <Link
+          to="/auctions/$auctionId"
+          params={{ auctionId: a.id }}
+          className="flex flex-col p-7"
+        >
           <div className="mb-3 flex items-center justify-between text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
             <span>{a.category === "spirits" ? "Rare Spirits" : "Fine Wine"}</span>
             <span className="text-gold">{formatCountdown(a.endsAtUtc)}</span>
@@ -243,9 +259,9 @@ function AuctionCard({ a }: { a: Auction }) {
               {a.biddingMode === "integrated" ? "Direct Bidding" : "Concierge Bidding"}
             </span>
           </div>
-        </div>
+        </Link>
       </div>
-    </Link>
+    </div>
   );
 }
 
