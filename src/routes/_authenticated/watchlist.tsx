@@ -3,7 +3,7 @@ import { SiteShell } from "@/components/site-shell";
 import { MemberGate } from "@/components/member-gate";
 import { DemoDataBanner } from "@/components/demo-data-banner";
 
-export const Route = createFileRoute("/watchlist")({
+export const Route = createFileRoute("/_authenticated/watchlist")({
   head: () => ({
     meta: [
       { title: "Watchlist — Opus Drinks" },

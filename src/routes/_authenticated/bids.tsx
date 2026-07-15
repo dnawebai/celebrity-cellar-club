@@ -4,7 +4,7 @@ import { SiteShell } from "@/components/site-shell";
 import { MemberGate } from "@/components/member-gate";
 import { DemoDataBanner } from "@/components/demo-data-banner";
 
-export const Route = createFileRoute("/bids")({
+export const Route = createFileRoute("/_authenticated/bids")({
   head: () => ({
     meta: [
       { title: "My Bids — Opus Drinks" },

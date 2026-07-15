@@ -3,7 +3,7 @@ import { useState } from "react";
 import { SiteShell } from "@/components/site-shell";
 import { DemoDataBanner } from "@/components/demo-data-banner";
 
-export const Route = createFileRoute("/concierge")({
+export const Route = createFileRoute("/_authenticated/concierge")({
   head: () => ({
     meta: [
       { title: "Opus Concierge — Auction Registration, Assisted Bidding, Shipping & Storage" },
