@@ -560,7 +560,7 @@ export function houseLabel(_id: AuctionHouseId): string {
 }
 
 export function currencySymbol(c: Auction["currency"]): string {
-  return { USD: "$", EUR: "€", GBP: "£", HKD: "HK$", CHF: "CHF " }[c];
+  return { USD: "$", EUR: "€", GBP: "£", HKD: "HK$", CHF: "CHF ", CAD: "CA$", SGD: "S$" }[c];
 }
 
 export function formatMoney(n: number, c: Auction["currency"]): string {
