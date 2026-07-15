@@ -26,7 +26,7 @@ export type Auction = {
   startsAtUtc: string; // ISO
   endsAtUtc: string;   // ISO
   registrationDeadlineUtc: string;
-  currency: "USD" | "EUR" | "GBP" | "HKD" | "CHF";
+  currency: "USD" | "EUR" | "GBP" | "HKD" | "CHF" | "CAD" | "SGD";
   buyersPremiumPct: number;
   lotCount: number;
   coverImage: string;
