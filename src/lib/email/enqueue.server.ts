@@ -13,8 +13,8 @@ const SITE_NAME = 'Opus Drinks'
 const SENDER_DOMAIN = 'notify.opusdrinks.com'
 const FROM_DOMAIN = 'notify.opusdrinks.com'
 
-let _client: ReturnType<typeof createClient> | null = null
-function client() {
+let _client: any = null
+function client(): any {
   if (!_client) {
     _client = createClient(
       process.env.SUPABASE_URL!,
