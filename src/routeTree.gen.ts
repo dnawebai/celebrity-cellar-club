@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WatchlistRouteImport } from './routes/watchlist'
 import { Route as SponsorsRouteImport } from './routes/sponsors'
 import { Route as SommelierRouteImport } from './routes/sommelier'
 import { Route as ProducersRouteImport } from './routes/producers'
@@ -17,11 +18,21 @@ import { Route as MarketplaceRouteImport } from './routes/marketplace'
 import { Route as InvestmentRouteImport } from './routes/investment'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as ConciergeRouteImport } from './routes/concierge'
 import { Route as CharityRouteImport } from './routes/charity'
+import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as BidsRouteImport } from './routes/bids'
 import { Route as AuctionsRouteImport } from './routes/auctions'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuctionsAuctionIdRouteImport } from './routes/auctions.$auctionId'
 import { Route as AdminMembersRouteImport } from './routes/admin.members'
+import { Route as AuctionsAuctionIdLotsLotIdRouteImport } from './routes/auctions.$auctionId.lots.$lotId'
 
+const WatchlistRoute = WatchlistRouteImport.update({
+  id: '/watchlist',
+  path: '/watchlist',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SponsorsRoute = SponsorsRouteImport.update({
   id: '/sponsors',
   path: '/sponsors',
@@ -62,9 +73,24 @@ const DashboardRoute = DashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConciergeRoute = ConciergeRouteImport.update({
+  id: '/concierge',
+  path: '/concierge',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CharityRoute = CharityRouteImport.update({
   id: '/charity',
   path: '/charity',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalendarRoute = CalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BidsRoute = BidsRouteImport.update({
+  id: '/bids',
+  path: '/bids',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuctionsRoute = AuctionsRouteImport.update({
@@ -77,16 +103,30 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuctionsAuctionIdRoute = AuctionsAuctionIdRouteImport.update({
+  id: '/$auctionId',
+  path: '/$auctionId',
+  getParentRoute: () => AuctionsRoute,
+} as any)
 const AdminMembersRoute = AdminMembersRouteImport.update({
   id: '/admin/members',
   path: '/admin/members',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuctionsAuctionIdLotsLotIdRoute =
+  AuctionsAuctionIdLotsLotIdRouteImport.update({
+    id: '/lots/$lotId',
+    path: '/lots/$lotId',
+    getParentRoute: () => AuctionsAuctionIdRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/auctions': typeof AuctionsRoute
+  '/auctions': typeof AuctionsRouteWithChildren
+  '/bids': typeof BidsRoute
+  '/calendar': typeof CalendarRoute
   '/charity': typeof CharityRoute
+  '/concierge': typeof ConciergeRoute
   '/dashboard': typeof DashboardRoute
   '/events': typeof EventsRoute
   '/investment': typeof InvestmentRoute
@@ -95,12 +135,18 @@ export interface FileRoutesByFullPath {
   '/producers': typeof ProducersRoute
   '/sommelier': typeof SommelierRoute
   '/sponsors': typeof SponsorsRoute
+  '/watchlist': typeof WatchlistRoute
   '/admin/members': typeof AdminMembersRoute
+  '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
+  '/auctions/$auctionId/lots/$lotId': typeof AuctionsAuctionIdLotsLotIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/auctions': typeof AuctionsRoute
+  '/auctions': typeof AuctionsRouteWithChildren
+  '/bids': typeof BidsRoute
+  '/calendar': typeof CalendarRoute
   '/charity': typeof CharityRoute
+  '/concierge': typeof ConciergeRoute
   '/dashboard': typeof DashboardRoute
   '/events': typeof EventsRoute
   '/investment': typeof InvestmentRoute
@@ -109,13 +155,19 @@ export interface FileRoutesByTo {
   '/producers': typeof ProducersRoute
   '/sommelier': typeof SommelierRoute
   '/sponsors': typeof SponsorsRoute
+  '/watchlist': typeof WatchlistRoute
   '/admin/members': typeof AdminMembersRoute
+  '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
+  '/auctions/$auctionId/lots/$lotId': typeof AuctionsAuctionIdLotsLotIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/auctions': typeof AuctionsRoute
+  '/auctions': typeof AuctionsRouteWithChildren
+  '/bids': typeof BidsRoute
+  '/calendar': typeof CalendarRoute
   '/charity': typeof CharityRoute
+  '/concierge': typeof ConciergeRoute
   '/dashboard': typeof DashboardRoute
   '/events': typeof EventsRoute
   '/investment': typeof InvestmentRoute
@@ -124,14 +176,20 @@ export interface FileRoutesById {
   '/producers': typeof ProducersRoute
   '/sommelier': typeof SommelierRoute
   '/sponsors': typeof SponsorsRoute
+  '/watchlist': typeof WatchlistRoute
   '/admin/members': typeof AdminMembersRoute
+  '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
+  '/auctions/$auctionId/lots/$lotId': typeof AuctionsAuctionIdLotsLotIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/auctions'
+    | '/bids'
+    | '/calendar'
     | '/charity'
+    | '/concierge'
     | '/dashboard'
     | '/events'
     | '/investment'
@@ -140,12 +198,18 @@ export interface FileRouteTypes {
     | '/producers'
     | '/sommelier'
     | '/sponsors'
+    | '/watchlist'
     | '/admin/members'
+    | '/auctions/$auctionId'
+    | '/auctions/$auctionId/lots/$lotId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auctions'
+    | '/bids'
+    | '/calendar'
     | '/charity'
+    | '/concierge'
     | '/dashboard'
     | '/events'
     | '/investment'
@@ -154,12 +218,18 @@ export interface FileRouteTypes {
     | '/producers'
     | '/sommelier'
     | '/sponsors'
+    | '/watchlist'
     | '/admin/members'
+    | '/auctions/$auctionId'
+    | '/auctions/$auctionId/lots/$lotId'
   id:
     | '__root__'
     | '/'
     | '/auctions'
+    | '/bids'
+    | '/calendar'
     | '/charity'
+    | '/concierge'
     | '/dashboard'
     | '/events'
     | '/investment'
@@ -168,13 +238,19 @@ export interface FileRouteTypes {
     | '/producers'
     | '/sommelier'
     | '/sponsors'
+    | '/watchlist'
     | '/admin/members'
+    | '/auctions/$auctionId'
+    | '/auctions/$auctionId/lots/$lotId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AuctionsRoute: typeof AuctionsRoute
+  AuctionsRoute: typeof AuctionsRouteWithChildren
+  BidsRoute: typeof BidsRoute
+  CalendarRoute: typeof CalendarRoute
   CharityRoute: typeof CharityRoute
+  ConciergeRoute: typeof ConciergeRoute
   DashboardRoute: typeof DashboardRoute
   EventsRoute: typeof EventsRoute
   InvestmentRoute: typeof InvestmentRoute
@@ -183,11 +259,19 @@ export interface RootRouteChildren {
   ProducersRoute: typeof ProducersRoute
   SommelierRoute: typeof SommelierRoute
   SponsorsRoute: typeof SponsorsRoute
+  WatchlistRoute: typeof WatchlistRoute
   AdminMembersRoute: typeof AdminMembersRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/watchlist': {
+      id: '/watchlist'
+      path: '/watchlist'
+      fullPath: '/watchlist'
+      preLoaderRoute: typeof WatchlistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sponsors': {
       id: '/sponsors'
       path: '/sponsors'
@@ -244,11 +328,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/concierge': {
+      id: '/concierge'
+      path: '/concierge'
+      fullPath: '/concierge'
+      preLoaderRoute: typeof ConciergeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/charity': {
       id: '/charity'
       path: '/charity'
       fullPath: '/charity'
       preLoaderRoute: typeof CharityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calendar': {
+      id: '/calendar'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof CalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bids': {
+      id: '/bids'
+      path: '/bids'
+      fullPath: '/bids'
+      preLoaderRoute: typeof BidsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auctions': {
@@ -265,6 +370,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auctions/$auctionId': {
+      id: '/auctions/$auctionId'
+      path: '/$auctionId'
+      fullPath: '/auctions/$auctionId'
+      preLoaderRoute: typeof AuctionsAuctionIdRouteImport
+      parentRoute: typeof AuctionsRoute
+    }
     '/admin/members': {
       id: '/admin/members'
       path: '/admin/members'
@@ -272,13 +384,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminMembersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auctions/$auctionId/lots/$lotId': {
+      id: '/auctions/$auctionId/lots/$lotId'
+      path: '/lots/$lotId'
+      fullPath: '/auctions/$auctionId/lots/$lotId'
+      preLoaderRoute: typeof AuctionsAuctionIdLotsLotIdRouteImport
+      parentRoute: typeof AuctionsAuctionIdRoute
+    }
   }
 }
 
+interface AuctionsAuctionIdRouteChildren {
+  AuctionsAuctionIdLotsLotIdRoute: typeof AuctionsAuctionIdLotsLotIdRoute
+}
+
+const AuctionsAuctionIdRouteChildren: AuctionsAuctionIdRouteChildren = {
+  AuctionsAuctionIdLotsLotIdRoute: AuctionsAuctionIdLotsLotIdRoute,
+}
+
+const AuctionsAuctionIdRouteWithChildren =
+  AuctionsAuctionIdRoute._addFileChildren(AuctionsAuctionIdRouteChildren)
+
+interface AuctionsRouteChildren {
+  AuctionsAuctionIdRoute: typeof AuctionsAuctionIdRouteWithChildren
+}
+
+const AuctionsRouteChildren: AuctionsRouteChildren = {
+  AuctionsAuctionIdRoute: AuctionsAuctionIdRouteWithChildren,
+}
+
+const AuctionsRouteWithChildren = AuctionsRoute._addFileChildren(
+  AuctionsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AuctionsRoute: AuctionsRoute,
+  AuctionsRoute: AuctionsRouteWithChildren,
+  BidsRoute: BidsRoute,
+  CalendarRoute: CalendarRoute,
   CharityRoute: CharityRoute,
+  ConciergeRoute: ConciergeRoute,
   DashboardRoute: DashboardRoute,
   EventsRoute: EventsRoute,
   InvestmentRoute: InvestmentRoute,
@@ -287,18 +432,9 @@ const rootRouteChildren: RootRouteChildren = {
   ProducersRoute: ProducersRoute,
   SommelierRoute: SommelierRoute,
   SponsorsRoute: SponsorsRoute,
+  WatchlistRoute: WatchlistRoute,
   AdminMembersRoute: AdminMembersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

@@ -1,333 +1,272 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { SiteShell } from "@/components/site-shell";
-import heroBottle from "@/assets/hero-bottle.jpg";
-import cellar from "@/assets/cellar-detail.jpg";
+import { DemoDataBanner } from "@/components/demo-data-banner";
+import {
+  auctions,
+  formatCountdown,
+  formatMoney,
+  type Auction,
+  type AuctionStatus,
+} from "@/lib/auctions-data";
 
 export const Route = createFileRoute("/auctions")({
   head: () => ({
     meta: [
-      { title: "Live Auctions — Opus Drinks" },
+      { title: "Fine Wine & Rare Spirits Auctions — Opus Drinks" },
       {
         name: "description",
         content:
-          "Sotheby's-style live auctions for rare wines and spirits. Place bids, view investment ratings, and track auction history.",
+          "One private marketplace for the world's leading fine wine and rare spirits auctions. Track lots, register, bid, and manage your collection through Opus Drinks.",
       },
+      { property: "og:title", content: "Fine Wine & Rare Spirits Auctions — Opus Drinks" },
+      {
+        property: "og:description",
+        content:
+          "Aggregated access to Sotheby's-tier wine auctions through one private, members-only interface.",
+      },
+      { property: "og:url", content: "https://opusdrinks.com/auctions" },
     ],
+    links: [{ rel: "canonical", href: "https://opusdrinks.com/auctions" }],
   }),
   component: AuctionsPage,
 });
 
-type Auction = {
-  lot: string;
-  title: string;
-  region: string;
-  bid: number;
-  reserve: number;
-  bidders: number;
-  endsAt: number;
-  estimate: string;
-  rating: "AAA" | "AA+" | "AA" | "A+";
-  img: string;
-};
+type TabId = AuctionStatus | "all";
 
-const now = Date.now();
-const H = 3_600_000;
-
-const live: Auction[] = [
-  {
-    lot: "Lot 014",
-    title: "1982 Château Mouton Rothschild",
-    region: "Pauillac · Bordeaux",
-    bid: 48250,
-    reserve: 45000,
-    bidders: 17,
-    endsAt: now + 2 * H + 14 * 60_000,
-    estimate: "$52,000 – $68,000",
-    rating: "AAA",
-    img: heroBottle,
-  },
-  {
-    lot: "Lot 017",
-    title: "1996 DRC La Tâche · 750ml",
-    region: "Vosne-Romanée · Burgundy",
-    bid: 31800,
-    reserve: 28000,
-    bidders: 24,
-    endsAt: now + 4 * H + 2 * 60_000,
-    estimate: "$34,000 – $42,000",
-    rating: "AAA",
-    img: cellar,
-  },
-  {
-    lot: "Lot 021",
-    title: "Pappy Van Winkle 23-Year Sealed",
-    region: "Kentucky · United States",
-    bid: 12400,
-    reserve: 12500,
-    bidders: 39,
-    endsAt: now + 6 * H + 49 * 60_000,
-    estimate: "$14,000 – $18,000",
-    rating: "AA+",
-    img: heroBottle,
-  },
-  {
-    lot: "Lot 023",
-    title: "Macallan 25-Year Sherry Oak",
-    region: "Speyside · Scotland",
-    bid: 8200,
-    reserve: 7500,
-    bidders: 12,
-    endsAt: now + 11 * H,
-    estimate: "$9,500 – $11,000",
-    rating: "AA",
-    img: cellar,
-  },
-  {
-    lot: "Lot 028",
-    title: "Penfolds Grange 2008 Library",
-    region: "South Australia",
-    bid: 3400,
-    reserve: 3000,
-    bidders: 21,
-    endsAt: now + 30 * H,
-    estimate: "$3,800 – $4,500",
-    rating: "A+",
-    img: heroBottle,
-  },
-];
-
-const upcoming = [
-  { date: "Dec 12", title: "Holiday Library Release", lots: 24 },
-  { date: "Jan 18", title: "Winter Spirits Collection", lots: 18 },
-  { date: "Feb 22", title: "Founder Circle Cellar Liquidation", lots: 11 },
-  { date: "Mar 14", title: "Spring Champagne Vault", lots: 36 },
+const tabs: { id: TabId; label: string }[] = [
+  { id: "live", label: "Live Now" },
+  { id: "closing-soon", label: "Closing Soon" },
+  { id: "upcoming", label: "Upcoming" },
+  { id: "past", label: "Completed" },
+  { id: "all", label: "All" },
 ];
 
 function AuctionsPage() {
-  const [tab, setTab] = useState<"live" | "upcoming" | "past">("live");
-  const [, setTick] = useState(0);
+  const [tab, setTab] = useState<TabId>("live");
+  const [category, setCategory] = useState<"all" | "wine" | "spirits">("all");
+  const [query, setQuery] = useState("");
+  const [, tick] = useState(0);
+
   useEffect(() => {
-    const id = setInterval(() => setTick((t) => t + 1), 1000);
+    const id = setInterval(() => tick((t) => t + 1), 1000);
     return () => clearInterval(id);
   }, []);
 
+  const filtered = useMemo(() => {
+    return auctions.filter((a) => {
+      if (tab !== "all" && a.status !== tab) return false;
+      if (category !== "all" && a.category !== category && a.category !== "mixed")
+        return false;
+      if (query) {
+        const q = query.toLowerCase();
+        if (
+          !a.title.toLowerCase().includes(q) &&
+          !a.location.toLowerCase().includes(q) &&
+          !a.summary.toLowerCase().includes(q)
+        )
+          return false;
+      }
+      return true;
+    });
+  }, [tab, category, query]);
+
   return (
     <SiteShell>
-      {/* HERO */}
-      <section className="border-b border-border px-6 pt-32 pb-20 lg:px-10">
+      <DemoDataBanner />
+
+      <section className="border-b border-border px-6 pt-24 pb-16 lg:px-10">
         <div className="mx-auto max-w-[1400px]">
           <span className="mb-6 inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.4em] text-gold">
-            <span className="size-1.5 rounded-full bg-gold pulse-gold" /> Live Auction Floor
+            <span className="size-1.5 rounded-full bg-gold pulse-gold" />
+            The Opus Auction Marketplace
           </span>
-          <h1 className="mb-6 max-w-[18ch] font-display text-5xl text-balance md:text-7xl">
-            The Opus <span className="italic text-gold-gradient">Auction House</span>.
+          <h1 className="mb-6 max-w-[20ch] font-display text-5xl text-balance md:text-7xl">
+            The World's Finest Wine Auctions.{" "}
+            <span className="italic text-gold-gradient">One private marketplace.</span>
           </h1>
-          <p className="max-w-[58ch] text-lg text-muted-foreground">
-            Member-only bidding on rare allocations from the world's most respected cellars and
-            distilleries. All lots authenticated, insured, and white-glove shipped.
+          <p className="max-w-[62ch] text-lg text-muted-foreground">
+            Discover exceptional wines and rare spirits offered through leading
+            international auctions. Track lots, register, bid, and manage your
+            collection through Opus Drinks — with a single membership, calendar,
+            watchlist, and concierge team.
           </p>
-          <div className="mt-10 flex gap-1 rounded-sm border border-border bg-surface/40 p-1 text-[11px] uppercase tracking-[0.25em] w-fit">
-            {(["live", "upcoming", "past"] as const).map((t) => (
-              <button
-                key={t}
-                onClick={() => setTab(t)}
-                className={`rounded-sm px-5 py-2.5 transition ${
-                  tab === t
-                    ? "bg-gold text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {t === "live" ? "Live Now" : t === "upcoming" ? "Upcoming" : "Completed"}
-              </button>
-            ))}
+
+          <div className="mt-10 flex flex-wrap items-center gap-3">
+            <div className="flex gap-1 rounded-sm border border-border bg-surface/40 p-1 text-[11px] uppercase tracking-[0.25em]">
+              {tabs.map((t) => (
+                <button
+                  key={t.id}
+                  onClick={() => setTab(t.id)}
+                  className={`rounded-sm px-4 py-2.5 transition ${
+                    tab === t.id
+                      ? "bg-gold text-primary-foreground"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+
+            <div className="flex gap-1 rounded-sm border border-border bg-surface/40 p-1 text-[11px] uppercase tracking-[0.25em]">
+              {(["all", "wine", "spirits"] as const).map((c) => (
+                <button
+                  key={c}
+                  onClick={() => setCategory(c)}
+                  className={`rounded-sm px-4 py-2.5 transition ${
+                    category === c
+                      ? "bg-foreground text-background"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {c === "all" ? "All Categories" : c}
+                </button>
+              ))}
+            </div>
+
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search producer, region, city…"
+              className="min-w-[240px] flex-1 rounded-sm border border-border bg-surface/40 px-4 py-2.5 text-sm placeholder:text-muted-foreground/70 focus:outline-none focus:ring-1 focus:ring-gold/60"
+            />
           </div>
         </div>
       </section>
 
-      {/* CONTENT */}
-      <section className="px-6 py-20 lg:px-10">
+      <section className="px-6 py-16 lg:px-10">
         <div className="mx-auto max-w-[1400px]">
-          {tab === "live" ? (
+          {filtered.length === 0 ? (
+            <p className="py-16 text-center text-sm text-muted-foreground">
+              No auctions match your filters.
+            </p>
+          ) : (
             <div className="grid gap-6 lg:grid-cols-2">
-              {live.map((a) => (
-                <LotCard key={a.lot} a={a} />
+              {filtered.map((a) => (
+                <AuctionCard key={a.id} a={a} />
               ))}
             </div>
-          ) : tab === "upcoming" ? (
-            <UpcomingCalendar />
-          ) : (
-            <PastResults />
           )}
         </div>
       </section>
 
-      {/* NOTIFICATIONS */}
-      <section className="border-t border-border bg-surface/30 px-6 py-24 lg:px-10">
-        <div className="mx-auto grid max-w-[1400px] gap-12 lg:grid-cols-2 lg:items-center">
-          <div>
-            <span className="mb-3 block text-[10px] uppercase tracking-[0.4em] text-gold">
-              Stay informed
-            </span>
-            <h2 className="mb-4 font-display text-4xl md:text-5xl">
-              Never miss <span className="italic">a closing bell</span>.
-            </h2>
-            <p className="text-muted-foreground">
-              Receive SMS and email alerts for auctions you've reserved, allocations you're tracking,
-              and final five-minute closing windows on any lot.
-            </p>
-          </div>
-          <form className="flex flex-col gap-3 sm:flex-row" onSubmit={(e) => e.preventDefault()}>
-            <input
-              type="email"
-              placeholder="member@email.com"
-              className="flex-1 rounded-sm bg-surface px-4 py-3 text-sm ring-1 ring-border focus:outline-none focus:ring-gold/60"
-            />
-            <button className="rounded-sm gold-gradient px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-primary-foreground">
-              Subscribe
-            </button>
-          </form>
+      <section className="border-t border-border bg-surface/30 px-6 py-20 lg:px-10">
+        <div className="mx-auto grid max-w-[1400px] gap-8 lg:grid-cols-3">
+          <Info
+            title="One membership, every partner"
+            body="A single $99 Opus Drinks membership gives you a unified calendar, watchlist, and concierge team across every authorised auction partner."
+          />
+          <Info
+            title="Two clearly-labelled bidding modes"
+            body="Where an authorised bidding integration exists, place bids directly. Otherwise, our concierge team handles registration and bidding on your behalf."
+          />
+          <Info
+            title="No fabricated data. Ever."
+            body="We never show a live bid button when no bidding integration exists. Every imported auction retains its verified source internally for compliance."
+          />
+        </div>
+      </section>
+
+      <section className="border-t border-border px-6 py-16 lg:px-10">
+        <div className="mx-auto max-w-[1400px] text-xs leading-relaxed text-muted-foreground">
+          Opus Drinks provides access to auction opportunities subject to
+          membership eligibility, auction-specific approval, geographic
+          restrictions, and applicable conditions of sale. Availability of
+          direct bidding depends on the integration and authorisation provided
+          by each auction partner.
         </div>
       </section>
     </SiteShell>
   );
 }
 
-function LotCard({ a }: { a: Auction }) {
-  const met = a.bid >= a.reserve;
+function AuctionCard({ a }: { a: Auction }) {
+  const closesLocal = new Date(a.endsAtUtc).toLocaleString(undefined, {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
   return (
-    <article className="group overflow-hidden rounded-sm border border-border bg-surface/40 transition hover:border-gold/40">
-      <div className="grid md:grid-cols-[260px_1fr]">
-        <div className="relative overflow-hidden">
+    <Link
+      to="/auctions/$auctionId"
+      params={{ auctionId: a.id }}
+      className="group block overflow-hidden rounded-sm border border-border bg-surface/40 transition hover:border-gold/40"
+    >
+      <div className="grid md:grid-cols-[280px_1fr]">
+        <div className="relative aspect-[4/5] overflow-hidden md:aspect-auto">
           <img
-            src={a.img}
+            src={a.coverImage}
             alt={a.title}
             loading="lazy"
             className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
           />
           <span className="absolute top-3 left-3 rounded-sm bg-background/80 px-2 py-1 text-[9px] uppercase tracking-[0.3em] text-gold backdrop-blur">
-            {a.rating}
+            {a.status === "closing-soon" ? "Closing soon" : a.status}
           </span>
         </div>
         <div className="flex flex-col p-7">
           <div className="mb-3 flex items-center justify-between text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-            <span>{a.lot}</span>
-            <span className="flex items-center gap-2 text-gold">
-              <span className="size-1 rounded-full bg-gold pulse-gold" />
-              {formatRemaining(a.endsAt)}
-            </span>
+            <span>{a.category === "spirits" ? "Rare Spirits" : "Fine Wine"}</span>
+            <span className="text-gold">{formatCountdown(a.endsAtUtc)}</span>
           </div>
           <h3 className="font-display text-2xl leading-tight">{a.title}</h3>
           <p className="mt-1 text-xs uppercase tracking-[0.2em] text-muted-foreground">
-            {a.region}
+            {a.location} · {a.format}
           </p>
 
-          <div className="my-5 grid grid-cols-2 gap-4 border-y border-border py-4">
-            <div>
-              <div className="text-[9px] uppercase tracking-[0.3em] text-muted-foreground">
-                Current Bid
-              </div>
-              <div className="mt-1 font-display text-2xl text-gold-gradient">
-                ${a.bid.toLocaleString()}
-              </div>
-            </div>
-            <div>
-              <div className="text-[9px] uppercase tracking-[0.3em] text-muted-foreground">
-                Est. Future Value
-              </div>
-              <div className="mt-1 font-mono text-sm">{a.estimate}</div>
-            </div>
+          <p className="mt-4 line-clamp-3 text-sm text-muted-foreground">
+            {a.summary}
+          </p>
+
+          <div className="my-5 grid grid-cols-3 gap-3 border-y border-border py-4 text-xs">
+            <Stat label="Lots" value={a.lotCount.toString()} />
+            <Stat label="Currency" value={a.currency} />
+            <Stat label="Buyer's Premium" value={`${a.buyersPremiumPct}%`} />
           </div>
 
-          <div className="mb-4 flex items-center justify-between text-xs text-muted-foreground">
-            <span>{a.bidders} bidders</span>
-            <span
-              className={`rounded-sm px-2 py-1 text-[9px] uppercase tracking-[0.3em] ${
-                met ? "bg-gold/15 text-gold" : "bg-burgundy/30 text-foreground"
-              }`}
-            >
-              {met ? "Reserve Met" : "Below Reserve"}
-            </span>
+          <div className="mb-4 text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
+            Closes · <span className="text-foreground">{closesLocal}</span>
           </div>
 
           <div className="mt-auto flex gap-2">
-            <Link
-              to="/membership"
-              className="flex-1 rounded-sm gold-gradient px-4 py-3 text-center text-[10px] font-semibold uppercase tracking-[0.3em] text-primary-foreground"
+            <span className="flex-1 rounded-sm gold-gradient px-4 py-3 text-center text-[10px] font-semibold uppercase tracking-[0.3em] text-primary-foreground">
+              View Auction
+            </span>
+            <span
+              className={`rounded-sm border px-4 py-3 text-[10px] uppercase tracking-[0.3em] ${
+                a.biddingMode === "integrated"
+                  ? "border-gold/50 text-gold"
+                  : "border-border text-muted-foreground"
+              }`}
             >
-              Place Bid
-            </Link>
-            <Link
-              to="/membership"
-              className="rounded-sm border border-border px-4 py-3 text-[10px] uppercase tracking-[0.3em] text-muted-foreground hover:border-gold hover:text-gold"
-            >
-              Watch
-            </Link>
+              {a.biddingMode === "integrated" ? "Direct Bidding" : "Concierge Bidding"}
+            </span>
           </div>
         </div>
       </div>
-    </article>
+    </Link>
   );
 }
 
-function UpcomingCalendar() {
+function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="overflow-hidden rounded-sm border border-border">
-      <div className="grid grid-cols-12 border-b border-border bg-surface/60 px-6 py-3 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-        <div className="col-span-2">Date</div>
-        <div className="col-span-6">Auction</div>
-        <div className="col-span-2">Lots</div>
-        <div className="col-span-2 text-right">Action</div>
+    <div>
+      <div className="text-[9px] uppercase tracking-[0.3em] text-muted-foreground">
+        {label}
       </div>
-      {upcoming.map((u) => (
-        <div
-          key={u.title}
-          className="grid grid-cols-12 items-center border-b border-border bg-background/40 px-6 py-5 text-sm last:border-0 hover:bg-surface/40"
-        >
-          <div className="col-span-2 font-mono text-gold">{u.date}</div>
-          <div className="col-span-6 font-display text-xl">{u.title}</div>
-          <div className="col-span-2 text-muted-foreground">{u.lots}</div>
-          <div className="col-span-2 text-right">
-            <Link
-              to="/membership"
-              className="inline-block rounded-sm border border-border px-3 py-1.5 text-[10px] uppercase tracking-[0.3em] hover:border-gold hover:text-gold"
-            >
-              Reserve
-            </Link>
-          </div>
-        </div>
-      ))}
+      <div className="mt-1 font-mono text-sm">{value}</div>
     </div>
   );
 }
 
-function PastResults() {
-  const past = [
-    { title: "1990 Krug Clos d'Ambonnay", sold: "$28,400", change: "+18%" },
-    { title: "Yamazaki 55 Year", sold: "$795,000", change: "+42%" },
-    { title: "1945 Romanée-Conti", sold: "$558,000", change: "+27%" },
-    { title: "Macallan Fine & Rare 1926", sold: "$1.2M", change: "+34%" },
-  ];
+function Info({ title, body }: { title: string; body: string }) {
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-      {past.map((p) => (
-        <div key={p.title} className="rounded-sm border border-border bg-surface/40 p-6">
-          <div className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-            Hammered
-          </div>
-          <div className="mt-2 font-display text-3xl text-gold-gradient">{p.sold}</div>
-          <h3 className="mt-3 font-serif text-lg">{p.title}</h3>
-          <div className="mt-3 text-xs text-gold">{p.change} vs estimate</div>
-        </div>
-      ))}
+    <div className="rounded-sm border border-border bg-background/40 p-6">
+      <h3 className="mb-2 font-display text-xl">{title}</h3>
+      <p className="text-sm text-muted-foreground">{body}</p>
     </div>
   );
 }
 
-function formatRemaining(endsAt: number) {
-  const diff = Math.max(0, endsAt - Date.now());
-  const h = Math.floor(diff / 3_600_000);
-  const m = Math.floor((diff % 3_600_000) / 60_000);
-  const s = Math.floor((diff % 60_000) / 1000);
-  return `${String(h).padStart(2, "0")}h ${String(m).padStart(2, "0")}m ${String(s).padStart(2, "0")}s`;
-}
+// Silence unused import warning for formatMoney (used in child routes).
+void formatMoney;
