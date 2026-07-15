@@ -1,8 +1,14 @@
 import { Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import type { ReactNode } from "react";
+import { useAuth } from "@/hooks/use-auth";
+import { getMyMembership } from "@/lib/membership.functions";
 
-// Phase 1: no real auth. This gate always renders the CTA path for
-// unauthenticated visitors. Wire to Supabase session in Phase 2.
+/**
+ * Real member gate. Renders `children` for active members. Shows a paywall
+ * for guests and pending applicants.
+ */
 export function MemberGate({
   children,
   reason,
@@ -10,6 +16,29 @@ export function MemberGate({
   children?: ReactNode;
   reason?: string;
 }) {
+  const { user, loading } = useAuth();
+  const fetchMe = useServerFn(getMyMembership);
+  const { data, isLoading } = useQuery({
+    queryKey: ["me", user?.id ?? "guest"],
+    queryFn: () => fetchMe(),
+    enabled: !!user,
+    staleTime: 30_000,
+  });
+
+  if (loading || (user && isLoading)) {
+    return (
+      <div className="rounded-sm border border-border bg-surface/40 p-10 text-center text-sm text-muted-foreground">
+        Loading…
+      </div>
+    );
+  }
+
+  if (data?.isMember) return <>{children}</>;
+
+  const cta = user ? "Complete membership" : "Become a member";
+  const secondaryLabel = user ? "View dashboard" : "Sign in";
+  const secondaryTo = user ? "/dashboard" : "/auth";
+
   return (
     <div className="relative overflow-hidden rounded-sm border border-border bg-surface/40 p-10 text-center">
       {children ? (
@@ -22,7 +51,7 @@ export function MemberGate({
           Members Only
         </span>
         <h3 className="mb-3 font-display text-3xl">
-          Sign in — or join Opus Drinks
+          {user ? "Activate your membership" : "Sign in — or join Opus Drinks"}
         </h3>
         <p className="mx-auto mb-6 max-w-md text-sm text-muted-foreground">
           {reason ??
@@ -33,13 +62,13 @@ export function MemberGate({
             to="/membership"
             className="rounded-sm gold-gradient px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-primary-foreground"
           >
-            Become a Member
+            {cta}
           </Link>
           <Link
-            to="/dashboard"
+            to={secondaryTo}
             className="rounded-sm border border-border px-6 py-3 text-[11px] uppercase tracking-[0.3em] text-muted-foreground hover:border-gold hover:text-gold"
           >
-            Sign in
+            {secondaryLabel}
           </Link>
         </div>
       </div>
