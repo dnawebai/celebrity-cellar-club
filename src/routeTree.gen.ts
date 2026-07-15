@@ -29,7 +29,10 @@ import { Route as AuthenticatedWatchlistRouteImport } from './routes/_authentica
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedConciergeRouteImport } from './routes/_authenticated/concierge'
 import { Route as AuthenticatedBidsRouteImport } from './routes/_authenticated/bids'
+import { Route as AuthenticatedCheckoutReturnRouteImport } from './routes/_authenticated/checkout.return'
+import { Route as AuthenticatedCheckoutMembershipRouteImport } from './routes/_authenticated/checkout.membership'
 import { Route as AuctionsAuctionIdLotsLotIdRouteImport } from './routes/auctions.$auctionId.lots.$lotId'
+import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
 const SponsorsRoute = SponsorsRouteImport.update({
   id: '/sponsors',
@@ -130,11 +133,29 @@ const AuthenticatedBidsRoute = AuthenticatedBidsRouteImport.update({
   path: '/bids',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedCheckoutReturnRoute =
+  AuthenticatedCheckoutReturnRouteImport.update({
+    id: '/checkout/return',
+    path: '/checkout/return',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedCheckoutMembershipRoute =
+  AuthenticatedCheckoutMembershipRouteImport.update({
+    id: '/checkout/membership',
+    path: '/checkout/membership',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuctionsAuctionIdLotsLotIdRoute =
   AuctionsAuctionIdLotsLotIdRouteImport.update({
     id: '/lots/$lotId',
     path: '/lots/$lotId',
     getParentRoute: () => AuctionsAuctionIdRoute,
+  } as any)
+const ApiPublicPaymentsWebhookRoute =
+  ApiPublicPaymentsWebhookRouteImport.update({
+    id: '/api/public/payments/webhook',
+    path: '/api/public/payments/webhook',
+    getParentRoute: () => rootRouteImport,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -157,6 +178,9 @@ export interface FileRoutesByFullPath {
   '/watchlist': typeof AuthenticatedWatchlistRoute
   '/admin/members': typeof AdminMembersRoute
   '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
+  '/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
+  '/checkout/return': typeof AuthenticatedCheckoutReturnRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/auctions/$auctionId/lots/$lotId': typeof AuctionsAuctionIdLotsLotIdRoute
 }
 export interface FileRoutesByTo {
@@ -179,6 +203,9 @@ export interface FileRoutesByTo {
   '/watchlist': typeof AuthenticatedWatchlistRoute
   '/admin/members': typeof AdminMembersRoute
   '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
+  '/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
+  '/checkout/return': typeof AuthenticatedCheckoutReturnRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/auctions/$auctionId/lots/$lotId': typeof AuctionsAuctionIdLotsLotIdRoute
 }
 export interface FileRoutesById {
@@ -203,6 +230,9 @@ export interface FileRoutesById {
   '/_authenticated/watchlist': typeof AuthenticatedWatchlistRoute
   '/admin/members': typeof AdminMembersRoute
   '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
+  '/_authenticated/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
+  '/_authenticated/checkout/return': typeof AuthenticatedCheckoutReturnRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/auctions/$auctionId/lots/$lotId': typeof AuctionsAuctionIdLotsLotIdRoute
 }
 export interface FileRouteTypes {
@@ -227,6 +257,9 @@ export interface FileRouteTypes {
     | '/watchlist'
     | '/admin/members'
     | '/auctions/$auctionId'
+    | '/checkout/membership'
+    | '/checkout/return'
+    | '/api/public/payments/webhook'
     | '/auctions/$auctionId/lots/$lotId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -249,6 +282,9 @@ export interface FileRouteTypes {
     | '/watchlist'
     | '/admin/members'
     | '/auctions/$auctionId'
+    | '/checkout/membership'
+    | '/checkout/return'
+    | '/api/public/payments/webhook'
     | '/auctions/$auctionId/lots/$lotId'
   id:
     | '__root__'
@@ -272,6 +308,9 @@ export interface FileRouteTypes {
     | '/_authenticated/watchlist'
     | '/admin/members'
     | '/auctions/$auctionId'
+    | '/_authenticated/checkout/membership'
+    | '/_authenticated/checkout/return'
+    | '/api/public/payments/webhook'
     | '/auctions/$auctionId/lots/$lotId'
   fileRoutesById: FileRoutesById
 }
@@ -291,6 +330,7 @@ export interface RootRouteChildren {
   SommelierRoute: typeof SommelierRoute
   SponsorsRoute: typeof SponsorsRoute
   AdminMembersRoute: typeof AdminMembersRoute
+  ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -435,12 +475,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBidsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/checkout/return': {
+      id: '/_authenticated/checkout/return'
+      path: '/checkout/return'
+      fullPath: '/checkout/return'
+      preLoaderRoute: typeof AuthenticatedCheckoutReturnRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/checkout/membership': {
+      id: '/_authenticated/checkout/membership'
+      path: '/checkout/membership'
+      fullPath: '/checkout/membership'
+      preLoaderRoute: typeof AuthenticatedCheckoutMembershipRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/auctions/$auctionId/lots/$lotId': {
       id: '/auctions/$auctionId/lots/$lotId'
       path: '/lots/$lotId'
       fullPath: '/auctions/$auctionId/lots/$lotId'
       preLoaderRoute: typeof AuctionsAuctionIdLotsLotIdRouteImport
       parentRoute: typeof AuctionsAuctionIdRoute
+    }
+    '/api/public/payments/webhook': {
+      id: '/api/public/payments/webhook'
+      path: '/api/public/payments/webhook'
+      fullPath: '/api/public/payments/webhook'
+      preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -450,6 +511,8 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedConciergeRoute: typeof AuthenticatedConciergeRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedWatchlistRoute: typeof AuthenticatedWatchlistRoute
+  AuthenticatedCheckoutMembershipRoute: typeof AuthenticatedCheckoutMembershipRoute
+  AuthenticatedCheckoutReturnRoute: typeof AuthenticatedCheckoutReturnRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -457,6 +520,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedConciergeRoute: AuthenticatedConciergeRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedWatchlistRoute: AuthenticatedWatchlistRoute,
+  AuthenticatedCheckoutMembershipRoute: AuthenticatedCheckoutMembershipRoute,
+  AuthenticatedCheckoutReturnRoute: AuthenticatedCheckoutReturnRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -501,17 +566,8 @@ const rootRouteChildren: RootRouteChildren = {
   SommelierRoute: SommelierRoute,
   SponsorsRoute: SponsorsRoute,
   AdminMembersRoute: AdminMembersRoute,
+  ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
