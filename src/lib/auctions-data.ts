@@ -78,10 +78,22 @@ import bottleG from "@/assets/celeb-pappy.jpg";
 import bottleH from "@/assets/celeb-sancerre.jpg";
 
 const DAY = 86_400_000;
-const now = Date.now();
-const iso = (offsetMs: number) => new Date(now + offsetMs).toISOString();
 
-export const auctions: Auction[] = [
+// Build auctions per call so dates stay fresh. On serverless runtimes
+// (Cloudflare Workers / Nitro isolates) module-scope `Date.now()` freezes
+// at isolate startup and countdowns drift to 00h 00m 00s. Recompute here.
+function buildAuctions(): Auction[] {
+  const now = Date.now();
+  const iso = (offsetMs: number) => new Date(now + offsetMs).toISOString();
+  return _auctionsFactory(iso);
+}
+
+export function getAuctions(): Auction[] {
+  return buildAuctions();
+}
+
+const _auctionsFactory = (iso: (ms: number) => string): Auction[] => [
+
   {
     id: "opus-a-001",
     sourceId: "sothebys-wine",
