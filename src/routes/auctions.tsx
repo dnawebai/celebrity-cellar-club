@@ -193,8 +193,7 @@ function AuctionCard({ a }: { a: Auction }) {
         {/* Image → $99 membership checkout. Bidding is member-only, so the
             hero image is the invitation to join. */}
         <Link
-          to="/membership"
-          search={{ intent: "checkout", auction: a.id }}
+          to="/checkout/membership"
           aria-label={`Join Opus Drinks — $99 to unlock ${a.title}`}
           className="relative block aspect-[4/5] overflow-hidden md:aspect-auto"
         >
