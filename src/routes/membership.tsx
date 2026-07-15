@@ -4,7 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { SiteShell } from "@/components/site-shell";
 import { useAuth } from "@/hooks/use-auth";
-import { saveProfile, submitVerification, selectBillingAndActivate } from "@/lib/membership.functions";
+import { saveProfile, submitVerification, selectBillingCycle } from "@/lib/membership.functions";
 import celebBranson from "@/assets/celeb-branson.jpg";
 import celebMouton from "@/assets/celeb-mouton.jpg";
 import celebSancerre from "@/assets/celeb-sancerre.jpg";
@@ -442,7 +442,7 @@ function SubscribeModal({ tier, onClose }: { tier: Tier; onClose: () => void }) 
   const qc = useQueryClient();
   const saveProfileFn = useServerFn(saveProfile);
   const submitVerificationFn = useServerFn(submitVerification);
-  const activateFn = useServerFn(selectBillingAndActivate);
+  const selectBillingFn = useServerFn(selectBillingCycle);
 
   if (!loading && !user) {
     return (
@@ -489,15 +489,18 @@ function SubscribeModal({ tier, onClose }: { tier: Tier; onClose: () => void }) 
           residence_doc_ref: `${form.address}, ${form.city}, ${form.state} ${form.zip}`,
         },
       });
-      await activateFn({ data: { billing_cycle: billing } });
+      await selectBillingFn({ data: { billing_cycle: billing } });
       qc.invalidateQueries();
-      setStep("done");
+      // Payment is completed via Stripe. Membership activation happens
+      // in the webhook after checkout.session.completed.
+      navigate({ to: "/checkout/membership" });
     } catch (e: unknown) {
       setErr(e instanceof Error ? e.message : "Something went wrong");
     } finally {
       setBusy(false);
     }
   }
+
 
   return (
     <div
@@ -616,8 +619,8 @@ function SubscribeModal({ tier, onClose }: { tier: Tier; onClose: () => void }) 
                 <span className="text-foreground">$99.00</span>
               </div>
               <div className="pt-3 text-xs text-muted-foreground">
-                Real Stripe checkout activates once payments are enabled on this project.
-                For now, activation records your membership immediately for testing.
+                Next: you'll be taken to Stripe's secure $99 checkout. Your membership
+                activates automatically the moment payment is confirmed.
               </div>
             </div>
 
@@ -636,8 +639,9 @@ function SubscribeModal({ tier, onClose }: { tier: Tier; onClose: () => void }) 
                 disabled={busy}
                 className="flex-1 rounded-sm gold-gradient py-3.5 text-[11px] font-semibold uppercase tracking-[0.3em] text-primary-foreground hover:brightness-110 disabled:opacity-60"
               >
-                {busy ? "Activating…" : "Activate membership"}
+                {busy ? "Preparing checkout…" : "Continue to $99 checkout"}
               </button>
+
             </div>
           </div>
         )}
