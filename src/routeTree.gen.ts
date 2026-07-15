@@ -29,6 +29,7 @@ import { Route as AuthenticatedWatchlistRouteImport } from './routes/_authentica
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedConciergeRouteImport } from './routes/_authenticated/concierge'
 import { Route as AuthenticatedBidsRouteImport } from './routes/_authenticated/bids'
+import { Route as AuthenticatedCheckoutMembershipRouteImport } from './routes/_authenticated/checkout.membership'
 import { Route as AuctionsAuctionIdLotsLotIdRouteImport } from './routes/auctions.$auctionId.lots.$lotId'
 
 const SponsorsRoute = SponsorsRouteImport.update({
@@ -130,6 +131,12 @@ const AuthenticatedBidsRoute = AuthenticatedBidsRouteImport.update({
   path: '/bids',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedCheckoutMembershipRoute =
+  AuthenticatedCheckoutMembershipRouteImport.update({
+    id: '/checkout/membership',
+    path: '/checkout/membership',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuctionsAuctionIdLotsLotIdRoute =
   AuctionsAuctionIdLotsLotIdRouteImport.update({
     id: '/lots/$lotId',
@@ -157,6 +164,7 @@ export interface FileRoutesByFullPath {
   '/watchlist': typeof AuthenticatedWatchlistRoute
   '/admin/members': typeof AdminMembersRoute
   '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
+  '/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
   '/auctions/$auctionId/lots/$lotId': typeof AuctionsAuctionIdLotsLotIdRoute
 }
 export interface FileRoutesByTo {
@@ -179,6 +187,7 @@ export interface FileRoutesByTo {
   '/watchlist': typeof AuthenticatedWatchlistRoute
   '/admin/members': typeof AdminMembersRoute
   '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
+  '/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
   '/auctions/$auctionId/lots/$lotId': typeof AuctionsAuctionIdLotsLotIdRoute
 }
 export interface FileRoutesById {
@@ -203,6 +212,7 @@ export interface FileRoutesById {
   '/_authenticated/watchlist': typeof AuthenticatedWatchlistRoute
   '/admin/members': typeof AdminMembersRoute
   '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
+  '/_authenticated/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
   '/auctions/$auctionId/lots/$lotId': typeof AuctionsAuctionIdLotsLotIdRoute
 }
 export interface FileRouteTypes {
@@ -227,6 +237,7 @@ export interface FileRouteTypes {
     | '/watchlist'
     | '/admin/members'
     | '/auctions/$auctionId'
+    | '/checkout/membership'
     | '/auctions/$auctionId/lots/$lotId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -249,6 +260,7 @@ export interface FileRouteTypes {
     | '/watchlist'
     | '/admin/members'
     | '/auctions/$auctionId'
+    | '/checkout/membership'
     | '/auctions/$auctionId/lots/$lotId'
   id:
     | '__root__'
@@ -272,6 +284,7 @@ export interface FileRouteTypes {
     | '/_authenticated/watchlist'
     | '/admin/members'
     | '/auctions/$auctionId'
+    | '/_authenticated/checkout/membership'
     | '/auctions/$auctionId/lots/$lotId'
   fileRoutesById: FileRoutesById
 }
@@ -435,6 +448,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBidsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/checkout/membership': {
+      id: '/_authenticated/checkout/membership'
+      path: '/checkout/membership'
+      fullPath: '/checkout/membership'
+      preLoaderRoute: typeof AuthenticatedCheckoutMembershipRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/auctions/$auctionId/lots/$lotId': {
       id: '/auctions/$auctionId/lots/$lotId'
       path: '/lots/$lotId'
@@ -450,6 +470,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedConciergeRoute: typeof AuthenticatedConciergeRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedWatchlistRoute: typeof AuthenticatedWatchlistRoute
+  AuthenticatedCheckoutMembershipRoute: typeof AuthenticatedCheckoutMembershipRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -457,6 +478,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedConciergeRoute: AuthenticatedConciergeRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedWatchlistRoute: AuthenticatedWatchlistRoute,
+  AuthenticatedCheckoutMembershipRoute: AuthenticatedCheckoutMembershipRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
