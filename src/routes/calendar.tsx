@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
 import { DemoDataBanner } from "@/components/demo-data-banner";
-import { auctions } from "@/lib/auctions-data";
+import { getAuctions } from "@/lib/auctions-data";
 
 export const Route = createFileRoute("/calendar")({
   head: () => ({
@@ -20,7 +20,7 @@ export const Route = createFileRoute("/calendar")({
 });
 
 function CalendarPage() {
-  const sorted = [...auctions].sort(
+  const sorted = [...getAuctions()].sort(
     (a, b) => new Date(a.startsAtUtc).getTime() - new Date(b.startsAtUtc).getTime(),
   );
 
