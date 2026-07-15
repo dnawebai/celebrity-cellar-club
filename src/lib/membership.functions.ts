@@ -61,15 +61,30 @@ export const getMyMembership = createServerFn({ method: "GET" })
         supabase.from("user_roles").select("role").eq("user_id", userId),
       ]);
 
+    // Entitlement: status must be active AND current_period_end (if set)
+    // must be in the future. An expired active row is treated as not-a-member
+    // until the nightly cron flips it to 'expired'.
+    const now = Date.now();
+    const periodEnd = membership?.current_period_end
+      ? new Date(membership.current_period_end).getTime()
+      : null;
+    const isMember =
+      membership?.status === "active" && (periodEnd === null || periodEnd > now);
+    const isExpired =
+      (membership?.status === "expired" ||
+        (membership?.status === "active" && periodEnd !== null && periodEnd <= now));
+
     return {
       userId,
       profile,
       membership,
       roles: (roles ?? []).map((r) => r.role),
-      isMember: membership?.status === "active",
+      isMember,
+      isExpired,
       isAdmin: (roles ?? []).some((r) => r.role === "admin"),
     };
   });
+
 
 /**
  * Save the user's compliance profile (name, DOB, country/region). DB trigger
@@ -132,68 +147,23 @@ export const submitVerification = createServerFn({ method: "POST" })
   });
 
 /**
- * Choose billing cycle. Real Stripe checkout is Phase 3; for now this
- * updates the membership row and flips status to active (demonstration mode).
- * When Stripe is enabled, this will create a Checkout Session instead and
- * activation moves to the webhook.
+ * Membership activation is now handled by the Stripe webhook on
+ * `checkout.session.completed`. This helper only stores a chosen
+ * billing cycle preference on the pending row — no status change.
  */
-export const selectBillingAndActivate = createServerFn({ method: "POST" })
+export const selectBillingCycle = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) =>
     z
-      .object({
-        billing_cycle: z.enum(["one_time", "monthly", "annual"]),
-      })
+      .object({ billing_cycle: z.enum(["one_time", "monthly", "annual"]) })
       .parse(input),
   )
   .handler(async ({ data, context }) => {
-    // Require a profile with DOB and a submitted verification before activating.
-    const { data: profile } = await context.supabase
-      .from("profiles")
-      .select("date_of_birth")
-      .eq("id", context.userId)
-      .maybeSingle();
-    if (!profile?.date_of_birth) {
-      throw new Error("Complete your profile (with date of birth) first.");
-    }
-    const { data: v } = await context.supabase
-      .from("id_verifications")
-      .select("id")
-      .eq("user_id", context.userId)
-      .limit(1);
-    if (!v || v.length === 0) {
-      throw new Error("Submit an ID verification first.");
-    }
-
-    const now = new Date();
-    const periodEnd = new Date(now);
-    if (data.billing_cycle === "monthly") {
-      periodEnd.setMonth(periodEnd.getMonth() + 1);
-    } else if (data.billing_cycle === "annual") {
-      periodEnd.setFullYear(periodEnd.getFullYear() + 1);
-    } else {
-      periodEnd.setFullYear(periodEnd.getFullYear() + 100);
-    }
-
-    const { error: mErr } = await context.supabase
+    const { error } = await context.supabase
       .from("memberships")
-      .update({
-        billing_cycle: data.billing_cycle,
-        price_cents: 9900,
-        status: "active",
-        started_at: now.toISOString(),
-        current_period_end: periodEnd.toISOString(),
-      })
+      .update({ billing_cycle: data.billing_cycle, price_cents: 9900 })
       .eq("user_id", context.userId);
-    if (mErr) throw new Error(mErr.message);
-
-    // Promote applicant → member (idempotent via unique constraint).
-    await context.supabase
-      .from("user_roles")
-      .upsert(
-        { user_id: context.userId, role: "member" },
-        { onConflict: "user_id,role" },
-      );
-
+    if (error) throw new Error(error.message);
     return { ok: true };
   });
+

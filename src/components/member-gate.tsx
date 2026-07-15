@@ -35,9 +35,12 @@ export function MemberGate({
 
   if (data?.isMember) return <>{children}</>;
 
-  const cta = user ? "Complete membership" : "Become a member";
+  const isExpired = !!data?.isExpired;
+  const cta = !user ? "Become a member" : isExpired ? "Renew · $99" : "Complete membership";
+  const ctaTo = user && isExpired ? "/checkout/membership" : "/membership";
   const secondaryLabel = user ? "View dashboard" : "Sign in";
   const secondaryTo = user ? "/dashboard" : "/auth";
+
 
   return (
     <div className="relative overflow-hidden rounded-sm border border-border bg-surface/40 p-10 text-center">
@@ -51,19 +54,26 @@ export function MemberGate({
           Members Only
         </span>
         <h3 className="mb-3 font-display text-3xl">
-          {user ? "Activate your membership" : "Sign in — or join Opus Drinks"}
+          {!user
+            ? "Sign in — or join Opus Drinks"
+            : isExpired
+              ? "Your membership has expired"
+              : "Activate your membership"}
         </h3>
         <p className="mx-auto mb-6 max-w-md text-sm text-muted-foreground">
           {reason ??
-            "Complete auction details, bidding, watchlists, and portfolio access are reserved for verified members ($99)."}
+            (isExpired
+              ? "Renew your $99 Opus Drinks membership to restore auction access, watchlists, and concierge."
+              : "Complete auction details, bidding, watchlists, and portfolio access are reserved for verified members ($99).")}
         </p>
         <div className="flex flex-wrap justify-center gap-3">
           <Link
-            to="/membership"
+            to={ctaTo}
             className="rounded-sm gold-gradient px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-primary-foreground"
           >
             {cta}
           </Link>
+
           <Link
             to={secondaryTo}
             className="rounded-sm border border-border px-6 py-3 text-[11px] uppercase tracking-[0.3em] text-muted-foreground hover:border-gold hover:text-gold"
