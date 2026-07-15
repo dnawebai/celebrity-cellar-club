@@ -55,7 +55,7 @@ function AuctionsPage() {
   }, []);
 
   const filtered = useMemo(() => {
-    return auctions.filter((a) => {
+    return getAuctions().filter((a: Auction) => {
       if (tab !== "all" && a.status !== tab) return false;
       if (category !== "all" && a.category !== category && a.category !== "mixed")
         return false;
