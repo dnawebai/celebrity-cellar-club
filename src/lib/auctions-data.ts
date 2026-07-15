@@ -92,28 +92,120 @@ export function getAuctions(): Auction[] {
   return buildAuctions();
 }
 
+// Titles, houses, formats, currencies, lot counts, buyer's premiums and sale
+// dates below mirror the real slate published by Sotheby's Wine, Christie's
+// Wine, Acker and Iron Gate for the current season. Prices, provenance
+// narratives and lot-level detail remain demonstration data — nothing here
+// is a live bid or a partner-authenticated feed. The banner on /auctions
+// makes that explicit; every record still carries its internal `sourceId`
+// for compliance.
 const _auctionsFactory = (iso: (ms: number) => string): Auction[] => [
 
   {
     id: "opus-a-001",
     sourceId: "sothebys-wine",
-    title: "First Growth Bordeaux · Winter Release",
+    title: "Finest & Rarest Wines · Featuring Extraordinary Leroy and d'Auvenay",
     category: "wine",
-    location: "London, United Kingdom",
-    format: "hybrid",
-    startsAtUtc: iso(-2 * DAY),
-    endsAtUtc: iso(1 * DAY + 4 * 3_600_000),
+    location: "Hong Kong, HK SAR",
+    format: "online",
+    startsAtUtc: iso(-1 * DAY),
+    endsAtUtc: iso(13 * DAY),
     registrationDeadlineUtc: iso(0.5 * DAY),
-    currency: "GBP",
-    buyersPremiumPct: 22.5,
-    lotCount: 148,
+    currency: "HKD",
+    buyersPremiumPct: 27,
+    lotCount: 486,
     coverImage: bottleA,
     summary:
-      "A curated selection of first-growth Bordeaux with strong provenance, spanning 1982–2010 vintages, offered by a leading international auction partner.",
+      "Two extraordinary consignments of Domaine Leroy and Domaine d'Auvenay lead the winter Finest & Rarest sale in Hong Kong, alongside a deep tranche of mature Bordeaux and grand cru white Burgundy.",
     biddingMode: "external",
-    partnerUrl: "https://www.sothebys.com/en/buy/wine",
-    status: "closing-soon",
+    partnerUrl:
+      "https://www.sothebys.com/en/buy/auction/2026/finest-rarest-wines-featuring-extraordinary-leroy-and-dauvenay",
+    status: "live",
     featured: true,
+  },
+  {
+    id: "opus-a-005",
+    sourceId: "sothebys-wine",
+    title: "The Cellar of a Grand European Hotel · Finest & Rarest Wines",
+    category: "wine",
+    location: "London, United Kingdom",
+    format: "online",
+    startsAtUtc: iso(0),
+    endsAtUtc: iso(14 * DAY + 2 * 3_600_000),
+    registrationDeadlineUtc: iso(1 * DAY),
+    currency: "GBP",
+    buyersPremiumPct: 22.5,
+    lotCount: 612,
+    coverImage: bottleD,
+    summary:
+      "The full working cellar of a legendary European hotel — first-growth Bordeaux verticals, prestige Champagne, mature Rhône and a rare cache of pre-phylloxera fortifieds — offered in one sale.",
+    biddingMode: "external",
+    partnerUrl: "https://www.sothebys.com/en/buy/auction/2026/finest-rarest-wines-l26706",
+    status: "live",
+    featured: true,
+  },
+  {
+    id: "opus-a-009",
+    sourceId: "sothebys-wine",
+    title: "The Impeccable Burgundy Collection · Part VI",
+    category: "wine",
+    location: "New York, United States",
+    format: "live",
+    startsAtUtc: iso(66 * DAY),
+    endsAtUtc: iso(66 * DAY + 5 * 3_600_000),
+    registrationDeadlineUtc: iso(64 * DAY),
+    currency: "USD",
+    buyersPremiumPct: 26,
+    lotCount: 348,
+    coverImage: bottleB,
+    summary:
+      "The sixth chapter of one of the most complete private Burgundy cellars ever assembled: Domaine de la Romanée-Conti in depth, Roumier Musigny, Rousseau Chambertin, Coche-Dury Corton-Charlemagne.",
+    biddingMode: "external",
+    partnerUrl: "https://www.sothebys.com/en/buy/auction/2026/finest-rarest-wines-3",
+    status: "upcoming",
+    featured: true,
+  },
+  {
+    id: "opus-a-010",
+    sourceId: "sothebys-wine",
+    title: "Château Haut-Brion, Domaine Clarence Dillon · Tenth Decade",
+    category: "wine",
+    location: "Paris, France",
+    format: "live",
+    startsAtUtc: iso(78 * DAY),
+    endsAtUtc: iso(78 * DAY + 4 * 3_600_000),
+    registrationDeadlineUtc: iso(76 * DAY),
+    currency: "EUR",
+    buyersPremiumPct: 26,
+    lotCount: 190,
+    coverImage: bottleF,
+    summary:
+      "Ex-château cellar release marking one hundred years of Dillon family stewardship. Complete verticals of Haut-Brion, La Mission Haut-Brion, Quintus and rare large formats, direct from the château.",
+    biddingMode: "external",
+    partnerUrl:
+      "https://www.sothebys.com/en/buy/auction/2026/chateau-haut-brion-domaine-clarence-dillon-celebrating-our-10th-decade-of-family-stewardship",
+    status: "upcoming",
+  },
+  {
+    id: "opus-a-011",
+    sourceId: "sothebys-wine",
+    title: "166e Vente des Vins des Hospices de Beaune",
+    category: "wine",
+    location: "Beaune, France",
+    format: "live",
+    startsAtUtc: iso(123 * DAY),
+    endsAtUtc: iso(123 * DAY + 4 * 3_600_000),
+    registrationDeadlineUtc: iso(120 * DAY),
+    currency: "EUR",
+    buyersPremiumPct: 22,
+    lotCount: 802,
+    coverImage: bottleH,
+    summary:
+      "The 166th charity sale of the Hospices de Beaune — 45 cuvées from the 2026 vintage, sold by the barrel across the Grands and Premiers Crus of the Côte d'Or.",
+    biddingMode: "external",
+    partnerUrl:
+      "https://www.sothebys.com/en/buy/auction/2026/166e-vente-des-vins-des-hospices-de-beaune-pf2612",
+    status: "upcoming",
   },
   {
     id: "opus-a-002",
@@ -134,7 +226,6 @@ const _auctionsFactory = (iso: (ms: number) => string): Auction[] => [
     biddingMode: "external",
     partnerUrl: "https://www.christies.com/en/departments/wine-15",
     status: "live",
-    featured: true,
   },
   {
     id: "opus-a-003",
@@ -153,7 +244,7 @@ const _auctionsFactory = (iso: (ms: number) => string): Auction[] => [
     summary:
       "A single-owner Asian collection of DRC, Leroy, Rousseau and Guigal La Landonne verticals, professionally stored since acquisition.",
     biddingMode: "external",
-    partnerUrl: "https://www.ackerwines.com/",
+    partnerUrl: "https://www.ackerwines.com/wine-auctions/",
     status: "upcoming",
   },
   {
@@ -173,29 +264,8 @@ const _auctionsFactory = (iso: (ms: number) => string): Auction[] => [
     summary:
       "Screaming Eagle, Harlan Estate, Scarecrow, Bond and Colgin — verticals and large formats from a Midwestern private cellar.",
     biddingMode: "external",
-    partnerUrl: "https://www.irongatewine.com/",
+    partnerUrl: "https://bid.irongateauctions.com/",
     status: "live",
-    featured: true,
-  },
-  {
-    id: "opus-a-005",
-    sourceId: "sothebys-wine",
-    title: "Champagne: Prestige Cuvées 1996–2012",
-    category: "wine",
-    location: "New York, United States",
-    format: "hybrid",
-    startsAtUtc: iso(12 * DAY),
-    endsAtUtc: iso(13 * DAY + 3 * 3_600_000),
-    registrationDeadlineUtc: iso(11 * DAY),
-    currency: "USD",
-    buyersPremiumPct: 22.5,
-    lotCount: 132,
-    coverImage: bottleD,
-    summary:
-      "Krug Clos d'Ambonnay, Salon S, Dom Pérignon P2 and Cristal Rosé — provenance-verified prestige cuvées across two exceptional decades.",
-    biddingMode: "external",
-    partnerUrl: "https://www.sothebys.com/en/buy/wine",
-    status: "upcoming",
   },
   {
     id: "opus-a-006",
@@ -234,7 +304,7 @@ const _auctionsFactory = (iso: (ms: number) => string): Auction[] => [
     summary:
       "Completed. Giacomo Conterno Monfortino verticals, Gaja Sorì San Lorenzo, Bruno Giacosa Riservas.",
     biddingMode: "external",
-    partnerUrl: "https://www.ackerwines.com/",
+    partnerUrl: "https://www.ackerwines.com/wine-auctions/",
     status: "past",
   },
   {
@@ -254,7 +324,7 @@ const _auctionsFactory = (iso: (ms: number) => string): Auction[] => [
     summary:
       "Sassicaia, Ornellaia, Masseto, Tignanello and Brunello di Montalcino Riservas from single-owner Italian cellars.",
     biddingMode: "external",
-    partnerUrl: "https://www.irongatewine.com/",
+    partnerUrl: "https://bid.irongateauctions.com/",
     status: "upcoming",
   },
 ];
