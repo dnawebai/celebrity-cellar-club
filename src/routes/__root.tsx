@@ -77,20 +77,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "OPUS DRINKS — Where Great Beverages Become Legacy" },
+      { title: "OPUS DRINKS — Collect. Invest. Experience." },
       {
         name: "description",
         content:
-          "Invitation-only luxury membership, live auctions, celebrity beverage marketplace, and wine investment platform for collectors and connoisseurs.",
+          "The members-only platform for the next generation of collectors. Live auctions, celebrity drops, AI sommelier, and a wine investment portfolio in one app.",
       },
-      { property: "og:title", content: "OPUS DRINKS — Where Great Beverages Become Legacy" },
+      { property: "og:title", content: "OPUS DRINKS — Collect. Invest. Experience." },
       {
         property: "og:description",
         content:
-          "Luxury membership, live auctions, celebrity collections, and wine investment for the world's most discerning collectors.",
+          "The members-only platform for the next generation of collectors. Live auctions, celebrity drops, AI sommelier, and a wine investment portfolio in one app.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "OPUS DRINKS — Collect. Invest. Experience." },
+      { name: "twitter:description", content: "The members-only platform for the next generation of collectors. Live auctions, celebrity drops, AI sommelier, and a wine investment portfolio in one app." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8e7cc765-ee70-4b58-a999-c528fed4d2ae/id-preview-a6eb391c--05836ee3-6fe8-4582-8580-145fae04b449.lovable.app-1783257177882.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8e7cc765-ee70-4b58-a999-c528fed4d2ae/id-preview-a6eb391c--05836ee3-6fe8-4582-8580-145fae04b449.lovable.app-1783257177882.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
