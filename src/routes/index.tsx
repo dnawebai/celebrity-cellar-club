@@ -64,12 +64,9 @@ const liveAuctions = [
   { lot: "Lot 021", title: "Pappy Van Winkle 23", region: "Kentucky", bid: "$12,400", bidders: 39, closes: "1d 06h 49m" },
 ];
 
-const stats = [
-  { value: `${formatMembers(getActiveMembers())}+`, label: "Members" },
-  { value: "$184M", label: "Transacted" },
-  { value: "320+", label: "Producers" },
-  { value: "+12.4%", label: "YTD Return" },
-];
+// Stats are built inside HomePage() so getActiveMembers() re-runs per
+// request/render. Module-scope evaluation freezes on serverless isolates.
+
 
 const pillars = [
   { n: "01", title: "Drops", body: "Limited-edition celebrity bottles. 100 per release. Numbered, signed, sealed." },
