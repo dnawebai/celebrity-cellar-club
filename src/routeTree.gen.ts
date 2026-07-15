@@ -29,6 +29,7 @@ import { Route as AuthenticatedWatchlistRouteImport } from './routes/_authentica
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedConciergeRouteImport } from './routes/_authenticated/concierge'
 import { Route as AuthenticatedBidsRouteImport } from './routes/_authenticated/bids'
+import { Route as AuthenticatedCheckoutReturnRouteImport } from './routes/_authenticated/checkout.return'
 import { Route as AuthenticatedCheckoutMembershipRouteImport } from './routes/_authenticated/checkout.membership'
 import { Route as AuctionsAuctionIdLotsLotIdRouteImport } from './routes/auctions.$auctionId.lots.$lotId'
 
@@ -131,6 +132,12 @@ const AuthenticatedBidsRoute = AuthenticatedBidsRouteImport.update({
   path: '/bids',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedCheckoutReturnRoute =
+  AuthenticatedCheckoutReturnRouteImport.update({
+    id: '/checkout/return',
+    path: '/checkout/return',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedCheckoutMembershipRoute =
   AuthenticatedCheckoutMembershipRouteImport.update({
     id: '/checkout/membership',
@@ -165,6 +172,7 @@ export interface FileRoutesByFullPath {
   '/admin/members': typeof AdminMembersRoute
   '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
   '/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
+  '/checkout/return': typeof AuthenticatedCheckoutReturnRoute
   '/auctions/$auctionId/lots/$lotId': typeof AuctionsAuctionIdLotsLotIdRoute
 }
 export interface FileRoutesByTo {
@@ -188,6 +196,7 @@ export interface FileRoutesByTo {
   '/admin/members': typeof AdminMembersRoute
   '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
   '/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
+  '/checkout/return': typeof AuthenticatedCheckoutReturnRoute
   '/auctions/$auctionId/lots/$lotId': typeof AuctionsAuctionIdLotsLotIdRoute
 }
 export interface FileRoutesById {
@@ -213,6 +222,7 @@ export interface FileRoutesById {
   '/admin/members': typeof AdminMembersRoute
   '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
   '/_authenticated/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
+  '/_authenticated/checkout/return': typeof AuthenticatedCheckoutReturnRoute
   '/auctions/$auctionId/lots/$lotId': typeof AuctionsAuctionIdLotsLotIdRoute
 }
 export interface FileRouteTypes {
@@ -238,6 +248,7 @@ export interface FileRouteTypes {
     | '/admin/members'
     | '/auctions/$auctionId'
     | '/checkout/membership'
+    | '/checkout/return'
     | '/auctions/$auctionId/lots/$lotId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -261,6 +272,7 @@ export interface FileRouteTypes {
     | '/admin/members'
     | '/auctions/$auctionId'
     | '/checkout/membership'
+    | '/checkout/return'
     | '/auctions/$auctionId/lots/$lotId'
   id:
     | '__root__'
@@ -285,6 +297,7 @@ export interface FileRouteTypes {
     | '/admin/members'
     | '/auctions/$auctionId'
     | '/_authenticated/checkout/membership'
+    | '/_authenticated/checkout/return'
     | '/auctions/$auctionId/lots/$lotId'
   fileRoutesById: FileRoutesById
 }
@@ -448,6 +461,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBidsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/checkout/return': {
+      id: '/_authenticated/checkout/return'
+      path: '/checkout/return'
+      fullPath: '/checkout/return'
+      preLoaderRoute: typeof AuthenticatedCheckoutReturnRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/checkout/membership': {
       id: '/_authenticated/checkout/membership'
       path: '/checkout/membership'
@@ -471,6 +491,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedWatchlistRoute: typeof AuthenticatedWatchlistRoute
   AuthenticatedCheckoutMembershipRoute: typeof AuthenticatedCheckoutMembershipRoute
+  AuthenticatedCheckoutReturnRoute: typeof AuthenticatedCheckoutReturnRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -479,6 +500,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedWatchlistRoute: AuthenticatedWatchlistRoute,
   AuthenticatedCheckoutMembershipRoute: AuthenticatedCheckoutMembershipRoute,
+  AuthenticatedCheckoutReturnRoute: AuthenticatedCheckoutReturnRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
