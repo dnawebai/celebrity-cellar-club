@@ -1,7 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { SiteShell } from "@/components/site-shell";
 import heroBottle from "@/assets/hero-bottle.jpg";
 import cellar from "@/assets/cellar-detail.jpg";
+import { getMyMembership } from "@/lib/membership.functions";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
@@ -25,7 +28,36 @@ const watchlist = [
   { title: "Pappy Van Winkle 23", bid: "$12,400", closes: "06h 49m" },
 ];
 
+function fmtDate(iso: string | null | undefined) {
+  if (!iso) return "—";
+  try {
+    return new Date(iso).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+  } catch {
+    return "—";
+  }
+}
+
 function Dashboard() {
+  const fetchMe = useServerFn(getMyMembership);
+  const { data: me } = useQuery({ queryKey: ["me"], queryFn: () => fetchMe(), staleTime: 30_000 });
+  const firstName =
+    me?.profile?.display_name?.split(" ")[0] ??
+    me?.profile?.full_name?.split(" ")[0] ??
+    "Member";
+  const memberSince = me?.membership?.started_at
+    ? new Date(me.membership.started_at).getFullYear()
+    : null;
+  const status = me?.membership?.status ?? "pending";
+  const isMember = !!me?.isMember;
+  const isExpired = !!me?.isExpired;
+  const statusLabel = isMember
+    ? `Opus Member · since ${memberSince ?? "—"}`
+    : isExpired
+      ? "Membership expired"
+      : status === "pending"
+        ? "Application pending — complete $99 checkout"
+        : `Membership status: ${status}`;
+
   return (
     <SiteShell>
       {/* Header */}
@@ -33,21 +65,26 @@ function Dashboard() {
         <div className="mx-auto flex max-w-[1400px] flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
             <span className="mb-3 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] text-gold">
-              <span className="size-1.5 rounded-full bg-gold pulse-gold" />
-              Opus Black · Member since 2023
+              <span className={`size-1.5 rounded-full ${isMember ? "bg-gold pulse-gold" : "bg-muted-foreground"}`} />
+              {statusLabel}
             </span>
-            <h1 className="font-display text-5xl md:text-6xl">Welcome back, Alexander.</h1>
+            <h1 className="font-display text-5xl md:text-6xl">Welcome back, {firstName}.</h1>
           </div>
           <div className="flex gap-3 text-[10px] uppercase tracking-[0.3em]">
+            {!isMember && (
+              <Link
+                to="/checkout/membership"
+                className="rounded-sm gold-gradient px-4 py-2 font-semibold text-primary-foreground"
+              >
+                {isExpired ? "Renew · $99" : "Complete · $99"}
+              </Link>
+            )}
             <Link
               to="/auctions"
               className="rounded-sm border border-border px-4 py-2 hover:border-gold hover:text-gold"
             >
               Auction Floor
             </Link>
-            <button className="rounded-sm gold-gradient px-4 py-2 font-semibold text-primary-foreground">
-              Settings
-            </button>
           </div>
         </div>
       </section>
@@ -56,7 +93,14 @@ function Dashboard() {
       <section className="border-b border-border bg-surface/30 px-6 py-10 lg:px-10">
         <div className="mx-auto grid max-w-[1400px] gap-px overflow-hidden md:grid-cols-4">
           {[
-            { k: "Portfolio Value", v: "$284,910", sub: "+12.4% YTD", up: true },
+            {
+              k: "Membership",
+              v: isMember ? "Active" : isExpired ? "Expired" : status[0].toUpperCase() + status.slice(1),
+              sub: isMember
+                ? `Renews ${fmtDate(me?.membership?.current_period_end)}`
+                : "$99 · 12 months",
+              up: isMember,
+            },
             { k: "Bottles in Cellar", v: "184", sub: "Across 12 regions" },
             { k: "Active Bids", v: "6", sub: "2 closing tonight", up: true },
             { k: "Upcoming Deliveries", v: "3", sub: "Next Oct 18" },
@@ -73,6 +117,7 @@ function Dashboard() {
           ))}
         </div>
       </section>
+
 
       {/* MAIN GRID */}
       <section className="px-6 py-12 lg:px-10">
