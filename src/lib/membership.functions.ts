@@ -61,15 +61,30 @@ export const getMyMembership = createServerFn({ method: "GET" })
         supabase.from("user_roles").select("role").eq("user_id", userId),
       ]);
 
+    // Entitlement: status must be active AND current_period_end (if set)
+    // must be in the future. An expired active row is treated as not-a-member
+    // until the nightly cron flips it to 'expired'.
+    const now = Date.now();
+    const periodEnd = membership?.current_period_end
+      ? new Date(membership.current_period_end).getTime()
+      : null;
+    const isMember =
+      membership?.status === "active" && (periodEnd === null || periodEnd > now);
+    const isExpired =
+      (membership?.status === "expired" ||
+        (membership?.status === "active" && periodEnd !== null && periodEnd <= now));
+
     return {
       userId,
       profile,
       membership,
       roles: (roles ?? []).map((r) => r.role),
-      isMember: membership?.status === "active",
+      isMember,
+      isExpired,
       isAdmin: (roles ?? []).some((r) => r.role === "admin"),
     };
   });
+
 
 /**
  * Save the user's compliance profile (name, DOB, country/region). DB trigger

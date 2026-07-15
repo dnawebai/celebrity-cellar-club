@@ -87,3 +87,33 @@ export const createMembershipCheckout = createServerFn({ method: "POST" })
       return { error: getStripeErrorMessage(error) };
     }
   });
+
+// Server-verify a Checkout Session so /checkout/return can only show
+// "Payment received" when Stripe confirms payment_status === 'paid'.
+export const verifyCheckoutSession = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(
+    (data: { sessionId: string; environment: StripeEnv }) => data,
+  )
+  .handler(async ({ data, context }) => {
+    try {
+      const stripe = createStripeClient(data.environment);
+      const session = await stripe.checkout.sessions.retrieve(data.sessionId);
+      // Only allow the session's owner to read its status.
+      const owner = (session.metadata as Record<string, string> | null)?.userId;
+      if (owner && owner !== context.userId) {
+        return { ok: false as const, error: "This checkout session belongs to a different account." };
+      }
+      const paid = session.payment_status === "paid" || session.status === "complete";
+      return {
+        ok: true as const,
+        paid,
+        status: session.status ?? null,
+        paymentStatus: session.payment_status ?? null,
+        amountTotal: session.amount_total ?? null,
+        currency: session.currency ?? null,
+      };
+    } catch (error) {
+      return { ok: false as const, error: getStripeErrorMessage(error) };
+    }
+  });
