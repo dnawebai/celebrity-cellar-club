@@ -4,10 +4,10 @@ import { formatMembers, getActiveMembers, getNextFridayUtc, WEEKLY_INCREMENT_MIN
 
 const navLinks = [
   { to: "/auctions", label: "Auctions" },
-  { to: "/marketplace", label: "Drops" },
-  { to: "/investment", label: "Invest" },
-  { to: "/sommelier", label: "Sommelier AI" },
-  { to: "/events", label: "Experiences" },
+  { to: "/calendar", label: "Calendar" },
+  { to: "/watchlist", label: "Watchlist" },
+  { to: "/bids", label: "My Bids" },
+  { to: "/concierge", label: "Concierge" },
   { to: "/membership", label: "Membership" },
 ] as const;
 
