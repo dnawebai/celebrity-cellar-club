@@ -32,6 +32,7 @@ import { Route as AuthenticatedBidsRouteImport } from './routes/_authenticated/b
 import { Route as AuthenticatedCheckoutReturnRouteImport } from './routes/_authenticated/checkout.return'
 import { Route as AuthenticatedCheckoutMembershipRouteImport } from './routes/_authenticated/checkout.membership'
 import { Route as AuctionsAuctionIdLotsLotIdRouteImport } from './routes/auctions.$auctionId.lots.$lotId'
+import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
 const SponsorsRoute = SponsorsRouteImport.update({
   id: '/sponsors',
@@ -150,6 +151,12 @@ const AuctionsAuctionIdLotsLotIdRoute =
     path: '/lots/$lotId',
     getParentRoute: () => AuctionsAuctionIdRoute,
   } as any)
+const ApiPublicPaymentsWebhookRoute =
+  ApiPublicPaymentsWebhookRouteImport.update({
+    id: '/api/public/payments/webhook',
+    path: '/api/public/payments/webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -173,6 +180,7 @@ export interface FileRoutesByFullPath {
   '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
   '/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
   '/checkout/return': typeof AuthenticatedCheckoutReturnRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/auctions/$auctionId/lots/$lotId': typeof AuctionsAuctionIdLotsLotIdRoute
 }
 export interface FileRoutesByTo {
@@ -197,6 +205,7 @@ export interface FileRoutesByTo {
   '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
   '/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
   '/checkout/return': typeof AuthenticatedCheckoutReturnRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/auctions/$auctionId/lots/$lotId': typeof AuctionsAuctionIdLotsLotIdRoute
 }
 export interface FileRoutesById {
@@ -223,6 +232,7 @@ export interface FileRoutesById {
   '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
   '/_authenticated/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
   '/_authenticated/checkout/return': typeof AuthenticatedCheckoutReturnRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/auctions/$auctionId/lots/$lotId': typeof AuctionsAuctionIdLotsLotIdRoute
 }
 export interface FileRouteTypes {
@@ -249,6 +259,7 @@ export interface FileRouteTypes {
     | '/auctions/$auctionId'
     | '/checkout/membership'
     | '/checkout/return'
+    | '/api/public/payments/webhook'
     | '/auctions/$auctionId/lots/$lotId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -273,6 +284,7 @@ export interface FileRouteTypes {
     | '/auctions/$auctionId'
     | '/checkout/membership'
     | '/checkout/return'
+    | '/api/public/payments/webhook'
     | '/auctions/$auctionId/lots/$lotId'
   id:
     | '__root__'
@@ -298,6 +310,7 @@ export interface FileRouteTypes {
     | '/auctions/$auctionId'
     | '/_authenticated/checkout/membership'
     | '/_authenticated/checkout/return'
+    | '/api/public/payments/webhook'
     | '/auctions/$auctionId/lots/$lotId'
   fileRoutesById: FileRoutesById
 }
@@ -317,6 +330,7 @@ export interface RootRouteChildren {
   SommelierRoute: typeof SommelierRoute
   SponsorsRoute: typeof SponsorsRoute
   AdminMembersRoute: typeof AdminMembersRoute
+  ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -482,6 +496,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuctionsAuctionIdLotsLotIdRouteImport
       parentRoute: typeof AuctionsAuctionIdRoute
     }
+    '/api/public/payments/webhook': {
+      id: '/api/public/payments/webhook'
+      path: '/api/public/payments/webhook'
+      fullPath: '/api/public/payments/webhook'
+      preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -545,6 +566,7 @@ const rootRouteChildren: RootRouteChildren = {
   SommelierRoute: SommelierRoute,
   SponsorsRoute: SponsorsRoute,
   AdminMembersRoute: AdminMembersRoute,
+  ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
