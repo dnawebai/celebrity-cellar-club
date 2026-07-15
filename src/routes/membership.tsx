@@ -312,6 +312,7 @@ function Field({
   textarea,
   required,
   placeholder,
+  onChange,
 }: {
   label: string;
   name: string;
@@ -319,6 +320,7 @@ function Field({
   textarea?: boolean;
   required?: boolean;
   placeholder?: string;
+  onChange?: (value: string) => void;
 }) {
   const base =
     "w-full rounded-sm bg-surface px-4 py-3 text-sm text-foreground ring-1 ring-border placeholder:text-muted-foreground/50 transition focus:outline-none focus:ring-gold/60";
@@ -329,7 +331,14 @@ function Field({
         {required && <span className="ml-1 text-gold">*</span>}
       </span>
       {textarea ? (
-        <textarea name={name} rows={4} placeholder={placeholder} className={base} required={required} />
+        <textarea
+          name={name}
+          rows={4}
+          placeholder={placeholder}
+          className={base}
+          required={required}
+          onChange={(e) => onChange?.(e.target.value)}
+        />
       ) : (
         <input
           type={type}
@@ -337,6 +346,7 @@ function Field({
           required={required}
           placeholder={placeholder}
           className={base}
+          onChange={(e) => onChange?.(e.target.value)}
         />
       )}
     </label>
