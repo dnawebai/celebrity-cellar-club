@@ -8,7 +8,7 @@ export const Route = createFileRoute("/investment")({
       {
         name: "description",
         content:
-          "Market reports, AI forecasting, auction analytics, and portfolio tracking for fine wine and spirits.",
+          "Market reports, analyst forecasts, auction analytics, and portfolio tracking for fine wine and spirits.",
       },
     ],
   }),
