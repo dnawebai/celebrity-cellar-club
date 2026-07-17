@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
@@ -378,14 +378,19 @@ function CelebritiesCollection() {
               key={b.celebrity}
               className="group overflow-hidden rounded-sm border border-border bg-surface/40 transition hover:border-gold/50"
             >
-              <img
-                src={b.img}
-                alt={b.bottle}
-                loading="lazy"
-                width={800}
-                height={1000}
-                className="aspect-[3/4] w-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
+              <Link
+                to="/checkout/membership"
+                aria-label={`Buy ${b.bottle} — unlock with $99 Opus Drinks membership`}
+              >
+                <img
+                  src={b.img}
+                  alt={b.bottle}
+                  loading="lazy"
+                  width={800}
+                  height={1000}
+                  className="aspect-[3/4] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </Link>
               <div className="p-5">
                 <div className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
                   {b.lot} · Inspired by
@@ -402,12 +407,12 @@ function CelebritiesCollection() {
                   >
                     Request Information
                   </a>
-                  <a
-                    href="#membership-plans"
+                  <Link
+                    to="/checkout/membership"
                     className="rounded-sm gold-gradient px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-primary-foreground"
                   >
                     Buy
-                  </a>
+                  </Link>
                 </div>
               </div>
             </article>
