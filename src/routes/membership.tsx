@@ -600,7 +600,7 @@ function SubscribeModal({ tier, onClose }: { tier: Tier; onClose: () => void }) 
           <div className="space-y-6">
             <div className="rounded-sm border border-border bg-surface/40 p-5 text-sm">
               <div className="flex items-center justify-between border-b border-border pb-3 text-muted-foreground">
-                <span>Membership · {billing === "one_time" ? "One-time" : billing === "monthly" ? "Monthly" : "Annual"}</span>
+                <span>Membership · One-time</span>
                 <span className="text-foreground">$99.00</span>
               </div>
               <div className="pt-3 text-xs text-muted-foreground">
