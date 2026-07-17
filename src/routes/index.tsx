@@ -401,7 +401,7 @@ function HomePage() {
               Your cellar is a <span className="italic text-gold-gradient">portfolio</span>.
             </h2>
             <p className="mb-10 text-lg text-muted-foreground">
-              Track market value, producer rankings, and AI forecasts on every bottle
+              Track market value, producer rankings, and analyst forecasts on every bottle
               you own. The first investment platform built for fine wine and spirits —
               designed for the people who'd rather hold than sip.
             </p>
@@ -410,7 +410,7 @@ function HomePage() {
                 { k: "+12.4%", v: "Avg. YTD return on Founder portfolios" },
                 { k: "1,840", v: "Producers tracked across 17 regions" },
                 { k: "Real-time", v: "Sotheby's, Christie's, Acker data feed" },
-                { k: "AI", v: "Vintage forecasts & cellaring strategy" },
+                { k: "Forecast", v: "Vintage projections & cellaring strategy" },
               ].map((m) => (
                 <div
                   key={m.v}
