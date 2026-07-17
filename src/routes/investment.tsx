@@ -109,7 +109,7 @@ function InvestmentPage() {
         <div className="mx-auto grid max-w-[1400px] gap-8 md:grid-cols-2 lg:grid-cols-4">
           {[
             { k: "Market Reports", v: "Quarterly briefings authored by the Opus research desk." },
-            { k: "AI Forecasting", v: "Bottle-level 12-month projections trained on 40 years of auction data." },
+            { k: "Analyst Forecasts", v: "Bottle-level 12-month projections drawn from 40 years of auction data." },
             { k: "Portfolio Tracker", v: "Live valuation, allocation drift, and cellaring windows." },
             { k: "Producer Rankings", v: "1,840 producers scored across vintage, scarcity, and demand." },
           ].map((f) => (
