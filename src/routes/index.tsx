@@ -18,7 +18,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "The members-only platform for the next generation of collectors. Live auctions, celebrity drops, AI sommelier, and a wine investment portfolio in one app.",
+          "The members-only platform for the next generation of collectors. Live auctions, celebrity drops, private sommelier, and a wine investment portfolio in one app.",
       },
       { property: "og:title", content: "OPUS DRINKS — Collect. Invest. Experience." },
       { property: "og:image", content: heroBottle },
