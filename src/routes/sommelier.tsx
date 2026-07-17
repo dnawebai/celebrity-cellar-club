@@ -60,7 +60,7 @@ function SommelierPage() {
           </h1>
           <p className="mt-8 max-w-[60ch] text-lg text-muted-foreground">
             Ask anything about wine, spirits, collecting, investing, and pairings. The Opus
-            Sommelier is trained on five decades of auction data, 12,000 tasting notes, and the
+            Sommelier draws on five decades of auction data, 12,000 tasting notes, and the
             Committee's private library.
           </p>
         </div>
