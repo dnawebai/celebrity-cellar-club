@@ -524,7 +524,7 @@ function SubscribeModal({ tier, onClose }: { tier: Tier; onClose: () => void }) 
         </div>
         <h3 className="mb-2 font-display text-3xl md:text-4xl">Become a member.</h3>
         <p className="mb-6 text-sm text-muted-foreground">
-          $99 membership fee. Choose one-time, monthly, or annual. Opus verifies your ID,
+          $99 one-time membership fee · 12 months of access. Opus verifies your ID,
           age (21+), and U.S. residence before your membership activates.
         </p>
 
@@ -561,26 +561,11 @@ function SubscribeModal({ tier, onClose }: { tier: Tier; onClose: () => void }) 
                 onChange={(v) => setForm((f) => ({ ...f, idIssuer: v }))} />
             </div>
 
-            <div>
-              <p className="mb-2 text-[10px] uppercase tracking-[0.3em] text-gold">
-                Billing cycle · $99
+            <div className="rounded-sm border border-border bg-surface/40 p-4 text-xs text-muted-foreground">
+              <p className="mb-1 text-[10px] uppercase tracking-[0.3em] text-gold">
+                Membership · $99
               </p>
-              <div className="grid grid-cols-3 gap-2">
-                {(["one_time", "monthly", "annual"] as const).map((b) => (
-                  <button
-                    key={b}
-                    type="button"
-                    onClick={() => setBilling(b)}
-                    className={`rounded-sm border px-3 py-3 text-[11px] uppercase tracking-[0.2em] transition ${
-                      billing === b
-                        ? "border-gold bg-surface text-foreground"
-                        : "border-border text-muted-foreground hover:border-gold/50"
-                    }`}
-                  >
-                    {b === "one_time" ? "One-time" : b === "monthly" ? "Monthly" : "Annual"}
-                  </button>
-                ))}
-              </div>
+              One-time payment · 12 months of access.
             </div>
 
             <div className="rounded-sm border border-gold/30 bg-surface/40 p-4 text-xs text-muted-foreground">
@@ -615,7 +600,7 @@ function SubscribeModal({ tier, onClose }: { tier: Tier; onClose: () => void }) 
           <div className="space-y-6">
             <div className="rounded-sm border border-border bg-surface/40 p-5 text-sm">
               <div className="flex items-center justify-between border-b border-border pb-3 text-muted-foreground">
-                <span>Membership · {billing === "one_time" ? "One-time" : billing === "monthly" ? "Monthly" : "Annual"}</span>
+                <span>Membership · One-time</span>
                 <span className="text-foreground">$99.00</span>
               </div>
               <div className="pt-3 text-xs text-muted-foreground">
