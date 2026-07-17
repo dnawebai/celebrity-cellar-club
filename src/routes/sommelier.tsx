@@ -5,11 +5,11 @@ import { SiteShell } from "@/components/site-shell";
 export const Route = createFileRoute("/sommelier")({
   head: () => ({
     meta: [
-      { title: "Opus AI Sommelier — Luxury Beverage Advisor" },
+      { title: "Opus Sommelier — Luxury Beverage Advisor" },
       {
         name: "description",
         content:
-          "A luxury AI sommelier for wine recommendations, food pairings, investment guidance, and cellaring advice.",
+          "A luxury sommelier concierge for wine recommendations, food pairings, investment guidance, and cellaring advice.",
       },
     ],
   }),
@@ -53,14 +53,14 @@ function SommelierPage() {
       <section className="border-b border-border px-6 pt-32 pb-16 lg:px-10">
         <div className="mx-auto max-w-[1400px]">
           <span className="mb-6 block text-[10px] uppercase tracking-[0.4em] text-gold">
-            Opus AI Sommelier
+            Opus Sommelier
           </span>
           <h1 className="max-w-[20ch] font-display text-5xl text-balance md:text-7xl">
             Your private <span className="italic text-gold-gradient">cellar concierge</span>.
           </h1>
           <p className="mt-8 max-w-[60ch] text-lg text-muted-foreground">
             Ask anything about wine, spirits, collecting, investing, and pairings. The Opus
-            Sommelier is trained on five decades of auction data, 12,000 tasting notes, and the
+            Sommelier draws on five decades of auction data, 12,000 tasting notes, and the
             Committee's private library.
           </p>
         </div>

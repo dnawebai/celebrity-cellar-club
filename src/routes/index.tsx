@@ -18,7 +18,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "The members-only platform for the next generation of collectors. Live auctions, celebrity drops, AI sommelier, and a wine investment portfolio in one app.",
+          "The members-only platform for the next generation of collectors. Live auctions, celebrity drops, private sommelier, and a wine investment portfolio in one app.",
       },
       { property: "og:title", content: "OPUS DRINKS — Collect. Invest. Experience." },
       { property: "og:image", content: heroBottle },
@@ -71,8 +71,8 @@ const liveAuctions = [
 const pillars = [
   { n: "01", title: "Drops", body: "Limited-edition celebrity bottles. 100 per release. Numbered, signed, sealed." },
   { n: "02", title: "Auctions", body: "Live bidding on grail bottles. Real-time data from the world's top auction houses." },
-  { n: "03", title: "Invest", body: "Track your cellar like a portfolio. AI forecasts, market indices, ROI reports." },
-  { n: "04", title: "Sommelier", body: "Your AI advisor. Pairings, vintages, allocation strategy — 24/7, in your pocket." },
+  { n: "03", title: "Invest", body: "Track your cellar like a portfolio. Analyst forecasts, market indices, ROI reports." },
+  { n: "04", title: "Sommelier", body: "Your private advisor. Pairings, vintages, allocation strategy — 24/7, in your pocket." },
 ];
 
 function HomePage() {
@@ -401,7 +401,7 @@ function HomePage() {
               Your cellar is a <span className="italic text-gold-gradient">portfolio</span>.
             </h2>
             <p className="mb-10 text-lg text-muted-foreground">
-              Track market value, producer rankings, and AI forecasts on every bottle
+              Track market value, producer rankings, and analyst forecasts on every bottle
               you own. The first investment platform built for fine wine and spirits —
               designed for the people who'd rather hold than sip.
             </p>
@@ -410,7 +410,7 @@ function HomePage() {
                 { k: "+12.4%", v: "Avg. YTD return on Founder portfolios" },
                 { k: "1,840", v: "Producers tracked across 17 regions" },
                 { k: "Real-time", v: "Sotheby's, Christie's, Acker data feed" },
-                { k: "AI", v: "Vintage forecasts & cellaring strategy" },
+                { k: "Forecast", v: "Vintage projections & cellaring strategy" },
               ].map((m) => (
                 <div
                   key={m.v}
@@ -540,7 +540,7 @@ function HomePage() {
               to="/sommelier"
               className="inline-flex items-center gap-2 rounded-full border border-foreground/20 bg-surface/50 px-7 py-4 text-sm font-semibold backdrop-blur hover:bg-surface"
             >
-              Try the AI Sommelier
+              Meet the Opus Sommelier
             </Link>
           </div>
         </div>

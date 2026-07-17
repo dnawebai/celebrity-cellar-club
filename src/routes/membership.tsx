@@ -37,7 +37,7 @@ const tiers = [
       "Education Center",
       "Investment Center",
       "Member-only pricing",
-      "AI Sommelier",
+      "Opus Sommelier",
     ],
   },
   {
