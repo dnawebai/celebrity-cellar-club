@@ -53,7 +53,7 @@ function SommelierPage() {
       <section className="border-b border-border px-6 pt-32 pb-16 lg:px-10">
         <div className="mx-auto max-w-[1400px]">
           <span className="mb-6 block text-[10px] uppercase tracking-[0.4em] text-gold">
-            Opus AI Sommelier
+            Opus Sommelier
           </span>
           <h1 className="max-w-[20ch] font-display text-5xl text-balance md:text-7xl">
             Your private <span className="italic text-gold-gradient">cellar concierge</span>.
