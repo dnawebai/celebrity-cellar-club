@@ -82,18 +82,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "The members-only platform for the next generation of collectors. Live auctions, celebrity drops, AI sommelier, and a wine investment portfolio in one app.",
+          "The members-only platform for the next generation of collectors. Live auctions, celebrity drops, private sommelier, and a wine investment portfolio in one app.",
       },
       { property: "og:title", content: "OPUS DRINKS — Collect. Invest. Experience." },
       {
         property: "og:description",
         content:
-          "The members-only platform for the next generation of collectors. Live auctions, celebrity drops, AI sommelier, and a wine investment portfolio in one app.",
+          "The members-only platform for the next generation of collectors. Live auctions, celebrity drops, private sommelier, and a wine investment portfolio in one app.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "OPUS DRINKS — Collect. Invest. Experience." },
-      { name: "twitter:description", content: "The members-only platform for the next generation of collectors. Live auctions, celebrity drops, AI sommelier, and a wine investment portfolio in one app." },
+      { name: "twitter:description", content: "The members-only platform for the next generation of collectors. Live auctions, celebrity drops, private sommelier, and a wine investment portfolio in one app." },
       { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8e7cc765-ee70-4b58-a999-c528fed4d2ae/id-preview-a6eb391c--05836ee3-6fe8-4582-8580-145fae04b449.lovable.app-1783257177882.png" },
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8e7cc765-ee70-4b58-a999-c528fed4d2ae/id-preview-a6eb391c--05836ee3-6fe8-4582-8580-145fae04b449.lovable.app-1783257177882.png" },
     ],
