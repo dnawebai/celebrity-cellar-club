@@ -540,7 +540,7 @@ function HomePage() {
               to="/sommelier"
               className="inline-flex items-center gap-2 rounded-full border border-foreground/20 bg-surface/50 px-7 py-4 text-sm font-semibold backdrop-blur hover:bg-surface"
             >
-              Try the AI Sommelier
+              Meet the Opus Sommelier
             </Link>
           </div>
         </div>
