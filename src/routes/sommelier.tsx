@@ -5,11 +5,11 @@ import { SiteShell } from "@/components/site-shell";
 export const Route = createFileRoute("/sommelier")({
   head: () => ({
     meta: [
-      { title: "Opus AI Sommelier — Luxury Beverage Advisor" },
+      { title: "Opus Sommelier — Luxury Beverage Advisor" },
       {
         name: "description",
         content:
-          "A luxury AI sommelier for wine recommendations, food pairings, investment guidance, and cellaring advice.",
+          "A luxury sommelier concierge for wine recommendations, food pairings, investment guidance, and cellaring advice.",
       },
     ],
   }),
