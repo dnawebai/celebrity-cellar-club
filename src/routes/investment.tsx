@@ -42,7 +42,7 @@ function InvestmentPage() {
             Transforming bottles into <span className="italic text-gold-gradient">assets</span>.
           </h1>
           <p className="mt-8 max-w-[58ch] text-lg text-muted-foreground">
-            Real-time market data, AI forecasting, and portfolio tracking — engineered for the
+            Real-time market data, analyst forecasts, and portfolio tracking — engineered for the
             collector who treats their cellar as a balance sheet.
           </p>
         </div>
