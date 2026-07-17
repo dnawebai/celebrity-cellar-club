@@ -216,19 +216,20 @@ function AuctionCard({ a }: { a: Auction }) {
           </div>
         </Link>
 
-        <Link
-          to="/auctions/$auctionId"
-          params={{ auctionId: a.id }}
-          className="flex flex-col p-7"
-        >
-          <div className="mb-3 flex items-center justify-between text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-            <span>{a.category === "spirits" ? "Rare Spirits" : "Fine Wine"}</span>
-            <span className="text-gold">{formatCountdown(a.endsAtUtc)}</span>
-          </div>
-          <h3 className="font-display text-2xl leading-tight">{a.title}</h3>
-          <p className="mt-1 text-xs uppercase tracking-[0.2em] text-muted-foreground">
-            {a.location} · {a.format}
-          </p>
+        <div className="flex flex-col p-7">
+          <Link
+            to="/auctions/$auctionId"
+            params={{ auctionId: a.id }}
+          >
+            <div className="mb-3 flex items-center justify-between text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+              <span>{a.category === "spirits" ? "Rare Spirits" : "Fine Wine"}</span>
+              <span className="text-gold">{formatCountdown(a.endsAtUtc)}</span>
+            </div>
+            <h3 className="font-display text-2xl leading-tight">{a.title}</h3>
+            <p className="mt-1 text-xs uppercase tracking-[0.2em] text-muted-foreground">
+              {a.location} · {a.format}
+            </p>
+          </Link>
 
           <p className="mt-4 line-clamp-3 text-sm text-muted-foreground">
             {a.summary}
@@ -245,9 +246,12 @@ function AuctionCard({ a }: { a: Auction }) {
           </div>
 
           <div className="mt-auto flex gap-2">
-            <span className="flex-1 rounded-sm gold-gradient px-4 py-3 text-center text-[10px] font-semibold uppercase tracking-[0.3em] text-primary-foreground">
-              View Auction
-            </span>
+            <Link
+              to="/checkout/membership"
+              className="flex-1 rounded-sm gold-gradient px-4 py-3 text-center text-[10px] font-semibold uppercase tracking-[0.3em] text-primary-foreground"
+            >
+              Buy · $99
+            </Link>
             <span
               className={`rounded-sm border px-4 py-3 text-[10px] uppercase tracking-[0.3em] ${
                 a.biddingMode === "integrated"
@@ -258,7 +262,7 @@ function AuctionCard({ a }: { a: Auction }) {
               {a.biddingMode === "integrated" ? "Direct Bidding" : "Concierge Bidding"}
             </span>
           </div>
-        </Link>
+        </div>
       </div>
     </div>
   );
