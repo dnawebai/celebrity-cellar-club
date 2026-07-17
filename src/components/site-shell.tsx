@@ -128,7 +128,7 @@ const footerLinks = {
   ],
   Platform: [
     { to: "/investment", label: "Investment" },
-    { to: "/sommelier", label: "Sommelier AI" },
+    { to: "/sommelier", label: "Sommelier" },
     { to: "/dashboard", label: "Member Dashboard" },
     { to: "/producers", label: "Producer Portal" },
     { to: "/sponsors", label: "Sponsors" },
