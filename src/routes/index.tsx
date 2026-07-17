@@ -71,8 +71,8 @@ const liveAuctions = [
 const pillars = [
   { n: "01", title: "Drops", body: "Limited-edition celebrity bottles. 100 per release. Numbered, signed, sealed." },
   { n: "02", title: "Auctions", body: "Live bidding on grail bottles. Real-time data from the world's top auction houses." },
-  { n: "03", title: "Invest", body: "Track your cellar like a portfolio. AI forecasts, market indices, ROI reports." },
-  { n: "04", title: "Sommelier", body: "Your AI advisor. Pairings, vintages, allocation strategy — 24/7, in your pocket." },
+  { n: "03", title: "Invest", body: "Track your cellar like a portfolio. Analyst forecasts, market indices, ROI reports." },
+  { n: "04", title: "Sommelier", body: "Your private advisor. Pairings, vintages, allocation strategy — 24/7, in your pocket." },
 ];
 
 function HomePage() {
