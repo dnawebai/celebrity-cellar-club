@@ -524,7 +524,7 @@ function SubscribeModal({ tier, onClose }: { tier: Tier; onClose: () => void }) 
         </div>
         <h3 className="mb-2 font-display text-3xl md:text-4xl">Become a member.</h3>
         <p className="mb-6 text-sm text-muted-foreground">
-          $99 membership fee. Choose one-time, monthly, or annual. Opus verifies your ID,
+          $99 one-time membership fee · 12 months of access. Opus verifies your ID,
           age (21+), and U.S. residence before your membership activates.
         </p>
 
