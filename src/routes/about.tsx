@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
+import { submitContactForm } from "@/lib/contact.functions";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -122,7 +124,7 @@ function AboutPage() {
               </p>
               <div className="mt-8">
                 <a
-                  href="mailto:hello@opusdrinks.com"
+                  href="#contact-form"
                   className="gold-gradient inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold tracking-tight transition-all hover:brightness-110 lime-glow"
                 >
                   Contact Us <span className="opacity-60">→</span>
@@ -132,6 +134,149 @@ function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* Contact Form */}
+      <section id="contact-form" className="border-t border-border px-6 py-24 lg:px-10 lg:py-32">
+        <div className="mx-auto max-w-[720px]">
+          <div className="mb-10 text-center">
+            <span className="mb-4 inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.4em] text-gold">
+              Get in Touch
+            </span>
+            <h2 className="font-display text-3xl tracking-[-0.02em] md:text-4xl">
+              Send us a message
+            </h2>
+            <p className="mt-4 text-muted-foreground">
+              Tell us about your brand, partnership, or distribution opportunity.
+            </p>
+          </div>
+          <ContactForm />
+        </div>
+      </section>
     </SiteShell>
+  );
+}
+
+function ContactForm() {
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus("submitting");
+    setErrorMessage("");
+
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: String(formData.get("name") ?? "").trim(),
+      email: String(formData.get("email") ?? "").trim(),
+      company: String(formData.get("company") ?? "").trim() || undefined,
+      message: String(formData.get("message") ?? "").trim(),
+    };
+
+    try {
+      await submitContactForm({ data });
+      setStatus("success");
+      e.currentTarget.reset();
+    } catch (err) {
+      setStatus("error");
+      setErrorMessage(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    }
+  }
+
+  if (status === "success") {
+    return (
+      <div className="rounded-sm border border-lime/30 bg-surface/40 p-10 text-center">
+        <h3 className="font-display text-2xl">Message sent</h3>
+        <p className="mt-3 text-muted-foreground">
+          Thank you for reaching out. The Opus Drinks team will be in touch soon.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={onSubmit} className="space-y-6 rounded-sm border border-border bg-surface/40 p-8 md:p-10">
+      <div className="grid gap-6 md:grid-cols-2">
+        <div className="space-y-2">
+          <label htmlFor="name" className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+            Name
+          </label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            required
+            minLength={2}
+            maxLength={120}
+            placeholder="Your name"
+            className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/50 focus:border-lime"
+          />
+        </div>
+        <div className="space-y-2">
+          <label htmlFor="email" className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+            Email
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            maxLength={255}
+            placeholder="you@company.com"
+            className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/50 focus:border-lime"
+          />
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <label htmlFor="company" className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+          Company <span className="normal-case text-muted-foreground/60">(optional)</span>
+        </label>
+        <input
+          id="company"
+          name="company"
+          type="text"
+          maxLength={120}
+          placeholder="Your company or brand"
+          className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/50 focus:border-lime"
+        />
+      </div>
+
+      <div className="space-y-2">
+        <label htmlFor="message" className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+          Message
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          required
+          minLength={10}
+          maxLength={5000}
+          rows={5}
+          placeholder="How can we partner?"
+          className="w-full resize-none rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/50 focus:border-lime"
+        />
+      </div>
+
+      {status === "error" && (
+        <p className="text-sm text-red-400">{errorMessage || "Failed to send message. Please try again."}</p>
+      )}
+
+      <button
+        type="submit"
+        disabled={status === "submitting"}
+        className="gold-gradient w-full rounded-full px-6 py-3.5 text-sm font-semibold tracking-tight transition-all hover:brightness-110 disabled:opacity-60 disabled:cursor-not-allowed"
+      >
+        {status === "submitting" ? "Sending..." : "Send Message"}
+      </button>
+
+      <p className="text-center text-[11px] text-muted-foreground">
+        Submissions are sent directly to{" "}
+        <a href="mailto:hello@opusdrinks.com" className="underline underline-offset-2 hover:text-foreground">
+          hello@opusdrinks.com
+        </a>
+        .
+      </p>
+    </form>
   );
 }
