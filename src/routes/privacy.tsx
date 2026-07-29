@@ -74,7 +74,7 @@ function PrivacyPage() {
             </div>
           </aside>
 
-          <article className="prose-style space-y-14 text-muted-foreground">
+          <article className="space-y-14 text-muted-foreground">
             <p className="text-lg leading-relaxed">
               <strong className="text-foreground">Effective date:</strong> October 20, 2023.
             </p>
