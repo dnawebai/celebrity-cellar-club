@@ -262,16 +262,19 @@ export type Database = {
       }
       site_settings: {
         Row: {
+          is_public: boolean
           key: string
           updated_at: string
           value: Json
         }
         Insert: {
+          is_public?: boolean
           key: string
           updated_at?: string
           value: Json
         }
         Update: {
+          is_public?: boolean
           key?: string
           updated_at?: string
           value?: Json
