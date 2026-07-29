@@ -120,7 +120,7 @@ function MembershipPage() {
             <span className="size-1.5 rounded-full bg-gold pulse-gold" /> Application Only
           </span>
           <h1 className="mb-8 max-w-[20ch] font-display text-5xl text-balance md:text-7xl">
-            A private invitation, <span className="italic text-gold-gradient">reviewed by committee</span>.
+            Apply for Membership
           </h1>
           <p className="max-w-[58ch] text-pretty text-lg text-muted-foreground">
             Access to Opus is subject to approval. Each application is reviewed individually by the
