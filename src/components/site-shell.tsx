@@ -1,6 +1,6 @@
 import { Link, useNavigate, useRouter } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
 import { formatMembers, getActiveMembers, getNextFridayUtc, WEEKLY_INCREMENT_MIN, WEEKLY_INCREMENT_MAX } from "@/lib/members";
@@ -44,8 +44,10 @@ export function SiteHeader() {
   const navigate = useNavigate();
   const router = useRouter();
   const qc = useQueryClient();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   async function onSignOut() {
+    setMenuOpen(false);
     await qc.cancelQueries();
     qc.clear();
     await supabase.auth.signOut();
@@ -127,8 +129,79 @@ export function SiteHeader() {
             </>
 
           )}
+
+          <button
+            type="button"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((v) => !v)}
+            className="grid size-9 place-items-center rounded-full border border-border text-foreground transition hover:border-gold hover:text-gold xl:hidden"
+          >
+            <span className="relative block h-3 w-4">
+              <span
+                className={`absolute left-0 h-[1.5px] w-4 bg-current transition-transform ${
+                  menuOpen ? "top-1.5 rotate-45" : "top-0"
+                }`}
+              />
+              <span
+                className={`absolute left-0 top-1.5 h-[1.5px] w-4 bg-current transition-opacity ${
+                  menuOpen ? "opacity-0" : "opacity-100"
+                }`}
+              />
+              <span
+                className={`absolute left-0 h-[1.5px] w-4 bg-current transition-transform ${
+                  menuOpen ? "top-1.5 -rotate-45" : "top-3"
+                }`}
+              />
+            </span>
+          </button>
         </div>
       </div>
+
+      {menuOpen ? (
+        <nav className="max-h-[calc(100vh-4rem)] overflow-y-auto border-t border-border bg-background px-5 py-4 xl:hidden">
+          <div className="flex flex-col">
+            {navLinks.map((l) => (
+              <Link
+                key={l.to}
+                to={l.to}
+                onClick={() => setMenuOpen(false)}
+                className="border-b border-border/60 py-3.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                activeProps={{
+                  className:
+                    "border-b border-border/60 py-3.5 text-sm font-medium text-foreground",
+                }}
+              >
+                {l.label}
+              </Link>
+            ))}
+            {user ? (
+              <Link
+                to="/dashboard"
+                onClick={() => setMenuOpen(false)}
+                className="border-b border-border/60 py-3.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Dashboard
+              </Link>
+            ) : (
+              <Link
+                to="/auth"
+                onClick={() => setMenuOpen(false)}
+                className="border-b border-border/60 py-3.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Sign in
+              </Link>
+            )}
+            <Link
+              to="/checkout/membership"
+              onClick={() => setMenuOpen(false)}
+              className="gold-gradient mt-4 rounded-full px-5 py-3 text-center text-[12px] font-semibold tracking-tight text-primary-foreground"
+            >
+              Join · $199
+            </Link>
+          </div>
+        </nav>
+      ) : null}
     </header>
   );
 }

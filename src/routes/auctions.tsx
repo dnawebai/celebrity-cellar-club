@@ -94,7 +94,7 @@ function AuctionsPage() {
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-3">
-            <div className="flex gap-1 rounded-sm border border-border bg-surface/40 p-1 text-[11px] uppercase tracking-[0.25em]">
+            <div className="flex max-w-full flex-wrap gap-1 rounded-sm border border-border bg-surface/40 p-1 text-[11px] uppercase tracking-[0.25em]">
               {tabs.map((t) => (
                 <button
                   key={t.id}
@@ -110,7 +110,7 @@ function AuctionsPage() {
               ))}
             </div>
 
-            <div className="flex gap-1 rounded-sm border border-border bg-surface/40 p-1 text-[11px] uppercase tracking-[0.25em]">
+            <div className="flex max-w-full flex-wrap gap-1 rounded-sm border border-border bg-surface/40 p-1 text-[11px] uppercase tracking-[0.25em]">
               {(["all", "wine", "spirits"] as const).map((c) => (
                 <button
                   key={c}
