@@ -106,7 +106,7 @@ function HomePage() {
                 className="size-1.5 rounded-full pulse-gold"
                 style={{ backgroundColor: "var(--color-lime)" }}
               />
-              Invitation only · Est. 2023
+              Est. 2023
             </span>
 
             <h1 className="font-display text-[13vw] font-medium leading-[0.85] tracking-[-0.045em] sm:text-[10vw] lg:text-[8.5rem] animate-fade-up">
