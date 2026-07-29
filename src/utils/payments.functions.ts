@@ -56,7 +56,7 @@ export const createMembershipCheckout = createServerFn({ method: "POST" })
       const stripe = createStripeClient(data.environment);
 
       const prices = await stripe.prices.list({
-        lookup_keys: ["opus_membership_onetime"],
+        lookup_keys: ["opus_membership_onetime_199"],
       });
       if (!prices.data.length) throw new Error("Membership price not found");
       const stripePrice = prices.data[0];
