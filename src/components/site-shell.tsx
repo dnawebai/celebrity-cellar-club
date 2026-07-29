@@ -112,6 +112,14 @@ export function SiteHeader() {
               </Link>
               <Link
                 to="/membership"
+                hash="membership-plans"
+                onClick={() => {
+                  if (typeof window !== "undefined" && window.location.pathname === "/membership") {
+                    document
+                      .getElementById("membership-plans")
+                      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }
+                }}
                 className="gold-gradient inline-flex items-center gap-1.5 rounded-full px-5 py-2.5 text-[12px] font-semibold tracking-tight transition-all hover:brightness-110"
               >
                 Apply <span className="opacity-60">→</span>
