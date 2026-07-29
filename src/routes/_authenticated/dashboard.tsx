@@ -56,7 +56,7 @@ function Dashboard() {
     : isExpired
       ? "Membership expired"
       : status === "pending"
-        ? "Application pending — complete $99 checkout"
+        ? "Application pending — complete $199 checkout"
         : `Membership status: ${status}`;
 
   return (
@@ -77,7 +77,7 @@ function Dashboard() {
                 to="/checkout/membership"
                 className="rounded-sm gold-gradient px-4 py-2 font-semibold text-primary-foreground"
               >
-                {isExpired ? "Renew · $99" : "Complete · $99"}
+                {isExpired ? "Renew · $199" : "Complete · $199"}
               </Link>
             )}
             <Link
@@ -99,7 +99,7 @@ function Dashboard() {
               v: isMember ? "Active" : isExpired ? "Expired" : status[0].toUpperCase() + status.slice(1),
               sub: isMember
                 ? `Renews ${fmtDate(me?.membership?.current_period_end)}`
-                : "$99 · 12 months",
+                : "$199 · 12 months",
               up: isMember,
             },
             { k: "Bottles in Cellar", v: "184", sub: "Across 12 regions" },

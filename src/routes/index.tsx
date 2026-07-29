@@ -521,7 +521,7 @@ function HomePage() {
             <span className="italic text-gold-gradient">Get rare.</span>
           </h2>
           <p className="mx-auto mt-8 max-w-xl text-lg text-muted-foreground">
-            $99 application fee. Reviewed individually. Approved members unlock
+            $199 application fee. Reviewed individually. Approved members unlock
             allocations within 48 hours.
           </p>
           <div className="mt-12 flex flex-wrap justify-center gap-3">

@@ -36,7 +36,7 @@ export function MemberGate({
   if (data?.isMember) return <>{children}</>;
 
   const isExpired = !!data?.isExpired;
-  const cta = !user ? "Become a member" : isExpired ? "Renew · $99" : "Complete membership";
+  const cta = !user ? "Become a member" : isExpired ? "Renew · $199" : "Complete membership";
   const ctaTo = user && isExpired ? "/checkout/membership" : "/membership";
   const secondaryLabel = user ? "View dashboard" : "Sign in";
   const secondaryTo = user ? "/dashboard" : "/auth";
@@ -63,8 +63,8 @@ export function MemberGate({
         <p className="mx-auto mb-6 max-w-md text-sm text-muted-foreground">
           {reason ??
             (isExpired
-              ? "Renew your $99 Opus Drinks membership to restore auction access, watchlists, and concierge."
-              : "Complete auction details, bidding, watchlists, and portfolio access are reserved for verified members ($99).")}
+              ? "Renew your $199 Opus Drinks membership to restore auction access, watchlists, and concierge."
+              : "Complete auction details, bidding, watchlists, and portfolio access are reserved for verified members ($199).")}
         </p>
         <div className="flex flex-wrap justify-center gap-3">
           <Link

@@ -48,7 +48,7 @@ async function activateMembershipFromSession(session: any) {
     .update({
       status: "active",
       billing_cycle: "one_time",
-      price_cents: 9900,
+      price_cents: 19900,
       currency: "usd",
       started_at: now.toISOString(),
       current_period_end: periodEnd.toISOString(),
@@ -66,7 +66,7 @@ async function activateMembershipFromSession(session: any) {
   // Send receipt + welcome
   const recipient = await fetchRecipient(userId);
   if (recipient) {
-    const amountCents = session.amount_total ?? 9900;
+    const amountCents = session.amount_total ?? 19900;
     const amount = `$${(amountCents / 100).toFixed(2)}`;
     const currency = (session.currency ?? "usd").toUpperCase();
     await enqueueTransactionalEmail({

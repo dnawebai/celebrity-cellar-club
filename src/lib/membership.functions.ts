@@ -161,7 +161,7 @@ export const selectBillingCycle = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const { error } = await context.supabase
       .from("memberships")
-      .update({ billing_cycle: data.billing_cycle, price_cents: 9900 })
+      .update({ billing_cycle: data.billing_cycle, price_cents: 19900 })
       .eq("user_id", context.userId);
     if (error) throw new Error(error.message);
     return { ok: true };

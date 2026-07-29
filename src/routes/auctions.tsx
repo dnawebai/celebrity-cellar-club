@@ -156,7 +156,7 @@ function AuctionsPage() {
         <div className="mx-auto grid max-w-[1400px] gap-8 lg:grid-cols-3">
           <Info
             title="One membership, every partner"
-            body="A single $99 Opus Drinks membership gives you a unified calendar, watchlist, and concierge team across every authorised auction partner."
+            body="A single $199 Opus Drinks membership gives you a unified calendar, watchlist, and concierge team across every authorised auction partner."
           />
           <Info
             title="Two clearly-labelled bidding modes"
@@ -190,11 +190,11 @@ function AuctionCard({ a }: { a: Auction }) {
   return (
     <div className="group block overflow-hidden rounded-sm border border-border bg-surface/40 transition hover:border-gold/40">
       <div className="grid md:grid-cols-[280px_1fr]">
-        {/* Image → $99 membership checkout. Bidding is member-only, so the
+        {/* Image → $199 membership checkout. Bidding is member-only, so the
             hero image is the invitation to join. */}
         <Link
           to="/checkout/membership"
-          aria-label={`Join Opus Drinks — $99 to unlock ${a.title}`}
+          aria-label={`Join Opus Drinks — $199 to unlock ${a.title}`}
           className="relative block aspect-[4/5] overflow-hidden md:aspect-auto"
         >
           <img
@@ -208,7 +208,7 @@ function AuctionCard({ a }: { a: Auction }) {
           </span>
           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-background/95 via-background/60 to-transparent p-4">
             <div className="text-[10px] uppercase tracking-[0.35em] text-gold">
-              Unlock · $99 membership
+              Unlock · $199 membership
             </div>
             <div className="mt-1 text-[11px] text-foreground/90">
               Bid across every partner house with one account
@@ -250,7 +250,7 @@ function AuctionCard({ a }: { a: Auction }) {
               to="/checkout/membership"
               className="flex-1 rounded-sm gold-gradient px-4 py-3 text-center text-[10px] font-semibold uppercase tracking-[0.3em] text-primary-foreground"
             >
-              Buy · $99
+              Buy · $199
             </Link>
             <span
               className={`rounded-sm border px-4 py-3 text-[10px] uppercase tracking-[0.3em] ${
