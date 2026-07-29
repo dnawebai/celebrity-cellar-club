@@ -144,6 +144,10 @@ const footerLinks = {
     { to: "/about", label: "About" },
     { to: "/membership", label: "Apply for Membership" },
   ],
+  Legal: [
+    { to: "/privacy", label: "Privacy Policy" },
+    { to: "/terms", label: "Terms of Service" },
+  ],
 } as const;
 
 export function SiteFooter() {

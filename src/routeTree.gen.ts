@@ -9,10 +9,12 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SponsorsRouteImport } from './routes/sponsors'
 import { Route as SommelierRouteImport } from './routes/sommelier'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ProducersRouteImport } from './routes/producers'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as MembershipRouteImport } from './routes/membership'
 import { Route as MarketplaceRouteImport } from './routes/marketplace'
 import { Route as InvestmentRouteImport } from './routes/investment'
@@ -43,6 +45,11 @@ import { Route as AuctionsAuctionIdLotsLotIdRouteImport } from './routes/auction
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 import { Route as ApiPublicCronExpiryRemindersRouteImport } from './routes/api/public/cron/expiry-reminders'
 
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SponsorsRoute = SponsorsRouteImport.update({
   id: '/sponsors',
   path: '/sponsors',
@@ -61,6 +68,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const ProducersRoute = ProducersRouteImport.update({
   id: '/producers',
   path: '/producers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MembershipRoute = MembershipRouteImport.update({
@@ -227,10 +239,12 @@ export interface FileRoutesByFullPath {
   '/investment': typeof InvestmentRoute
   '/marketplace': typeof MarketplaceRoute
   '/membership': typeof MembershipRoute
+  '/privacy': typeof PrivacyRoute
   '/producers': typeof ProducersRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sommelier': typeof SommelierRoute
   '/sponsors': typeof SponsorsRoute
+  '/terms': typeof TermsRoute
   '/bids': typeof AuthenticatedBidsRoute
   '/concierge': typeof AuthenticatedConciergeRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -261,10 +275,12 @@ export interface FileRoutesByTo {
   '/investment': typeof InvestmentRoute
   '/marketplace': typeof MarketplaceRoute
   '/membership': typeof MembershipRoute
+  '/privacy': typeof PrivacyRoute
   '/producers': typeof ProducersRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sommelier': typeof SommelierRoute
   '/sponsors': typeof SponsorsRoute
+  '/terms': typeof TermsRoute
   '/bids': typeof AuthenticatedBidsRoute
   '/concierge': typeof AuthenticatedConciergeRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -297,10 +313,12 @@ export interface FileRoutesById {
   '/investment': typeof InvestmentRoute
   '/marketplace': typeof MarketplaceRoute
   '/membership': typeof MembershipRoute
+  '/privacy': typeof PrivacyRoute
   '/producers': typeof ProducersRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sommelier': typeof SommelierRoute
   '/sponsors': typeof SponsorsRoute
+  '/terms': typeof TermsRoute
   '/_authenticated/bids': typeof AuthenticatedBidsRoute
   '/_authenticated/concierge': typeof AuthenticatedConciergeRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
@@ -333,10 +351,12 @@ export interface FileRouteTypes {
     | '/investment'
     | '/marketplace'
     | '/membership'
+    | '/privacy'
     | '/producers'
     | '/reset-password'
     | '/sommelier'
     | '/sponsors'
+    | '/terms'
     | '/bids'
     | '/concierge'
     | '/dashboard'
@@ -367,10 +387,12 @@ export interface FileRouteTypes {
     | '/investment'
     | '/marketplace'
     | '/membership'
+    | '/privacy'
     | '/producers'
     | '/reset-password'
     | '/sommelier'
     | '/sponsors'
+    | '/terms'
     | '/bids'
     | '/concierge'
     | '/dashboard'
@@ -402,10 +424,12 @@ export interface FileRouteTypes {
     | '/investment'
     | '/marketplace'
     | '/membership'
+    | '/privacy'
     | '/producers'
     | '/reset-password'
     | '/sommelier'
     | '/sponsors'
+    | '/terms'
     | '/_authenticated/bids'
     | '/_authenticated/concierge'
     | '/_authenticated/dashboard'
@@ -438,10 +462,12 @@ export interface RootRouteChildren {
   InvestmentRoute: typeof InvestmentRoute
   MarketplaceRoute: typeof MarketplaceRoute
   MembershipRoute: typeof MembershipRoute
+  PrivacyRoute: typeof PrivacyRoute
   ProducersRoute: typeof ProducersRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SommelierRoute: typeof SommelierRoute
   SponsorsRoute: typeof SponsorsRoute
+  TermsRoute: typeof TermsRoute
   AdminMembersRoute: typeof AdminMembersRoute
   EmailUnsubscribeRoute: typeof EmailUnsubscribeRoute
   LovableEmailSuppressionRoute: typeof LovableEmailSuppressionRoute
@@ -456,6 +482,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sponsors': {
       id: '/sponsors'
       path: '/sponsors'
@@ -482,6 +515,13 @@ declare module '@tanstack/react-router' {
       path: '/producers'
       fullPath: '/producers'
       preLoaderRoute: typeof ProducersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/membership': {
@@ -746,10 +786,12 @@ const rootRouteChildren: RootRouteChildren = {
   InvestmentRoute: InvestmentRoute,
   MarketplaceRoute: MarketplaceRoute,
   MembershipRoute: MembershipRoute,
+  PrivacyRoute: PrivacyRoute,
   ProducersRoute: ProducersRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SommelierRoute: SommelierRoute,
   SponsorsRoute: SponsorsRoute,
+  TermsRoute: TermsRoute,
   AdminMembersRoute: AdminMembersRoute,
   EmailUnsubscribeRoute: EmailUnsubscribeRoute,
   LovableEmailSuppressionRoute: LovableEmailSuppressionRoute,
@@ -764,3 +806,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
