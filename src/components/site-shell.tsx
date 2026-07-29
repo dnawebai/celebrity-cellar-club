@@ -1,6 +1,6 @@
 import { Link, useNavigate, useRouter } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
 import { formatMembers, getActiveMembers, getNextFridayUtc, WEEKLY_INCREMENT_MIN, WEEKLY_INCREMENT_MAX } from "@/lib/members";
@@ -44,8 +44,10 @@ export function SiteHeader() {
   const navigate = useNavigate();
   const router = useRouter();
   const qc = useQueryClient();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   async function onSignOut() {
+    setMenuOpen(false);
     await qc.cancelQueries();
     qc.clear();
     await supabase.auth.signOut();
