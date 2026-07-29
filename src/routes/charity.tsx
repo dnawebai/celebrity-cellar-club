@@ -18,11 +18,11 @@ export const Route = createFileRoute("/charity")({
 });
 
 const causes = [
-  { name: "Children & Family", raised: "$4.2M" },
-  { name: "Healthcare Access", raised: "$3.1M" },
-  { name: "Education", raised: "$2.6M" },
-  { name: "Humanitarian Aid", raised: "$1.8M" },
-  { name: "Community Development", raised: "$1.4M" },
+  { name: "Children & Family", raised: "$840K" },
+  { name: "Healthcare Access", raised: "$620K" },
+  { name: "Education", raised: "$520K" },
+  { name: "Humanitarian Aid", raised: "$360K" },
+  { name: "Community Development", raised: "$280K" },
 ];
 
 function CharityPage() {
@@ -46,19 +46,19 @@ function CharityPage() {
           </p>
           <div className="mt-12 flex flex-wrap gap-12">
             <div>
-              <div className="font-display text-6xl text-gold-gradient">$13.1M</div>
+              <div className="font-display text-6xl text-gold-gradient">$2.62M</div>
               <div className="mt-1 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
                 Raised Since 2023
               </div>
             </div>
             <div>
-              <div className="font-display text-6xl text-gold-gradient">42</div>
+              <div className="font-display text-6xl text-gold-gradient">8</div>
               <div className="mt-1 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
                 Charity Auctions
               </div>
             </div>
             <div>
-              <div className="font-display text-6xl text-gold-gradient">17</div>
+              <div className="font-display text-6xl text-gold-gradient">3</div>
               <div className="mt-1 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
                 Partner Foundations
               </div>
