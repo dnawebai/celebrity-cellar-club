@@ -133,7 +133,10 @@ function MembershipPage() {
       <CelebritiesCollection />
 
       {/* TIERS */}
-      <section className="border-y border-border bg-surface/30 px-6 py-24 lg:px-10">
+      <section
+        id="membership-plans"
+        className="scroll-mt-24 border-y border-border bg-surface/30 px-6 py-24 lg:px-10"
+      >
         <div className="mx-auto max-w-[1400px]">
           <div className="mb-12 flex items-end justify-between">
             <h2 className="font-display text-4xl md:text-5xl">Membership Plans</h2>
