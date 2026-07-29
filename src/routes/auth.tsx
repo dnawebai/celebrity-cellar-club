@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, createFileRoute, useNavigate, useRouter } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable";
 import { SiteShell } from "@/components/site-shell";
 import { useAuth } from "@/hooks/use-auth";
 
