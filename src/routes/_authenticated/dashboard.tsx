@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { SiteShell } from "@/components/site-shell";
+import { SponsorSpotlight } from "@/components/sponsor-spotlight";
 import heroBottle from "@/assets/hero-bottle.jpg";
 import cellar from "@/assets/cellar-detail.jpg";
 import { getMyMembership } from "@/lib/membership.functions";
@@ -211,6 +212,9 @@ function Dashboard() {
               Reserve Seat
             </button>
           </div>
+
+          {/* Sponsor Spotlight */}
+          <SponsorSpotlight />
         </div>
       </section>
     </SiteShell>
