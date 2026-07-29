@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, createFileRoute, useNavigate, useRouter } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable";
 import { SiteShell } from "@/components/site-shell";
 import { useAuth } from "@/hooks/use-auth";
 
@@ -69,22 +68,8 @@ function AuthPage() {
     }
   }
 
-  async function onGoogle() {
-    setBusy(true);
-    setMsg(null);
-    const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
-    });
-    if (result?.error) {
-      setMsg({ kind: "err", text: result.error.message });
-      setBusy(false);
-      return;
-    }
-    if (!result?.redirected) {
-      router.invalidate();
-      navigate({ to: "/dashboard" });
-    }
-  }
+
+
 
   return (
     <SiteShell>
@@ -102,22 +87,8 @@ function AuthPage() {
               : "Sign in to access auctions, watchlist, and your portfolio."}
           </p>
 
-          {mode !== "forgot" && (
-            <button
-              type="button"
-              onClick={onGoogle}
-              disabled={busy}
-              className="mt-6 w-full rounded-sm border border-border bg-background px-4 py-3 text-sm font-medium hover:border-gold hover:text-gold disabled:opacity-50"
-            >
-              Continue with Google
-            </button>
-          )}
+          <div className="mt-6" />
 
-          <div className="my-5 flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-            <span className="h-px flex-1 bg-border" />
-            or
-            <span className="h-px flex-1 bg-border" />
-          </div>
 
           <form onSubmit={onSubmit} className="space-y-3">
             <label className="block text-xs uppercase tracking-[0.2em] text-muted-foreground">
