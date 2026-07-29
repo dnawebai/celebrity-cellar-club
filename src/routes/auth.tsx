@@ -26,9 +26,19 @@ function AuthPage() {
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState<{ kind: "err" | "ok"; text: string } | null>(null);
   const [busy, setBusy] = useState(false);
+  const [pendingEmail, setPendingEmail] = useState<string | null>(null);
+  const [sentAt, setSentAt] = useState<number | null>(null);
+  const [cooldown, setCooldown] = useState(0);
+  const [resendCount, setResendCount] = useState(0);
   const navigate = useNavigate();
   const router = useRouter();
   const { user, loading } = useAuth();
+
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const t = setInterval(() => setCooldown((c) => (c > 0 ? c - 1 : 0)), 1000);
+    return () => clearInterval(t);
+  }, [cooldown]);
 
   useEffect(() => {
     if (!loading && user) {
@@ -53,7 +63,10 @@ function AuthPage() {
           options: { emailRedirectTo: window.location.origin },
         });
         if (error) throw error;
-        setMsg({ kind: "ok", text: "Check your inbox to confirm your email." });
+        setPendingEmail(email);
+        setSentAt(Date.now());
+        setCooldown(60);
+        setMsg(null);
       } else {
         const { error } = await supabase.auth.resetPasswordForEmail(email, {
           redirectTo: `${window.location.origin}/reset-password`,
@@ -70,6 +83,101 @@ function AuthPage() {
 
 
 
+
+  async function onResend() {
+    if (!pendingEmail || cooldown > 0) return;
+    setBusy(true);
+    setMsg(null);
+    try {
+      const { error } = await supabase.auth.resend({
+        type: "signup",
+        email: pendingEmail,
+        options: { emailRedirectTo: window.location.origin },
+      });
+      if (error) throw error;
+      setSentAt(Date.now());
+      setResendCount((c) => c + 1);
+      setCooldown(60);
+    } catch (err: unknown) {
+      setMsg({ kind: "err", text: err instanceof Error ? err.message : "Could not resend the email" });
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  if (pendingEmail) {
+    const supportBody = encodeURIComponent(
+      `I signed up for Opus Drinks with ${pendingEmail} but have not received the confirmation email.\n\nSent at: ${sentAt ? new Date(sentAt).toISOString() : "unknown"}\nResend attempts: ${resendCount}`,
+    );
+    return (
+      <SiteShell>
+        <section className="mx-auto grid min-h-[80vh] max-w-md place-items-center px-6 py-24">
+          <div className="w-full rounded-sm border border-border bg-surface/40 p-8">
+            <span className="text-[10px] uppercase tracking-[0.4em] text-gold">Confirm your email</span>
+            <h1 className="mt-2 font-display text-4xl">Check your inbox</h1>
+
+            <div className="mt-6 rounded-sm border border-emerald-500/30 bg-emerald-500/5 p-4">
+              <p className="text-sm text-emerald-400">
+                Confirmation email sent to <span className="font-semibold">{pendingEmail}</span>
+                {sentAt ? ` at ${new Date(sentAt).toLocaleTimeString()}` : ""}.
+              </p>
+              <p className="mt-2 text-xs text-muted-foreground">
+                Delivery usually takes under 2 minutes. Please also check your spam or promotions folder.
+                {resendCount > 0 ? ` Resent ${resendCount} time${resendCount > 1 ? "s" : ""}.` : ""}
+              </p>
+            </div>
+
+            <button
+              onClick={onResend}
+              disabled={busy || cooldown > 0}
+              className="mt-6 w-full rounded-sm gold-gradient px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-primary-foreground disabled:opacity-60"
+            >
+              {busy ? "Sending..." : cooldown > 0 ? `Resend available in ${cooldown}s` : "Resend confirmation email"}
+            </button>
+
+            {msg && (
+              <p className={`mt-4 text-sm ${msg.kind === "err" ? "text-red-400" : "text-emerald-400"}`}>{msg.text}</p>
+            )}
+
+            <div className="mt-6 border-t border-border pt-6">
+              <p className="text-xs text-muted-foreground">
+                Still nothing after a few minutes? Our team can confirm your account manually.
+              </p>
+              <a
+                href={`mailto:hello@opusdrinks.com?subject=${encodeURIComponent("Confirmation email not received")}&body=${supportBody}`}
+                className="mt-3 block w-full rounded-sm border border-gold px-4 py-3 text-center text-[11px] font-semibold uppercase tracking-[0.3em] text-gold hover:bg-gold/10"
+              >
+                Contact support
+              </a>
+            </div>
+
+            <div className="mt-6 flex flex-wrap justify-between gap-3 text-xs text-muted-foreground">
+              <button
+                className="hover:text-gold"
+                onClick={() => {
+                  setPendingEmail(null);
+                  setMsg(null);
+                  setMode("sign_up");
+                }}
+              >
+                Use a different email
+              </button>
+              <button
+                className="hover:text-gold"
+                onClick={() => {
+                  setPendingEmail(null);
+                  setMsg(null);
+                  setMode("sign_in");
+                }}
+              >
+                Already confirmed? Sign in
+              </button>
+            </div>
+          </div>
+        </section>
+      </SiteShell>
+    );
+  }
 
   return (
     <SiteShell>
