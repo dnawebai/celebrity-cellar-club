@@ -71,3 +71,17 @@ export function ContactSubmissionEmail({
     </Html>
   )
 }
+
+export const template = {
+  component: ContactSubmissionEmail,
+  subject: 'New contact form submission — Opus Drinks',
+  displayName: 'Contact form submission',
+  to: 'hello@opusdrinks.com',
+  previewData: {
+    name: 'Jordan Smith',
+    email: 'jordan@example.com',
+    company: 'Example Cellars',
+    message:
+      'Hi Opus team, I would love to discuss a distribution partnership for our Napa Cabernet. Please reach out at your earliest convenience.',
+  },
+} satisfies TemplateEntry
