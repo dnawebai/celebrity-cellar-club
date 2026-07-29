@@ -18,11 +18,11 @@ export const Route = createFileRoute("/charity")({
 });
 
 const causes = [
-  { name: "Children & Family", raised: "$21K" },
-  { name: "Healthcare Access", raised: "$15.5K" },
-  { name: "Education", raised: "$13K" },
-  { name: "Humanitarian Aid", raised: "$9K" },
-  { name: "Community Development", raised: "$7K" },
+  { name: "Children & Family", raised: "$5.25K" },
+  { name: "Healthcare Access", raised: "$3.9K" },
+  { name: "Education", raised: "$3.25K" },
+  { name: "Humanitarian Aid", raised: "$2.25K" },
+  { name: "Community Development", raised: "$1.75K" },
 ];
 
 function CharityPage() {
@@ -46,7 +46,7 @@ function CharityPage() {
           </p>
           <div className="mt-12 flex flex-wrap gap-12">
             <div>
-              <div className="font-display text-6xl text-gold-gradient">$65.5K</div>
+              <div className="font-display text-6xl text-gold-gradient">$16.4K</div>
               <div className="mt-1 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
                 Raised Since 2023
               </div>
