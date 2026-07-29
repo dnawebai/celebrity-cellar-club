@@ -71,17 +71,15 @@ function AuthPage() {
   async function onGoogle() {
     setBusy(true);
     setMsg(null);
-    const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: window.location.origin },
     });
-    if (result.error) {
-      setMsg({ kind: "err", text: result.error.message });
+    if (error) {
+      setMsg({ kind: "err", text: error.message });
       setBusy(false);
       return;
     }
-    if (result.redirected) return;
-    router.invalidate();
-    navigate({ to: "/dashboard" });
   }
 
   return (
