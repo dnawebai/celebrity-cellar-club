@@ -8,6 +8,7 @@ import {
   Section,
   Text,
 } from '@react-email/components'
+import type { TemplateEntry } from './registry'
 
 interface ContactSubmissionProps {
   name: string
