@@ -21,6 +21,7 @@ import { Route as CharityRouteImport } from './routes/charity'
 import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuctionsRouteImport } from './routes/auctions'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EmailUnsubscribeRouteImport } from './routes/email/unsubscribe'
@@ -100,6 +101,11 @@ const AuthRoute = AuthRouteImport.update({
 const AuctionsRoute = AuctionsRouteImport.update({
   id: '/auctions',
   path: '/auctions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -212,6 +218,7 @@ const ApiPublicCronExpiryRemindersRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/auctions': typeof AuctionsRouteWithChildren
   '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
@@ -245,6 +252,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/auctions': typeof AuctionsRouteWithChildren
   '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
@@ -280,6 +288,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/about': typeof AboutRoute
   '/auctions': typeof AuctionsRouteWithChildren
   '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
@@ -315,6 +324,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
     | '/auctions'
     | '/auth'
     | '/calendar'
@@ -348,6 +358,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
     | '/auctions'
     | '/auth'
     | '/calendar'
@@ -382,6 +393,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/about'
     | '/auctions'
     | '/auth'
     | '/calendar'
@@ -417,6 +429,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AboutRoute: typeof AboutRoute
   AuctionsRoute: typeof AuctionsRouteWithChildren
   AuthRoute: typeof AuthRoute
   CalendarRoute: typeof CalendarRoute
@@ -525,6 +538,13 @@ declare module '@tanstack/react-router' {
       path: '/auctions'
       fullPath: '/auctions'
       preLoaderRoute: typeof AuctionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -717,6 +737,7 @@ const AuctionsRouteWithChildren = AuctionsRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AboutRoute: AboutRoute,
   AuctionsRoute: AuctionsRouteWithChildren,
   AuthRoute: AuthRoute,
   CalendarRoute: CalendarRoute,

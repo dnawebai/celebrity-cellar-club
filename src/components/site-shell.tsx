@@ -140,7 +140,10 @@ const footerLinks = {
     { to: "/sponsors", label: "Sponsors" },
     { to: "/charity", label: "Charity" },
   ],
-  Contact: [{ to: "/membership", label: "Apply for Membership" }],
+  Company: [
+    { to: "/about", label: "About" },
+    { to: "/membership", label: "Apply for Membership" },
+  ],
 } as const;
 
 export function SiteFooter() {
