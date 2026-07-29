@@ -212,6 +212,9 @@ function Dashboard() {
               Reserve Seat
             </button>
           </div>
+
+          {/* Sponsor Spotlight */}
+          <SponsorSpotlight />
         </div>
       </section>
     </SiteShell>
