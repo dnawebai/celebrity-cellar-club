@@ -36,7 +36,7 @@ const Email = ({
           Renew for another year of unified auction access, watchlist, concierge
           bidding, and the collector portfolio.
         </Text>
-        <Button style={btn} href={renewUrl}>Renew for $99</Button>
+        <Button style={btn} href={renewUrl}>Renew for $199</Button>
         <Text style={footer}>
           Renewals extend your access by 12 months from today. If you'd rather
           let your membership lapse, no action is needed.

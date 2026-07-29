@@ -72,13 +72,13 @@ function AuctionDetail() {
       <section className="grid gap-0 border-b border-border lg:grid-cols-2">
         <Link
           to="/checkout/membership"
-          aria-label="Unlock with $99 Opus Drinks membership"
+          aria-label="Unlock with $199 Opus Drinks membership"
           className="group relative block aspect-[4/3] overflow-hidden"
         >
           <img src={auction.coverImage} alt={auction.title} className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105" />
           <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
             <span className="mb-8 rounded-sm gold-gradient px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-primary-foreground">
-              Unlock · $99 membership
+              Unlock · $199 membership
             </span>
           </div>
         </Link>

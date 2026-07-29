@@ -23,10 +23,10 @@ function MembershipCheckoutPage() {
             Opus Drinks · Membership
           </span>
           <h1 className="mt-3 font-display text-4xl md:text-5xl leading-tight">
-            $99 unlocks every auction house
+            $199 unlocks every auction house
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-sm text-muted-foreground">
-            A single $99 Opus Drinks membership gives you a unified calendar,
+            A single $199 Opus Drinks membership gives you a unified calendar,
             watchlist, and concierge team across every authorised auction
             partner.
           </p>

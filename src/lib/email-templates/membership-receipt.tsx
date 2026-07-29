@@ -23,7 +23,7 @@ interface Props {
 
 const Email = ({
   recipientName,
-  amount = '$99.00',
+  amount = '$199.00',
   currency = 'USD',
   paidAt = new Date().toISOString().slice(0, 10),
   sessionId = '',
@@ -38,7 +38,7 @@ const Email = ({
         <Heading style={h1}>Payment received</Heading>
         <Text style={text}>
           {recipientName ? `Hi ${recipientName}, thank ` : 'Thank '}
-          you for joining Opus Drinks. This email confirms your $99 membership
+          you for joining Opus Drinks. This email confirms your $199 membership
           payment.
         </Text>
 
@@ -71,11 +71,11 @@ function Row({ label, value }: { label: string; value: string }) {
 
 export const template = {
   component: Email,
-  subject: 'Your Opus Drinks receipt · $99',
+  subject: 'Your Opus Drinks receipt · $199',
   displayName: 'Membership receipt',
   previewData: {
     recipientName: 'Alexander',
-    amount: '$99.00',
+    amount: '$199.00',
     currency: 'USD',
     paidAt: '2026-07-15',
     sessionId: 'cs_test_a1B2c3',

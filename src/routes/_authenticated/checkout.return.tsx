@@ -78,7 +78,7 @@ function CheckoutReturnPage() {
 
   const body =
     state.kind === "paid"
-      ? `Thank you. Your $99 Opus Drinks membership is active for the next 12 months.${state.amount ? ` Charged ${state.amount} ${state.currency}.` : ""} A receipt is on its way to your inbox.`
+      ? `Thank you. Your $199 Opus Drinks membership is active for the next 12 months.${state.amount ? ` Charged ${state.amount} ${state.currency}.` : ""} A receipt is on its way to your inbox.`
       : state.kind === "processing"
         ? "Stripe is still confirming your payment. Refresh in a minute — your membership will unlock automatically once confirmed."
         : state.kind === "error"

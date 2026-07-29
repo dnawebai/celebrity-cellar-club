@@ -17,7 +17,7 @@ export const Route = createFileRoute("/membership")({
       {
         name: "description",
         content:
-          "Apply for invitation-only membership. $99 application fee, committee review. Tiers from $199/mo to Founder Circle.",
+          "Apply for invitation-only membership. $199 application fee, committee review. Tiers from $199/mo to Founder Circle.",
       },
     ],
   }),
@@ -138,7 +138,7 @@ function MembershipPage() {
           <div className="mb-12 flex items-end justify-between">
             <h2 className="font-display text-4xl md:text-5xl">Membership Plans</h2>
             <span className="hidden text-[10px] uppercase tracking-[0.3em] text-muted-foreground md:block">
-              All tiers require a $99 application fee
+              All tiers require a $199 application fee
             </span>
           </div>
           <div className="grid gap-6 lg:grid-cols-3">
@@ -181,7 +181,7 @@ function MembershipPage() {
             ))}
           </div>
           <p className="mt-8 text-center text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
-            Subscriptions begin with a $99 application fee · ID & U.S. residence verification required
+            Subscriptions begin with a $199 application fee · ID & U.S. residence verification required
           </p>
         </div>
       </section>
@@ -255,7 +255,7 @@ function MembershipPage() {
                     className="mt-0.5 size-4 rounded border-border bg-surface accent-[color:var(--color-gold)]"
                   />
                   <span>
-                    I authorize the non-refundable $99 USD application fee and acknowledge that
+                    I authorize the non-refundable $199 USD application fee and acknowledge that
                     membership is subject to Committee approval.
                   </span>
                 </div>
@@ -263,7 +263,7 @@ function MembershipPage() {
                   type="submit"
                   className="w-full rounded-sm gold-gradient py-4 text-xs font-semibold uppercase tracking-[0.3em] text-primary-foreground transition hover:brightness-110"
                 >
-                  Submit Application — $99
+                  Submit Application — $199
                 </button>
               </form>
             )}
@@ -380,7 +380,7 @@ function CelebritiesCollection() {
             >
               <Link
                 to="/checkout/membership"
-                aria-label={`Buy ${b.bottle} — unlock with $99 Opus Drinks membership`}
+                aria-label={`Buy ${b.bottle} — unlock with $199 Opus Drinks membership`}
               >
                 <img
                   src={b.img}
@@ -529,7 +529,7 @@ function SubscribeModal({ tier, onClose }: { tier: Tier; onClose: () => void }) 
         </div>
         <h3 className="mb-2 font-display text-3xl md:text-4xl">Become a member.</h3>
         <p className="mb-6 text-sm text-muted-foreground">
-          $99 one-time membership fee · 12 months of access. Opus verifies your ID,
+          $199 one-time membership fee · 12 months of access. Opus verifies your ID,
           age (21+), and U.S. residence before your membership activates.
         </p>
 
@@ -568,7 +568,7 @@ function SubscribeModal({ tier, onClose }: { tier: Tier; onClose: () => void }) 
 
             <div className="rounded-sm border border-border bg-surface/40 p-4 text-xs text-muted-foreground">
               <p className="mb-1 text-[10px] uppercase tracking-[0.3em] text-gold">
-                Membership · $99
+                Membership · $199
               </p>
               One-time payment · 12 months of access.
             </div>
@@ -588,7 +588,7 @@ function SubscribeModal({ tier, onClose }: { tier: Tier; onClose: () => void }) 
               </label>
               <label className="flex items-start gap-3">
                 <input type="checkbox" required className="mt-0.5 size-4 accent-[color:var(--color-gold)]" />
-                <span>I authorize the $99 membership fee and consent to ID/age/residence verification.</span>
+                <span>I authorize the $199 membership fee and consent to ID/age/residence verification.</span>
               </label>
             </div>
 
@@ -606,10 +606,10 @@ function SubscribeModal({ tier, onClose }: { tier: Tier; onClose: () => void }) 
             <div className="rounded-sm border border-border bg-surface/40 p-5 text-sm">
               <div className="flex items-center justify-between border-b border-border pb-3 text-muted-foreground">
                 <span>Membership · One-time</span>
-                <span className="text-foreground">$99.00</span>
+                <span className="text-foreground">$199.00</span>
               </div>
               <div className="pt-3 text-xs text-muted-foreground">
-                Next: you'll be taken to Stripe's secure $99 checkout. Your membership
+                Next: you'll be taken to Stripe's secure $199 checkout. Your membership
                 activates automatically the moment payment is confirmed.
               </div>
             </div>
@@ -629,7 +629,7 @@ function SubscribeModal({ tier, onClose }: { tier: Tier; onClose: () => void }) 
                 disabled={busy}
                 className="flex-1 rounded-sm gold-gradient py-3.5 text-[11px] font-semibold uppercase tracking-[0.3em] text-primary-foreground hover:brightness-110 disabled:opacity-60"
               >
-                {busy ? "Preparing checkout…" : "Continue to $99 checkout"}
+                {busy ? "Preparing checkout…" : "Continue to $199 checkout"}
               </button>
 
             </div>
