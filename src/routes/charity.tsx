@@ -46,7 +46,7 @@ function CharityPage() {
           </p>
           <div className="mt-12 flex flex-wrap gap-12">
             <div>
-              <div className="font-display text-6xl text-gold-gradient">$2.62M</div>
+              <div className="font-display text-6xl text-gold-gradient">$262K</div>
               <div className="mt-1 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
                 Raised Since 2023
               </div>
