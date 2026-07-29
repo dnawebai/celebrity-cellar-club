@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
 import { formatMembers, getActiveMembers } from "@/lib/members";
 import heroBottle from "@/assets/hero-bottle.jpg";
-import qmiBottle from "@/assets/qmi-bottle.jpg";
+import opusOneBottle from "@/assets/opus-one-bottle.jpg";
 import influencer1 from "@/assets/drop-denise.jpg";
 import influencer2 from "@/assets/drop-hibell.jpg";
 import influencer3 from "@/assets/drop-taylor.jpg";
@@ -430,31 +430,26 @@ function HomePage() {
               Open investment center →
             </Link>
           </div>
-          <a
-            href="https://qmiwinery.com/"
-            target="_blank"
-            rel="noreferrer noopener"
-            className="relative order-1 block overflow-hidden rounded-3xl border border-border luxury-shadow transition hover:border-gold/50 lg:order-2"
-          >
+          <div className="relative order-1 overflow-hidden rounded-3xl border border-border luxury-shadow transition hover:border-gold/50 lg:order-2">
             <img
-              src={qmiBottle}
-              alt="QMI Winery signature bottle — visit qmiwinery.com"
+              src={opusOneBottle}
+              alt="Opus One Napa Valley red wine bottle"
               loading="lazy"
               className="aspect-[4/5] w-full object-cover"
             />
             <div className="absolute inset-x-5 bottom-5 rounded-2xl border border-border bg-background/80 p-5 backdrop-blur-xl">
               <div className="mb-2 flex items-center justify-between text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
-                <span>QMI Winery · Signature</span>
+                <span>Opus One · Napa Valley</span>
                 <span style={{ color: "var(--color-lime)" }}>+8.4% (30d)</span>
               </div>
               <div className="font-display text-3xl font-medium tracking-tight">
                 $2,800
               </div>
               <div className="mt-2 text-[10px] uppercase tracking-[0.3em] text-gold">
-                Visit qmiwinery.com →
+                Investment-grade allocation
               </div>
             </div>
-          </a>
+          </div>
         </div>
       </section>
 
