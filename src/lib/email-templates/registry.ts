@@ -3,6 +3,7 @@ import { template as contactSubmissionTemplate } from './contact-submission'
 import { template as membershipReceiptTemplate } from './membership-receipt'
 import { template as membershipWelcomeTemplate } from './membership-welcome'
 import { template as membershipExpiryReminderTemplate } from './membership-expiry-reminder'
+import { template as outbidTemplate } from './outbid'
 
 export interface TemplateEntry {
   component: ComponentType<any>
@@ -18,4 +19,5 @@ export const TEMPLATES: Record<string, TemplateEntry> = {
   'membership-receipt': membershipReceiptTemplate,
   'membership-welcome': membershipWelcomeTemplate,
   'membership-expiry-reminder': membershipExpiryReminderTemplate,
+  'outbid': outbidTemplate,
 }
