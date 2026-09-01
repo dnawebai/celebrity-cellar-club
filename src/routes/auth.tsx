@@ -3,6 +3,8 @@ import { Link, createFileRoute, useNavigate, useRouter } from "@tanstack/react-r
 import { supabase } from "@/integrations/supabase/client";
 import { SiteShell } from "@/components/site-shell";
 import { useAuth } from "@/hooks/use-auth";
+import { useServerFn } from "@tanstack/react-start";
+import { trackPublicConversionEvent } from "@/lib/auctions.functions";
 
 export const Route = createFileRoute("/auth")({
   ssr: false,
