@@ -34,6 +34,7 @@ import { Route as AuthenticatedWatchlistRouteImport } from './routes/_authentica
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedConciergeRouteImport } from './routes/_authenticated/concierge'
 import { Route as AuthenticatedBidsRouteImport } from './routes/_authenticated/bids'
+import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
 import { Route as LovableEmailSuppressionRouteImport } from './routes/lovable/email/suppression'
 import { Route as AuthenticatedCheckoutReturnRouteImport } from './routes/_authenticated/checkout.return'
 import { Route as AuthenticatedCheckoutMembershipRouteImport } from './routes/_authenticated/checkout.membership'
@@ -172,6 +173,11 @@ const AuthenticatedBidsRoute = AuthenticatedBidsRouteImport.update({
   path: '/bids',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminRouteRoute = AuthenticatedAdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const LovableEmailSuppressionRoute = LovableEmailSuppressionRouteImport.update({
   id: '/lovable/email/suppression',
   path: '/lovable/email/suppression',
@@ -259,6 +265,7 @@ export interface FileRoutesByFullPath {
   '/sommelier': typeof SommelierRoute
   '/sponsors': typeof SponsorsRoute
   '/terms': typeof TermsRoute
+  '/admin': typeof AuthenticatedAdminRouteRoute
   '/bids': typeof AuthenticatedBidsRoute
   '/concierge': typeof AuthenticatedConciergeRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -297,6 +304,7 @@ export interface FileRoutesByTo {
   '/sommelier': typeof SommelierRoute
   '/sponsors': typeof SponsorsRoute
   '/terms': typeof TermsRoute
+  '/admin': typeof AuthenticatedAdminRouteRoute
   '/bids': typeof AuthenticatedBidsRoute
   '/concierge': typeof AuthenticatedConciergeRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -337,6 +345,7 @@ export interface FileRoutesById {
   '/sommelier': typeof SommelierRoute
   '/sponsors': typeof SponsorsRoute
   '/terms': typeof TermsRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteRoute
   '/_authenticated/bids': typeof AuthenticatedBidsRoute
   '/_authenticated/concierge': typeof AuthenticatedConciergeRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
@@ -377,6 +386,7 @@ export interface FileRouteTypes {
     | '/sommelier'
     | '/sponsors'
     | '/terms'
+    | '/admin'
     | '/bids'
     | '/concierge'
     | '/dashboard'
@@ -415,6 +425,7 @@ export interface FileRouteTypes {
     | '/sommelier'
     | '/sponsors'
     | '/terms'
+    | '/admin'
     | '/bids'
     | '/concierge'
     | '/dashboard'
@@ -454,6 +465,7 @@ export interface FileRouteTypes {
     | '/sommelier'
     | '/sponsors'
     | '/terms'
+    | '/_authenticated/admin'
     | '/_authenticated/bids'
     | '/_authenticated/concierge'
     | '/_authenticated/dashboard'
@@ -683,6 +695,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBidsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/lovable/email/suppression': {
       id: '/lovable/email/suppression'
       path: '/lovable/email/suppression'
@@ -771,6 +790,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRouteRoute: typeof AuthenticatedAdminRouteRoute
   AuthenticatedBidsRoute: typeof AuthenticatedBidsRoute
   AuthenticatedConciergeRoute: typeof AuthenticatedConciergeRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
@@ -781,6 +801,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRouteRoute: AuthenticatedAdminRouteRoute,
   AuthenticatedBidsRoute: AuthenticatedBidsRoute,
   AuthenticatedConciergeRoute: AuthenticatedConciergeRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
