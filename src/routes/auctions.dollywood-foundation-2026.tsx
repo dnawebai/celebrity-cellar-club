@@ -12,7 +12,7 @@ export const Route = createFileRoute("/auctions/dollywood-foundation-2026")({
       {
         name: "description",
         content:
-          "A single-owner Appalachian cellar goes under the hammer for the Dollywood Foundation and Imagination Library. September 15, 2026 in Nashville. Members-only bidding.",
+          "One bottle of Veuve Monsigny Champagne Brut goes under the hammer for the Dollywood Foundation and Imagination Library. September 15, 2026 in Nashville. Members-only bidding.",
       },
       {
         property: "og:title",
