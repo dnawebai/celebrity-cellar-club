@@ -45,9 +45,11 @@ function AuthPage() {
 
   useEffect(() => {
     trackEvent({
-      eventType: "auth_page_viewed",
-      path: window.location.pathname + window.location.search,
-      referrer: document.referrer || undefined,
+      data: {
+        eventType: "auth_page_viewed",
+        path: window.location.pathname + window.location.search,
+        referrer: document.referrer || undefined,
+      },
     }).catch(() => {});
   }, [trackEvent]);
 
