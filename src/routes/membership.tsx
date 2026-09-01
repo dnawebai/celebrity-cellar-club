@@ -111,6 +111,17 @@ function MembershipPage() {
   const [submitted, setSubmitted] = useState(false);
   
   const [subscribeTier, setSubscribeTier] = useState<Tier | null>(null);
+  const trackEvent = useServerFn(trackPublicConversionEvent);
+
+  useEffect(() => {
+    trackEvent({
+      data: {
+        eventType: "membership_page_viewed",
+        path: window.location.pathname + window.location.search,
+        referrer: document.referrer || undefined,
+      },
+    }).catch(() => {});
+  }, [trackEvent]);
 
   return (
     <SiteShell>
