@@ -12,7 +12,7 @@ export const Route = createFileRoute("/auctions/dollywood-foundation-2026")({
       {
         name: "description",
         content:
-          "A single-owner Appalachian cellar goes under the hammer for the Dollywood Foundation and Imagination Library. September 15, 2026 in Nashville. Members-only bidding.",
+          "One bottle of Veuve Monsigny Champagne Brut goes under the hammer for the Dollywood Foundation and Imagination Library. September 15, 2026 in Nashville. Members-only bidding.",
       },
       {
         property: "og:title",
@@ -95,7 +95,8 @@ function DollywoodAuctionPage() {
             The Dolly Parton Benefit
           </p>
           <p className="mt-6 max-w-[70ch] text-base text-muted-foreground md:text-lg">
-            A single-owner Appalachian cellar goes under the hammer for the{" "}
+            One bottle of <strong className="text-foreground">Veuve Monsigny Champagne Brut</strong>{" "}
+            goes under the hammer for the{" "}
             <strong className="text-foreground">Dollywood Foundation</strong> and{" "}
             <strong className="text-foreground">Dolly Parton&apos;s Imagination Library</strong>. 100%
             of hammer price benefits the cause. Bidding is open to active Opus Drinks members.
@@ -127,8 +128,8 @@ function DollywoodAuctionPage() {
         <div className="mx-auto max-w-[1400px]">
           <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
-              <span className="text-[10px] uppercase tracking-[0.4em] text-gold">Curated Lots</span>
-              <h2 className="mt-2 font-display text-3xl md:text-4xl">The Cellar</h2>
+              <span className="text-[10px] uppercase tracking-[0.4em] text-gold">The Lot</span>
+              <h2 className="mt-2 font-display text-3xl md:text-4xl">Veuve Monsigny Champagne Brut</h2>
             </div>
             <p className="max-w-[50ch] text-sm text-muted-foreground">
               Each lot is available exclusively to Opus Drinks members. Click a lot to place a bid or
