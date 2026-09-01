@@ -155,10 +155,6 @@ function DollyModal({ onClose }: { onClose: () => void }) {
               >
                 Reserve your paddle · $199
               </Link>
-
-              <p className="mt-1.5 text-center text-[11px] text-[#888] md:mt-3">
-                Membership required. One-time $199.
-              </p>
             </div>
           </div>
         </div>
