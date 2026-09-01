@@ -250,7 +250,7 @@ export const trackConversionEvent = createServerFn({ method: "POST" })
       user_id: userId,
       path: data.path ?? null,
       referrer: data.referrer ?? null,
-      metadata: data.metadata ?? null,
+      metadata: (data.metadata ?? null) as any,
     });
 
     if (error) throw new Error(error.message);
