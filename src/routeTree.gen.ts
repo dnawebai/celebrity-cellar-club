@@ -38,6 +38,7 @@ import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authentic
 import { Route as LovableEmailSuppressionRouteImport } from './routes/lovable/email/suppression'
 import { Route as AuthenticatedCheckoutReturnRouteImport } from './routes/_authenticated/checkout.return'
 import { Route as AuthenticatedCheckoutMembershipRouteImport } from './routes/_authenticated/checkout.membership'
+import { Route as AuthenticatedAdminConversionsRouteImport } from './routes/_authenticated/admin/conversions'
 import { Route as LovableEmailTransactionalSendRouteImport } from './routes/lovable/email/transactional/send'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
@@ -195,6 +196,12 @@ const AuthenticatedCheckoutMembershipRoute =
     path: '/checkout/membership',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminConversionsRoute =
+  AuthenticatedAdminConversionsRouteImport.update({
+    id: '/conversions',
+    path: '/conversions',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
 const LovableEmailTransactionalSendRoute =
   LovableEmailTransactionalSendRouteImport.update({
     id: '/lovable/email/transactional/send',
@@ -265,7 +272,7 @@ export interface FileRoutesByFullPath {
   '/sommelier': typeof SommelierRoute
   '/sponsors': typeof SponsorsRoute
   '/terms': typeof TermsRoute
-  '/admin': typeof AuthenticatedAdminRouteRoute
+  '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/bids': typeof AuthenticatedBidsRoute
   '/concierge': typeof AuthenticatedConciergeRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -274,6 +281,7 @@ export interface FileRoutesByFullPath {
   '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
   '/auctions/dollywood-foundation-2026': typeof AuctionsDollywoodFoundation2026Route
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
+  '/admin/conversions': typeof AuthenticatedAdminConversionsRoute
   '/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
   '/checkout/return': typeof AuthenticatedCheckoutReturnRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
@@ -304,7 +312,7 @@ export interface FileRoutesByTo {
   '/sommelier': typeof SommelierRoute
   '/sponsors': typeof SponsorsRoute
   '/terms': typeof TermsRoute
-  '/admin': typeof AuthenticatedAdminRouteRoute
+  '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/bids': typeof AuthenticatedBidsRoute
   '/concierge': typeof AuthenticatedConciergeRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -313,6 +321,7 @@ export interface FileRoutesByTo {
   '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
   '/auctions/dollywood-foundation-2026': typeof AuctionsDollywoodFoundation2026Route
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
+  '/admin/conversions': typeof AuthenticatedAdminConversionsRoute
   '/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
   '/checkout/return': typeof AuthenticatedCheckoutReturnRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
@@ -345,7 +354,7 @@ export interface FileRoutesById {
   '/sommelier': typeof SommelierRoute
   '/sponsors': typeof SponsorsRoute
   '/terms': typeof TermsRoute
-  '/_authenticated/admin': typeof AuthenticatedAdminRouteRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/_authenticated/bids': typeof AuthenticatedBidsRoute
   '/_authenticated/concierge': typeof AuthenticatedConciergeRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
@@ -354,6 +363,7 @@ export interface FileRoutesById {
   '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
   '/auctions/dollywood-foundation-2026': typeof AuctionsDollywoodFoundation2026Route
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
+  '/_authenticated/admin/conversions': typeof AuthenticatedAdminConversionsRoute
   '/_authenticated/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
   '/_authenticated/checkout/return': typeof AuthenticatedCheckoutReturnRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
@@ -395,6 +405,7 @@ export interface FileRouteTypes {
     | '/auctions/$auctionId'
     | '/auctions/dollywood-foundation-2026'
     | '/email/unsubscribe'
+    | '/admin/conversions'
     | '/checkout/membership'
     | '/checkout/return'
     | '/lovable/email/suppression'
@@ -434,6 +445,7 @@ export interface FileRouteTypes {
     | '/auctions/$auctionId'
     | '/auctions/dollywood-foundation-2026'
     | '/email/unsubscribe'
+    | '/admin/conversions'
     | '/checkout/membership'
     | '/checkout/return'
     | '/lovable/email/suppression'
@@ -474,6 +486,7 @@ export interface FileRouteTypes {
     | '/auctions/$auctionId'
     | '/auctions/dollywood-foundation-2026'
     | '/email/unsubscribe'
+    | '/_authenticated/admin/conversions'
     | '/_authenticated/checkout/membership'
     | '/_authenticated/checkout/return'
     | '/lovable/email/suppression'
@@ -723,6 +736,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCheckoutMembershipRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/conversions': {
+      id: '/_authenticated/admin/conversions'
+      path: '/conversions'
+      fullPath: '/admin/conversions'
+      preLoaderRoute: typeof AuthenticatedAdminConversionsRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
     '/lovable/email/transactional/send': {
       id: '/lovable/email/transactional/send'
       path: '/lovable/email/transactional/send'
@@ -789,8 +809,22 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedAdminRouteRouteChildren {
+  AuthenticatedAdminConversionsRoute: typeof AuthenticatedAdminConversionsRoute
+}
+
+const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren =
+  {
+    AuthenticatedAdminConversionsRoute: AuthenticatedAdminConversionsRoute,
+  }
+
+const AuthenticatedAdminRouteRouteWithChildren =
+  AuthenticatedAdminRouteRoute._addFileChildren(
+    AuthenticatedAdminRouteRouteChildren,
+  )
+
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAdminRouteRoute: typeof AuthenticatedAdminRouteRoute
+  AuthenticatedAdminRouteRoute: typeof AuthenticatedAdminRouteRouteWithChildren
   AuthenticatedBidsRoute: typeof AuthenticatedBidsRoute
   AuthenticatedConciergeRoute: typeof AuthenticatedConciergeRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
@@ -801,7 +835,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAdminRouteRoute: AuthenticatedAdminRouteRoute,
+  AuthenticatedAdminRouteRoute: AuthenticatedAdminRouteRouteWithChildren,
   AuthenticatedBidsRoute: AuthenticatedBidsRoute,
   AuthenticatedConciergeRoute: AuthenticatedConciergeRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
