@@ -13,7 +13,7 @@ export const Route = createFileRoute("/auctions/dollywood-foundation-2026")({
       {
         name: "description",
         content:
-          "One bottle of Veuve Monsigny Champagne Brut goes under the hammer for the Dollywood Foundation and Imagination Library. September 15, 2026 in Nashville. Members-only bidding.",
+          "100 bottles of Veuve Monsigny Champagne Brut go under the hammer for the Dollywood Foundation and Dolly Parton's Imagination Library. September 15, 2026 — Nashville & Online. Members-only bidding.",
       },
       {
         property: "og:title",
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/auctions/dollywood-foundation-2026")({
       {
         property: "og:description",
         content:
-          "100% of hammer price benefits the Dollywood Foundation. Exclusive lots for Opus Drinks members.",
+          "September 15, 2026 · Nashville & Online. 100 bottles of Veuve Monsigny Champagne Brut. 100% of hammer price to the cause.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -97,11 +97,12 @@ function DollywoodAuctionPage() {
               The Dolly Parton Benefit
             </p>
             <p className="mt-6 max-w-[70ch] text-base text-muted-foreground md:text-lg">
-              One bottle of <strong className="text-foreground">Veuve Monsigny Champagne Brut</strong>{" "}
-              goes under the hammer for the{" "}
+              September 15, 2026 · Nashville &amp; Online. 100 bottles of{" "}
+              <strong className="text-foreground">Veuve Monsigny Champagne Brut</strong> go under the
+              hammer for the{" "}
               <strong className="text-foreground">Dollywood Foundation</strong> and{" "}
               <strong className="text-foreground">Dolly Parton&apos;s Imagination Library</strong>. 100%
-              of hammer price benefits the cause. Bidding is open to active Opus Drinks members.
+              of hammer price to the cause. Bidding is open to active Opus Drinks members.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-4">
@@ -117,17 +118,17 @@ function DollywoodAuctionPage() {
             </div>
 
             <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
-              <Stat label="Lots" value={lots.length.toString()} />
+              <Stat label="Bottles" value="100" />
               <Stat label="Opens" value={eventDate ?? "—"} />
               <Stat label="Proceeds" value="100%" />
-              <Stat label="Location" value="Nashville + Online" />
+              <Stat label="Location" value="Nashville & Online" />
             </div>
           </div>
 
           <div className="relative overflow-hidden rounded-sm border border-border shadow-lg">
             <img
               src={dollyVeuve}
-              alt="Veuve Monsigny Champagne Brut — the single lot of the Butterflies & Barrels benefit auction"
+              alt="Veuve Monsigny Champagne Brut — the lot of 100 bottles in the Butterflies & Barrels benefit auction"
               className="aspect-[4/5] w-full object-cover"
               width={1024}
               height={1280}
@@ -143,7 +144,7 @@ function DollywoodAuctionPage() {
           <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
               <span className="text-[10px] uppercase tracking-[0.4em] text-gold">The Lot</span>
-              <h2 className="mt-2 font-display text-3xl md:text-4xl">Veuve Monsigny Champagne Brut</h2>
+              <h2 className="mt-2 font-display text-3xl md:text-4xl">Veuve Monsigny Champagne Brut · 100 Bottles</h2>
             </div>
             <p className="max-w-[50ch] text-sm text-muted-foreground">
               Each lot is available exclusively to Opus Drinks members. Click a lot to place a bid or
