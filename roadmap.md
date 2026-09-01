@@ -12,3 +12,4 @@
 
 - Home page Dolly Parton event as centered popup modal using white/pink colours; clicking goes to membership checkout.
 - Membership ($199), Stripe checkout, email receipts, RLS/security fixes, mobile nav, About/Terms/Privacy pages.
+- Polished Dolly modal: stat cards are vertically centered and same height, "7PM CT" no longer wraps, and membership subtext removed.
