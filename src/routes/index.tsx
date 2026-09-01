@@ -10,6 +10,7 @@ import influencer4 from "@/assets/drop-50cent.jpg";
 import eventTasting from "@/assets/event-tasting.jpg";
 import eventVineyard from "@/assets/event-vineyard.jpg";
 import eventDinner from "@/assets/event-dinner.jpg";
+import dollyAuction from "@/assets/event-dolly-auction.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
