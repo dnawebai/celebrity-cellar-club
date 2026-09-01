@@ -187,8 +187,11 @@ export const placeBid = createServerFn({ method: "POST" })
       );
     }
 
-    // 4. Insert bid and update lot in a transaction-ish sequence.
-    //    The outbid trigger fires BEFORE INSERT, notifying the previous leader.
+    // 4. Capture previous leader before the bid is recorded.
+    const previousLeaderId = lot.leading_bidder_id;
+    const previousBidAmount = lot.current_bid_cents;
+
+    // 5. Insert bid and update lot.
     const { error: bidError } = await supabase.from("bids").insert({
       lot_id: data.lotId,
       bidder_id: userId,
@@ -206,6 +209,39 @@ export const placeBid = createServerFn({ method: "POST" })
       .eq("id", data.lotId);
 
     if (updateError) throw new Error(updateError.message);
+
+    // 6. Notify previous high bidder they were outbid.
+    if (previousLeaderId && previousLeaderId !== userId) {
+      const { data: prevProfile } = await supabase
+        .from("profiles")
+        .select("full_name, display_name")
+        .eq("id", previousLeaderId)
+        .maybeSingle();
+
+      const { data: prevUser } = await supabase.auth.admin.getUserById(
+        previousLeaderId,
+      );
+      const recipientEmail = prevUser?.user?.email;
+
+      if (recipientEmail) {
+        const { enqueueTransactionalEmail } = await import(
+          "@/lib/email/enqueue.server"
+        );
+        await enqueueTransactionalEmail({
+          templateName: "outbid",
+          recipientEmail,
+          idempotencyKey: `outbid:${data.lotId}:${previousLeaderId}:${Date.now()}`,
+          templateData: {
+            recipientName: prevProfile?.display_name ?? prevProfile?.full_name ?? undefined,
+            auctionTitle: auction.title,
+            lotTitle: lot.title,
+            previousBidCents: previousBidAmount,
+            newBidCents: data.amountCents,
+            lotUrl: `https://opusdrinks.com/auctions/dollywood-foundation-2026/lots/${data.lotId}`,
+          },
+        });
+      }
+    }
 
     return { ok: true, amountCents: data.amountCents };
   });
