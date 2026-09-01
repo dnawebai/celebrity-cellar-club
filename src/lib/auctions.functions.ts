@@ -162,7 +162,7 @@ export const placeBid = createServerFn({ method: "POST" })
     // 2. Lot + auction must be live
     const { data: lot, error: lotError } = await supabase
       .from("auction_lots")
-      .select("*, auctions(id, status, starts_at, ends_at)")
+      .select("*, auctions(id, title, status, starts_at, ends_at)")
       .eq("id", data.lotId)
       .maybeSingle();
 
