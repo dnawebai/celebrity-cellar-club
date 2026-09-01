@@ -4,6 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useQueryClient } from "@tanstack/react-query";
 import { verifyCheckoutSession } from "@/utils/payments.functions";
 import { getStripeEnvironment } from "@/lib/stripe";
+import { trackConversionEvent } from "@/lib/auctions.functions";
 
 export const Route = createFileRoute("/_authenticated/checkout/return")({
   validateSearch: (search: Record<string, unknown>): { session_id?: string } => ({
