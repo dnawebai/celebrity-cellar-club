@@ -101,9 +101,11 @@ function DollyModal({ onClose }: { onClose: () => void }) {
         <div className="flex min-h-0 flex-col overflow-hidden md:grid md:grid-cols-2">
           <Link to="/checkout/membership" className="relative block h-28 shrink-0 md:h-auto">
             <img
-              src={dollyAuction}
-              alt="Dolly Parton benefit auction lots"
+              src={dollyVeuve}
+              alt="Veuve Monsigny Champagne Brut — the single lot of the Butterflies & Barrels benefit auction"
               className="h-full w-full object-cover"
+              width={1024}
+              height={1280}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#c71585]/30 to-transparent" />
           </Link>

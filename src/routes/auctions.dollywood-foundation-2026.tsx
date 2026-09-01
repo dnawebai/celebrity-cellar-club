@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { SiteShell } from "@/components/site-shell";
 import { getAuctionBySlug } from "@/lib/auctions.functions";
+import dollyVeuve from "@/assets/dolly-veuve-monsigny.jpg";
 
 export const Route = createFileRoute("/auctions/dollywood-foundation-2026")({
   head: () => ({
