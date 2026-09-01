@@ -254,6 +254,89 @@ function HomePage() {
         </div>
       </section>
 
+      {/* ============ FEATURED CHARITY AUCTION — DOLLY PARTON ============ */}
+      <section className="border-b border-border px-5 py-24 lg:px-8 lg:py-32">
+        <div className="mx-auto grid max-w-[1500px] items-center gap-12 lg:grid-cols-2 lg:gap-20">
+          <Link
+            to="/checkout/membership"
+            className="group relative block overflow-hidden rounded-3xl border border-border"
+          >
+            <img
+              src={dollyAuction}
+              alt="Rare bourbon and Napa Cabernet lots staged for the Dollywood Foundation benefit auction"
+              loading="lazy"
+              width={1408}
+              height={912}
+              className="aspect-[3/2] w-full object-cover transition duration-700 group-hover:scale-[1.03]"
+            />
+            <div className="absolute inset-0 flex items-end bg-gradient-to-t from-background via-background/20 to-transparent p-7 opacity-0 transition group-hover:opacity-100">
+              <span className="rounded-full gold-gradient px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.3em] text-primary-foreground">
+                Unlock access · $199
+              </span>
+            </div>
+            <span className="absolute left-6 top-6 inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-3 py-1 text-[11px] uppercase tracking-[0.25em] backdrop-blur">
+              <span className="size-1.5 rounded-full" style={{ backgroundColor: "var(--color-lime)" }} />
+              Benefit auction
+            </span>
+          </Link>
+
+          <div>
+            <span className="mb-5 block font-mono text-[11px] uppercase tracking-[0.35em] text-gold">
+              September 15, 2026 · Nashville &amp; Online
+            </span>
+            <h2 className="max-w-[20ch] font-display text-5xl font-medium tracking-[-0.03em] md:text-6xl">
+              Butterflies &amp; Barrels:{" "}
+              <span className="italic text-gold-gradient">The Dolly Parton Benefit</span>
+            </h2>
+            <p className="mt-6 max-w-[52ch] text-base leading-relaxed text-muted-foreground">
+              One night, twenty-two lots, one cause. A single-owner Appalachian cellar
+              goes under the hammer in honour of Dolly Parton — with 100% of hammer
+              price directed to the Dollywood Foundation and its Imagination Library.
+              Expect Tennessee whiskey aged in Smoky Mountain rickhouses, vertical
+              flights of Napa Cabernet, and a hand-signed magnum reserved for the
+              closing lot.
+            </p>
+
+            <dl className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-4">
+              {[
+                { k: "Lots", v: "22" },
+                { k: "Opens", v: "7:00 PM CT" },
+                { k: "Proceeds", v: "100%" },
+                { k: "Paddles", v: "140" },
+              ].map((s) => (
+                <div key={s.k} className="bg-background p-5">
+                  <dt className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+                    {s.k}
+                  </dt>
+                  <dd className="mt-2 font-display text-2xl">{s.v}</dd>
+                </div>
+              ))}
+            </dl>
+
+            <div className="mt-10 flex flex-wrap items-center gap-4">
+              <Link
+                to="/checkout/membership"
+                className="rounded-full gold-gradient px-7 py-4 text-[11px] font-semibold uppercase tracking-[0.3em] text-primary-foreground"
+              >
+                Reserve your paddle · $199
+              </Link>
+              <Link
+                to="/checkout/membership"
+                className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground underline-offset-4 hover:text-gold hover:underline"
+              >
+                See the lot list
+              </Link>
+            </div>
+            <p className="mt-5 text-xs text-muted-foreground">
+              Bidding, catalogue previews and paddle registration are reserved for Opus
+              members. Membership is a one-time $199.
+            </p>
+          </div>
+        </div>
+      </section>
+
+
+
       {/* ============ LIVE AUCTIONS ============ */}
       <section className="border-b border-border px-5 py-24 lg:px-8 lg:py-32">
         <div className="mx-auto max-w-[1500px]">
