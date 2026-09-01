@@ -55,9 +55,18 @@ function AuthPage() {
 
   useEffect(() => {
     if (!loading && user) {
+      if (user.email_confirmed_at) {
+        trackEvent({
+          data: {
+            eventType: "email_confirmed",
+            path: window.location.pathname + window.location.search,
+            metadata: { provider: user.app_metadata?.provider },
+          },
+        }).catch(() => {});
+      }
       navigate({ to: "/dashboard" });
     }
-  }, [loading, user, navigate]);
+  }, [loading, user, navigate, trackEvent]);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
