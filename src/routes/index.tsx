@@ -135,12 +135,12 @@ function DollyModal({ onClose }: { onClose: () => void }) {
                 ].map((stat) => (
                   <div
                     key={stat.label}
-                    className="rounded-xl border border-[#ffe4e1] bg-white p-1.5 text-center shadow-sm md:p-3"
+                    className="rounded-xl border border-[#ffe4e1] bg-white p-1.5 text-center shadow-sm md:p-2 lg:p-3"
                   >
-                    <div className="text-[9px] uppercase tracking-[0.08em] text-[#c71585] md:text-[10px] md:tracking-[0.12em] lg:tracking-[0.2em]">
+                    <div className="text-[9px] uppercase tracking-[0.08em] text-[#c71585] md:text-[9px] md:tracking-[0.08em] lg:text-[10px] lg:tracking-[0.2em]">
                       {stat.label}
                     </div>
-                    <div className="font-display text-sm text-[#1a1a1a] md:mt-1 md:text-xl">
+                    <div className="font-display text-sm text-[#1a1a1a] md:mt-1 md:text-base lg:text-xl">
                       {stat.value}
                     </div>
                   </div>
