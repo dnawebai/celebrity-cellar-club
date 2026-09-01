@@ -125,15 +125,15 @@ function DollyModal({ onClose }: { onClose: () => void }) {
             </p>
 
             <p className="mt-3 text-sm leading-relaxed text-[#4a4a4a] md:mt-5">
-              September 15, 2026 · Nashville &amp; Online. One bottle of{" "}
-              <strong className="text-[#1a1a1a]">Veuve Monsigny Champagne Brut</strong> goes under the
+              September 15, 2026 · Nashville &amp; Online. 100 bottles of{" "}
+              <strong className="text-[#1a1a1a]">Veuve Monsigny Champagne Brut</strong> go under the
               hammer for the Dollywood Foundation and Dolly Parton&apos;s Imagination Library. 100% of
               hammer price to the cause.
             </p>
 
             <div className="mt-5 grid grid-cols-2 gap-3 md:mt-7 md:grid-cols-4 md:gap-4">
               {[
-                { label: "Lots", value: "1" },
+                { label: "Bottles", value: "100" },
                 { label: "Opens", value: "7PM CT" },
                 { label: "Proceeds", value: "100%" },
                 { label: "Paddles", value: "140" },
