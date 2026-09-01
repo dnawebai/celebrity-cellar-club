@@ -144,7 +144,7 @@ function DollywoodAuctionPage() {
           <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
               <span className="text-[10px] uppercase tracking-[0.4em] text-gold">The Lot</span>
-              <h2 className="mt-2 font-display text-3xl md:text-4xl">Veuve Monsigny Champagne Brut</h2>
+              <h2 className="mt-2 font-display text-3xl md:text-4xl">Veuve Monsigny Champagne Brut · 100 Bottles</h2>
             </div>
             <p className="max-w-[50ch] text-sm text-muted-foreground">
               Each lot is available exclusively to Opus Drinks members. Click a lot to place a bid or

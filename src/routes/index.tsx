@@ -102,7 +102,7 @@ function DollyModal({ onClose }: { onClose: () => void }) {
         <div className="relative h-48 shrink-0 md:h-auto md:w-1/2">
           <img
             src={dollyVeuve}
-            alt="Veuve Monsigny Champagne Brut — the single lot of the Butterflies & Barrels benefit auction"
+            alt="Veuve Monsigny Champagne Brut — the lot of 100 bottles in the Butterflies & Barrels benefit auction"
             className="h-full w-full object-cover"
             width={1024}
             height={1280}
