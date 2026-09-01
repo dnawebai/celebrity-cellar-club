@@ -163,7 +163,7 @@ function DollywoodAuctionPage() {
             this one.
           </p>
           <Link
-            to="/_authenticated/checkout/membership"
+            to="/checkout/membership"
             className="mt-8 inline-block rounded-sm bg-pink-600 px-8 py-4 text-[11px] font-semibold uppercase tracking-[0.3em] text-white shadow-sm transition hover:bg-pink-700"
           >
             Join Opus Drinks · $199
@@ -186,7 +186,7 @@ function Stat({ label, value }: { label: string; value: string }) {
 function LotCard({ lot }: { lot: { id: string; lot_number: string; title: string; description: string | null; image_url: string | null; estimate_low_cents: number | null; estimate_high_cents: number | null; current_bid_cents: number | null } }) {
   return (
     <Link
-      to="/_authenticated/auctions/dollywood-foundation-2026/lots/$lotId"
+      to="/auctions/dollywood-foundation-2026/lots/$lotId"
       params={{ lotId: lot.id }}
       className="group flex flex-col overflow-hidden rounded-sm border border-border bg-surface/40 transition hover:border-gold/40"
     >
