@@ -87,7 +87,7 @@ function DollyModal({ onClose }: { onClose: () => void }) {
     >
       <div
         data-testid="dolly-modal"
-        className="relative my-auto flex max-h-[90dvh] w-full max-w-4xl flex-col overflow-hidden rounded-[2rem] border-2 border-[#ffb6c1] bg-white shadow-2xl md:max-h-[86dvh]"
+        className="relative my-auto flex h-[85dvh] max-h-[85dvh] w-full max-w-4xl flex-col overflow-hidden rounded-[2rem] border-2 border-[#ffb6c1] bg-white shadow-2xl md:h-auto md:max-h-[86dvh]"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -98,8 +98,8 @@ function DollyModal({ onClose }: { onClose: () => void }) {
           ✕
         </button>
 
-        <div className="flex flex-col overflow-hidden md:grid md:grid-cols-2">
-          <Link to="/checkout/membership" className="relative block h-40 shrink-0 md:h-auto">
+        <div className="flex h-full flex-col overflow-hidden md:grid md:grid-cols-2">
+          <Link to="/checkout/membership" className="relative block h-32 shrink-0 md:h-auto">
             <img
               src={dollyAuction}
               alt="Dolly Parton benefit auction lots"
@@ -108,25 +108,25 @@ function DollyModal({ onClose }: { onClose: () => void }) {
             <div className="absolute inset-0 bg-gradient-to-t from-[#c71585]/30 to-transparent" />
           </Link>
 
-          <div className="flex flex-col bg-gradient-to-br from-white to-[#fff0f5]">
-            <div className="flex-1 overflow-y-auto p-5 md:p-12">
-              <span className="mb-2 inline-flex w-fit items-center gap-2 rounded-full border border-[#ffb6c1] bg-[#fff0f5] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-[#c71585]">
+          <div className="flex h-full flex-col bg-gradient-to-br from-white to-[#fff0f5]">
+            <div className="flex-1 overflow-y-auto p-4 md:p-12">
+              <span className="mb-1.5 inline-flex w-fit items-center gap-2 rounded-full border border-[#ffb6c1] bg-[#fff0f5] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-[#c71585]">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-[#ff69b4]" />
                 Benefit Auction
               </span>
 
-              <h2 className="font-display text-2xl font-medium tracking-tight text-[#1a1a1a] md:text-5xl">
+              <h2 className="font-display text-xl font-medium tracking-tight text-[#1a1a1a] md:text-5xl">
                 Butterflies &amp; Barrels
               </h2>
-              <p className="mt-1 font-display text-lg italic text-[#c71585] md:mt-2 md:text-2xl">
+              <p className="mt-0.5 font-display text-base italic text-[#c71585] md:mt-2 md:text-2xl">
                 The Dolly Parton Benefit
               </p>
 
-              <p className="mt-3 text-sm leading-relaxed text-[#4a4a4a] md:mt-5">
+              <p className="mt-2 text-xs leading-relaxed text-[#4a4a4a] md:mt-5 md:text-sm">
                 September 15, 2026 · Nashville &amp; Online. A single-owner Appalachian cellar goes under the hammer for the Dollywood Foundation and Imagination Library. 100% of hammer price to the cause.
               </p>
 
-              <div className="mt-4 grid grid-cols-2 gap-2 md:mt-6 md:gap-3">
+              <div className="mt-3 grid grid-cols-2 gap-2 md:mt-6 md:gap-3">
                 {[
                   { label: "Lots", value: "22" },
                   { label: "Opens", value: "7PM CT" },
@@ -135,12 +135,12 @@ function DollyModal({ onClose }: { onClose: () => void }) {
                 ].map((stat) => (
                   <div
                     key={stat.label}
-                    className="rounded-xl border border-[#ffe4e1] bg-white p-2 text-center shadow-sm md:p-3"
+                    className="rounded-xl border border-[#ffe4e1] bg-white p-1.5 text-center shadow-sm md:p-3"
                   >
-                    <div className="text-[10px] uppercase tracking-[0.2em] text-[#c71585]">
+                    <div className="text-[9px] uppercase tracking-[0.2em] text-[#c71585] md:text-[10px]">
                       {stat.label}
                     </div>
-                    <div className="mt-0.5 font-display text-base text-[#1a1a1a] md:mt-1 md:text-xl">
+                    <div className="font-display text-sm text-[#1a1a1a] md:mt-1 md:text-xl">
                       {stat.value}
                     </div>
                   </div>
@@ -148,15 +148,15 @@ function DollyModal({ onClose }: { onClose: () => void }) {
               </div>
             </div>
 
-            <div className="border-t border-[#ffe4e1] bg-white/80 p-5 backdrop-blur-sm md:border-transparent md:bg-transparent md:p-12 md:pt-0">
+            <div className="border-t border-[#ffe4e1] bg-white/80 p-4 backdrop-blur-sm md:border-transparent md:bg-transparent md:p-12 md:pt-0">
               <Link
                 to="/checkout/membership"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#ff1493] px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.15em] text-white shadow-lg transition hover:bg-[#c71585] hover:shadow-xl md:px-8 md:py-4"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#ff1493] px-6 py-3 text-sm font-semibold uppercase tracking-[0.15em] text-white shadow-lg transition hover:bg-[#c71585] hover:shadow-xl md:px-8 md:py-4"
               >
                 Reserve your paddle · $199
               </Link>
 
-              <p className="mt-2 text-center text-[11px] text-[#888] md:mt-3">
+              <p className="mt-1.5 text-center text-[11px] text-[#888] md:mt-3">
                 Membership required. One-time $199.
               </p>
             </div>
