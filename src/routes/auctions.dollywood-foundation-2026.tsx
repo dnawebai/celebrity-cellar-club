@@ -83,42 +83,55 @@ function DollywoodAuctionPage() {
         <div className="absolute inset-0 -z-10 opacity-20">
           <div className="h-full w-full bg-gradient-to-br from-pink-100 via-white to-emerald-50" />
         </div>
-        <div className="mx-auto max-w-[1400px]">
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-pink-200 bg-white/60 px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-pink-700 backdrop-blur">
-            <span className="size-1.5 rounded-full bg-pink-500" />
-            Benefit Auction · September 15, 2026
-          </span>
-          <h1 className="max-w-[18ch] font-display text-5xl text-balance md:text-7xl lg:text-8xl">
-            Butterflies <span className="italic text-pink-600">&</span> Barrels
-          </h1>
-          <p className="mt-4 max-w-[60ch] font-serif text-2xl italic text-pink-700 md:text-3xl">
-            The Dolly Parton Benefit
-          </p>
-          <p className="mt-6 max-w-[70ch] text-base text-muted-foreground md:text-lg">
-            One bottle of <strong className="text-foreground">Veuve Monsigny Champagne Brut</strong>{" "}
-            goes under the hammer for the{" "}
-            <strong className="text-foreground">Dollywood Foundation</strong> and{" "}
-            <strong className="text-foreground">Dolly Parton&apos;s Imagination Library</strong>. 100%
-            of hammer price benefits the cause. Bidding is open to active Opus Drinks members.
-          </p>
-
-          <div className="mt-8 flex flex-wrap items-center gap-4">
-            <Link
-              to="/checkout/membership"
-              className="rounded-sm bg-pink-600 px-6 py-3 text-center text-[11px] font-semibold uppercase tracking-[0.3em] text-white shadow-sm transition hover:bg-pink-700"
-            >
-              Reserve Your Paddle · $199
-            </Link>
-            <span className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
-              {auction ? formatCountdown(auction.starts_at) : "Loading…"}
+        <div className="mx-auto grid max-w-[1400px] gap-10 lg:grid-cols-2 lg:items-center">
+          <div>
+            <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-pink-200 bg-white/60 px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-pink-700 backdrop-blur">
+              <span className="size-1.5 rounded-full bg-pink-500" />
+              Benefit Auction · September 15, 2026
             </span>
+            <h1 className="max-w-[18ch] font-display text-5xl text-balance md:text-7xl lg:text-8xl">
+              Butterflies <span className="italic text-pink-600">&</span> Barrels
+            </h1>
+            <p className="mt-4 max-w-[60ch] font-serif text-2xl italic text-pink-700 md:text-3xl">
+              The Dolly Parton Benefit
+            </p>
+            <p className="mt-6 max-w-[70ch] text-base text-muted-foreground md:text-lg">
+              One bottle of <strong className="text-foreground">Veuve Monsigny Champagne Brut</strong>{" "}
+              goes under the hammer for the{" "}
+              <strong className="text-foreground">Dollywood Foundation</strong> and{" "}
+              <strong className="text-foreground">Dolly Parton&apos;s Imagination Library</strong>. 100%
+              of hammer price benefits the cause. Bidding is open to active Opus Drinks members.
+            </p>
+
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <Link
+                to="/checkout/membership"
+                className="rounded-sm bg-pink-600 px-6 py-3 text-center text-[11px] font-semibold uppercase tracking-[0.3em] text-white shadow-sm transition hover:bg-pink-700"
+              >
+                Reserve Your Paddle · $199
+              </Link>
+              <span className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
+                {auction ? formatCountdown(auction.starts_at) : "Loading…"}
+              </span>
+            </div>
+
+            <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
+              <Stat label="Lots" value={lots.length.toString()} />
+              <Stat label="Opens" value={eventDate ?? "—"} />
+              <Stat label="Proceeds" value="100%" />
+              <Stat label="Location" value="Nashville + Online" />
+            </div>
           </div>
 
-          <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
-            <Stat label="Lots" value={lots.length.toString()} />
-            <Stat label="Opens" value={eventDate ?? "—"} />
-            <Stat label="Proceeds" value="100%" />
-            <Stat label="Location" value="Nashville + Online" />
+          <div className="relative overflow-hidden rounded-sm border border-border shadow-lg">
+            <img
+              src={dollyVeuve}
+              alt="Veuve Monsigny Champagne Brut — the single lot of the Butterflies & Barrels benefit auction"
+              className="aspect-[4/5] w-full object-cover"
+              width={1024}
+              height={1280}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-pink-950/20 to-transparent" />
           </div>
         </div>
       </section>
