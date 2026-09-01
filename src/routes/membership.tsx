@@ -1,10 +1,11 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { SiteShell } from "@/components/site-shell";
 import { useAuth } from "@/hooks/use-auth";
 import { saveProfile, submitVerification, selectBillingCycle } from "@/lib/membership.functions";
+import { trackPublicConversionEvent } from "@/lib/auctions.functions";
 import celebBranson from "@/assets/celeb-branson.jpg";
 import celebMouton from "@/assets/celeb-mouton.jpg";
 import celebSancerre from "@/assets/celeb-sancerre.jpg";
@@ -110,6 +111,17 @@ function MembershipPage() {
   const [submitted, setSubmitted] = useState(false);
   
   const [subscribeTier, setSubscribeTier] = useState<Tier | null>(null);
+  const trackEvent = useServerFn(trackPublicConversionEvent);
+
+  useEffect(() => {
+    trackEvent({
+      data: {
+        eventType: "membership_page_viewed",
+        path: window.location.pathname + window.location.search,
+        referrer: document.referrer || undefined,
+      },
+    }).catch(() => {});
+  }, [trackEvent]);
 
   return (
     <SiteShell>

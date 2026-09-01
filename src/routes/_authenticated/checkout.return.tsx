@@ -4,6 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useQueryClient } from "@tanstack/react-query";
 import { verifyCheckoutSession } from "@/utils/payments.functions";
 import { getStripeEnvironment } from "@/lib/stripe";
+import { trackConversionEvent } from "@/lib/auctions.functions";
 
 export const Route = createFileRoute("/_authenticated/checkout/return")({
   validateSearch: (search: Record<string, unknown>): { session_id?: string } => ({
@@ -22,6 +23,7 @@ type State =
 function CheckoutReturnPage() {
   const { session_id } = Route.useSearch();
   const verify = useServerFn(verifyCheckoutSession);
+  const trackEvent = useServerFn(trackConversionEvent);
   const qc = useQueryClient();
   const [state, setState] = useState<State>(
     session_id ? { kind: "loading" } : { kind: "missing" },
@@ -47,6 +49,17 @@ function CheckoutReturnPage() {
               ? `$${(res.amountTotal / 100).toFixed(2)}`
               : undefined;
           setState({ kind: "paid", amount: amt, currency: (res.currency ?? "usd").toUpperCase() });
+          trackEvent({
+            data: {
+              eventType: "membership_purchased",
+              path: window.location.pathname + window.location.search,
+              metadata: {
+                amount_total: res.amountTotal,
+                currency: res.currency,
+                session_id,
+              },
+            },
+          }).catch(() => {});
           return;
         }
         if (attempt++ < 5) {

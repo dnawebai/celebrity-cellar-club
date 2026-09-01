@@ -26,16 +26,20 @@ import { Route as AuctionsRouteImport } from './routes/auctions'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuctionsIndexRouteImport } from './routes/auctions.index'
 import { Route as EmailUnsubscribeRouteImport } from './routes/email/unsubscribe'
+import { Route as AuctionsDollywoodFoundation2026RouteImport } from './routes/auctions.dollywood-foundation-2026'
 import { Route as AuctionsAuctionIdRouteImport } from './routes/auctions.$auctionId'
 import { Route as AdminMembersRouteImport } from './routes/admin.members'
 import { Route as AuthenticatedWatchlistRouteImport } from './routes/_authenticated/watchlist'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedConciergeRouteImport } from './routes/_authenticated/concierge'
 import { Route as AuthenticatedBidsRouteImport } from './routes/_authenticated/bids'
+import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
 import { Route as LovableEmailSuppressionRouteImport } from './routes/lovable/email/suppression'
 import { Route as AuthenticatedCheckoutReturnRouteImport } from './routes/_authenticated/checkout.return'
 import { Route as AuthenticatedCheckoutMembershipRouteImport } from './routes/_authenticated/checkout.membership'
+import { Route as AuthenticatedAdminConversionsRouteImport } from './routes/_authenticated/admin/conversions'
 import { Route as LovableEmailTransactionalSendRouteImport } from './routes/lovable/email/transactional/send'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
@@ -44,6 +48,7 @@ import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/em
 import { Route as AuctionsAuctionIdLotsLotIdRouteImport } from './routes/auctions.$auctionId.lots.$lotId'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 import { Route as ApiPublicCronExpiryRemindersRouteImport } from './routes/api/public/cron/expiry-reminders'
+import { Route as AuthenticatedAuctionsDollywoodFoundation2026LotsLotIdRouteImport } from './routes/_authenticated/auctions.dollywood-foundation-2026.lots.$lotId'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -129,11 +134,22 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuctionsIndexRoute = AuctionsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuctionsRoute,
+} as any)
 const EmailUnsubscribeRoute = EmailUnsubscribeRouteImport.update({
   id: '/email/unsubscribe',
   path: '/email/unsubscribe',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuctionsDollywoodFoundation2026Route =
+  AuctionsDollywoodFoundation2026RouteImport.update({
+    id: '/dollywood-foundation-2026',
+    path: '/dollywood-foundation-2026',
+    getParentRoute: () => AuctionsRoute,
+  } as any)
 const AuctionsAuctionIdRoute = AuctionsAuctionIdRouteImport.update({
   id: '/$auctionId',
   path: '/$auctionId',
@@ -164,6 +180,11 @@ const AuthenticatedBidsRoute = AuthenticatedBidsRouteImport.update({
   path: '/bids',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminRouteRoute = AuthenticatedAdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const LovableEmailSuppressionRoute = LovableEmailSuppressionRouteImport.update({
   id: '/lovable/email/suppression',
   path: '/lovable/email/suppression',
@@ -180,6 +201,12 @@ const AuthenticatedCheckoutMembershipRoute =
     id: '/checkout/membership',
     path: '/checkout/membership',
     getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminConversionsRoute =
+  AuthenticatedAdminConversionsRouteImport.update({
+    id: '/conversions',
+    path: '/conversions',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
 const LovableEmailTransactionalSendRoute =
   LovableEmailTransactionalSendRouteImport.update({
@@ -227,6 +254,12 @@ const ApiPublicCronExpiryRemindersRoute =
     path: '/api/public/cron/expiry-reminders',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AuthenticatedAuctionsDollywoodFoundation2026LotsLotIdRoute =
+  AuthenticatedAuctionsDollywoodFoundation2026LotsLotIdRouteImport.update({
+    id: '/auctions/dollywood-foundation-2026/lots/$lotId',
+    path: '/auctions/dollywood-foundation-2026/lots/$lotId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -245,13 +278,17 @@ export interface FileRoutesByFullPath {
   '/sommelier': typeof SommelierRoute
   '/sponsors': typeof SponsorsRoute
   '/terms': typeof TermsRoute
+  '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/bids': typeof AuthenticatedBidsRoute
   '/concierge': typeof AuthenticatedConciergeRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/watchlist': typeof AuthenticatedWatchlistRoute
   '/admin/members': typeof AdminMembersRoute
   '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
+  '/auctions/dollywood-foundation-2026': typeof AuctionsDollywoodFoundation2026Route
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
+  '/auctions/': typeof AuctionsIndexRoute
+  '/admin/conversions': typeof AuthenticatedAdminConversionsRoute
   '/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
   '/checkout/return': typeof AuthenticatedCheckoutReturnRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
@@ -263,11 +300,11 @@ export interface FileRoutesByFullPath {
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
   '/lovable/email/transactional/send': typeof LovableEmailTransactionalSendRoute
+  '/auctions/dollywood-foundation-2026/lots/$lotId': typeof AuthenticatedAuctionsDollywoodFoundation2026LotsLotIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/auctions': typeof AuctionsRouteWithChildren
   '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
   '/charity': typeof CharityRoute
@@ -281,13 +318,17 @@ export interface FileRoutesByTo {
   '/sommelier': typeof SommelierRoute
   '/sponsors': typeof SponsorsRoute
   '/terms': typeof TermsRoute
+  '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/bids': typeof AuthenticatedBidsRoute
   '/concierge': typeof AuthenticatedConciergeRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/watchlist': typeof AuthenticatedWatchlistRoute
   '/admin/members': typeof AdminMembersRoute
   '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
+  '/auctions/dollywood-foundation-2026': typeof AuctionsDollywoodFoundation2026Route
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
+  '/auctions': typeof AuctionsIndexRoute
+  '/admin/conversions': typeof AuthenticatedAdminConversionsRoute
   '/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
   '/checkout/return': typeof AuthenticatedCheckoutReturnRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
@@ -299,6 +340,7 @@ export interface FileRoutesByTo {
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
   '/lovable/email/transactional/send': typeof LovableEmailTransactionalSendRoute
+  '/auctions/dollywood-foundation-2026/lots/$lotId': typeof AuthenticatedAuctionsDollywoodFoundation2026LotsLotIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -319,13 +361,17 @@ export interface FileRoutesById {
   '/sommelier': typeof SommelierRoute
   '/sponsors': typeof SponsorsRoute
   '/terms': typeof TermsRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/_authenticated/bids': typeof AuthenticatedBidsRoute
   '/_authenticated/concierge': typeof AuthenticatedConciergeRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/watchlist': typeof AuthenticatedWatchlistRoute
   '/admin/members': typeof AdminMembersRoute
   '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
+  '/auctions/dollywood-foundation-2026': typeof AuctionsDollywoodFoundation2026Route
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
+  '/auctions/': typeof AuctionsIndexRoute
+  '/_authenticated/admin/conversions': typeof AuthenticatedAdminConversionsRoute
   '/_authenticated/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
   '/_authenticated/checkout/return': typeof AuthenticatedCheckoutReturnRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
@@ -337,6 +383,7 @@ export interface FileRoutesById {
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
   '/lovable/email/transactional/send': typeof LovableEmailTransactionalSendRoute
+  '/_authenticated/auctions/dollywood-foundation-2026/lots/$lotId': typeof AuthenticatedAuctionsDollywoodFoundation2026LotsLotIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -357,13 +404,17 @@ export interface FileRouteTypes {
     | '/sommelier'
     | '/sponsors'
     | '/terms'
+    | '/admin'
     | '/bids'
     | '/concierge'
     | '/dashboard'
     | '/watchlist'
     | '/admin/members'
     | '/auctions/$auctionId'
+    | '/auctions/dollywood-foundation-2026'
     | '/email/unsubscribe'
+    | '/auctions/'
+    | '/admin/conversions'
     | '/checkout/membership'
     | '/checkout/return'
     | '/lovable/email/suppression'
@@ -375,11 +426,11 @@ export interface FileRouteTypes {
     | '/lovable/email/queue/process'
     | '/lovable/email/transactional/preview'
     | '/lovable/email/transactional/send'
+    | '/auctions/dollywood-foundation-2026/lots/$lotId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
-    | '/auctions'
     | '/auth'
     | '/calendar'
     | '/charity'
@@ -393,13 +444,17 @@ export interface FileRouteTypes {
     | '/sommelier'
     | '/sponsors'
     | '/terms'
+    | '/admin'
     | '/bids'
     | '/concierge'
     | '/dashboard'
     | '/watchlist'
     | '/admin/members'
     | '/auctions/$auctionId'
+    | '/auctions/dollywood-foundation-2026'
     | '/email/unsubscribe'
+    | '/auctions'
+    | '/admin/conversions'
     | '/checkout/membership'
     | '/checkout/return'
     | '/lovable/email/suppression'
@@ -411,6 +466,7 @@ export interface FileRouteTypes {
     | '/lovable/email/queue/process'
     | '/lovable/email/transactional/preview'
     | '/lovable/email/transactional/send'
+    | '/auctions/dollywood-foundation-2026/lots/$lotId'
   id:
     | '__root__'
     | '/'
@@ -430,13 +486,17 @@ export interface FileRouteTypes {
     | '/sommelier'
     | '/sponsors'
     | '/terms'
+    | '/_authenticated/admin'
     | '/_authenticated/bids'
     | '/_authenticated/concierge'
     | '/_authenticated/dashboard'
     | '/_authenticated/watchlist'
     | '/admin/members'
     | '/auctions/$auctionId'
+    | '/auctions/dollywood-foundation-2026'
     | '/email/unsubscribe'
+    | '/auctions/'
+    | '/_authenticated/admin/conversions'
     | '/_authenticated/checkout/membership'
     | '/_authenticated/checkout/return'
     | '/lovable/email/suppression'
@@ -448,6 +508,7 @@ export interface FileRouteTypes {
     | '/lovable/email/queue/process'
     | '/lovable/email/transactional/preview'
     | '/lovable/email/transactional/send'
+    | '/_authenticated/auctions/dollywood-foundation-2026/lots/$lotId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -601,12 +662,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auctions/': {
+      id: '/auctions/'
+      path: '/'
+      fullPath: '/auctions/'
+      preLoaderRoute: typeof AuctionsIndexRouteImport
+      parentRoute: typeof AuctionsRoute
+    }
     '/email/unsubscribe': {
       id: '/email/unsubscribe'
       path: '/email/unsubscribe'
       fullPath: '/email/unsubscribe'
       preLoaderRoute: typeof EmailUnsubscribeRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/auctions/dollywood-foundation-2026': {
+      id: '/auctions/dollywood-foundation-2026'
+      path: '/dollywood-foundation-2026'
+      fullPath: '/auctions/dollywood-foundation-2026'
+      preLoaderRoute: typeof AuctionsDollywoodFoundation2026RouteImport
+      parentRoute: typeof AuctionsRoute
     }
     '/auctions/$auctionId': {
       id: '/auctions/$auctionId'
@@ -650,6 +725,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBidsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/lovable/email/suppression': {
       id: '/lovable/email/suppression'
       path: '/lovable/email/suppression'
@@ -670,6 +752,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/checkout/membership'
       preLoaderRoute: typeof AuthenticatedCheckoutMembershipRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/conversions': {
+      id: '/_authenticated/admin/conversions'
+      path: '/conversions'
+      fullPath: '/admin/conversions'
+      preLoaderRoute: typeof AuthenticatedAdminConversionsRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
     }
     '/lovable/email/transactional/send': {
       id: '/lovable/email/transactional/send'
@@ -727,25 +816,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicCronExpiryRemindersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/auctions/dollywood-foundation-2026/lots/$lotId': {
+      id: '/_authenticated/auctions/dollywood-foundation-2026/lots/$lotId'
+      path: '/auctions/dollywood-foundation-2026/lots/$lotId'
+      fullPath: '/auctions/dollywood-foundation-2026/lots/$lotId'
+      preLoaderRoute: typeof AuthenticatedAuctionsDollywoodFoundation2026LotsLotIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedAdminRouteRouteChildren {
+  AuthenticatedAdminConversionsRoute: typeof AuthenticatedAdminConversionsRoute
+}
+
+const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren =
+  {
+    AuthenticatedAdminConversionsRoute: AuthenticatedAdminConversionsRoute,
+  }
+
+const AuthenticatedAdminRouteRouteWithChildren =
+  AuthenticatedAdminRouteRoute._addFileChildren(
+    AuthenticatedAdminRouteRouteChildren,
+  )
+
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRouteRoute: typeof AuthenticatedAdminRouteRouteWithChildren
   AuthenticatedBidsRoute: typeof AuthenticatedBidsRoute
   AuthenticatedConciergeRoute: typeof AuthenticatedConciergeRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedWatchlistRoute: typeof AuthenticatedWatchlistRoute
   AuthenticatedCheckoutMembershipRoute: typeof AuthenticatedCheckoutMembershipRoute
   AuthenticatedCheckoutReturnRoute: typeof AuthenticatedCheckoutReturnRoute
+  AuthenticatedAuctionsDollywoodFoundation2026LotsLotIdRoute: typeof AuthenticatedAuctionsDollywoodFoundation2026LotsLotIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRouteRoute: AuthenticatedAdminRouteRouteWithChildren,
   AuthenticatedBidsRoute: AuthenticatedBidsRoute,
   AuthenticatedConciergeRoute: AuthenticatedConciergeRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedWatchlistRoute: AuthenticatedWatchlistRoute,
   AuthenticatedCheckoutMembershipRoute: AuthenticatedCheckoutMembershipRoute,
   AuthenticatedCheckoutReturnRoute: AuthenticatedCheckoutReturnRoute,
+  AuthenticatedAuctionsDollywoodFoundation2026LotsLotIdRoute:
+    AuthenticatedAuctionsDollywoodFoundation2026LotsLotIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -764,10 +879,14 @@ const AuctionsAuctionIdRouteWithChildren =
 
 interface AuctionsRouteChildren {
   AuctionsAuctionIdRoute: typeof AuctionsAuctionIdRouteWithChildren
+  AuctionsDollywoodFoundation2026Route: typeof AuctionsDollywoodFoundation2026Route
+  AuctionsIndexRoute: typeof AuctionsIndexRoute
 }
 
 const AuctionsRouteChildren: AuctionsRouteChildren = {
   AuctionsAuctionIdRoute: AuctionsAuctionIdRouteWithChildren,
+  AuctionsDollywoodFoundation2026Route: AuctionsDollywoodFoundation2026Route,
+  AuctionsIndexRoute: AuctionsIndexRoute,
 }
 
 const AuctionsRouteWithChildren = AuctionsRoute._addFileChildren(

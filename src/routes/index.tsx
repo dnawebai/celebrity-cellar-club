@@ -126,7 +126,7 @@ function DollyModal({ onClose }: { onClose: () => void }) {
                 September 15, 2026 · Nashville &amp; Online. A single-owner Appalachian cellar goes under the hammer for the Dollywood Foundation and Imagination Library. 100% of hammer price to the cause.
               </p>
 
-              <div className="mt-3 grid grid-cols-2 gap-2 md:mt-6 md:grid-cols-4 md:gap-3">
+              <div className="mt-3 grid grid-cols-2 gap-2 md:mt-6 lg:grid-cols-4 md:gap-3">
                 {[
                   { label: "Lots", value: "22" },
                   { label: "Opens", value: "7PM CT" },
@@ -135,12 +135,12 @@ function DollyModal({ onClose }: { onClose: () => void }) {
                 ].map((stat) => (
                   <div
                     key={stat.label}
-                    className="rounded-xl border border-[#ffe4e1] bg-white p-1.5 text-center shadow-sm md:p-3"
+                    className="rounded-xl border border-[#ffe4e1] bg-white p-1.5 text-center shadow-sm md:p-2 lg:p-3"
                   >
-                    <div className="text-[9px] uppercase tracking-[0.2em] text-[#c71585] md:text-[10px]">
+                    <div className="text-[9px] uppercase tracking-[0.08em] text-[#c71585] md:text-[9px] md:tracking-[0.08em] lg:text-[10px] lg:tracking-[0.2em]">
                       {stat.label}
                     </div>
-                    <div className="font-display text-sm text-[#1a1a1a] md:mt-1 md:text-xl">
+                    <div className="font-display text-sm text-[#1a1a1a] md:mt-1 md:text-base lg:text-xl">
                       {stat.value}
                     </div>
                   </div>

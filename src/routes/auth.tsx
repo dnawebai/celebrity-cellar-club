@@ -3,6 +3,8 @@ import { Link, createFileRoute, useNavigate, useRouter } from "@tanstack/react-r
 import { supabase } from "@/integrations/supabase/client";
 import { SiteShell } from "@/components/site-shell";
 import { useAuth } from "@/hooks/use-auth";
+import { useServerFn } from "@tanstack/react-start";
+import { trackPublicConversionEvent } from "@/lib/auctions.functions";
 
 export const Route = createFileRoute("/auth")({
   ssr: false,
@@ -33,6 +35,7 @@ function AuthPage() {
   const navigate = useNavigate();
   const router = useRouter();
   const { user, loading } = useAuth();
+  const trackEvent = useServerFn(trackPublicConversionEvent);
 
   useEffect(() => {
     if (cooldown <= 0) return;
@@ -41,10 +44,29 @@ function AuthPage() {
   }, [cooldown]);
 
   useEffect(() => {
+    trackEvent({
+      data: {
+        eventType: "auth_page_viewed",
+        path: window.location.pathname + window.location.search,
+        referrer: document.referrer || undefined,
+      },
+    }).catch(() => {});
+  }, [trackEvent]);
+
+  useEffect(() => {
     if (!loading && user) {
+      if (user.email_confirmed_at) {
+        trackEvent({
+          data: {
+            eventType: "email_confirmed",
+            path: window.location.pathname + window.location.search,
+            metadata: { provider: user.app_metadata?.provider },
+          },
+        }).catch(() => {});
+      }
       navigate({ to: "/dashboard" });
     }
-  }, [loading, user, navigate]);
+  }, [loading, user, navigate, trackEvent]);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -57,6 +79,13 @@ function AuthPage() {
         router.invalidate();
         navigate({ to: "/dashboard" });
       } else if (mode === "sign_up") {
+        trackEvent({
+          data: {
+            eventType: "sign_up_initiated",
+            path: window.location.pathname,
+            metadata: { email_domain: email.split("@")[1] },
+          },
+        }).catch(() => {});
         const { error } = await supabase.auth.signUp({
           email,
           password,
@@ -67,6 +96,13 @@ function AuthPage() {
         setSentAt(Date.now());
         setCooldown(60);
         setMsg(null);
+        trackEvent({
+          data: {
+            eventType: "email_confirmation_sent",
+            path: window.location.pathname,
+            metadata: { email_domain: email.split("@")[1] },
+          },
+        }).catch(() => {});
       } else {
         const { error } = await supabase.auth.resetPasswordForEmail(email, {
           redirectTo: `${window.location.origin}/reset-password`,
