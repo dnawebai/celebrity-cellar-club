@@ -86,12 +86,23 @@ function AuthPage() {
             metadata: { email_domain: email.split("@")[1] },
           },
         }).catch(() => {});
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: { emailRedirectTo: window.location.origin },
         });
         if (error) throw error;
+        // Supabase obfuscates existing accounts: a user with no identities means
+        // this email is already registered, and no confirmation email was sent.
+        if (data.user && (data.user.identities?.length ?? 0) === 0) {
+          setMode("sign_in");
+          setPassword("");
+          setMsg({
+            kind: "err",
+            text: "An account already exists for this email. Please sign in, or use \u201cForgot password?\u201d to set a new password.",
+          });
+          return;
+        }
         setPendingEmail(email);
         setSentAt(Date.now());
         setCooldown(60);
