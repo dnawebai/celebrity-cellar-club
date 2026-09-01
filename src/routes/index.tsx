@@ -11,7 +11,7 @@ import influencer4 from "@/assets/drop-50cent.jpg";
 import eventTasting from "@/assets/event-tasting.jpg";
 import eventVineyard from "@/assets/event-vineyard.jpg";
 import eventDinner from "@/assets/event-dinner.jpg";
-import dollyAuction from "@/assets/event-dolly-auction.jpg";
+import dollyVeuve from "@/assets/dolly-veuve-monsigny.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -80,14 +80,15 @@ const pillars = [
 function DollyModal({ onClose }: { onClose: () => void }) {
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/75 p-4 backdrop-blur-md"
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/80 p-4 backdrop-blur-md"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
+      aria-labelledby="dolly-modal-title"
     >
       <div
         data-testid="dolly-modal"
-        className="relative my-auto flex h-[80dvh] max-h-[80dvh] w-full max-w-4xl flex-col overflow-hidden rounded-[2rem] border-2 border-[#ffb6c1] bg-white shadow-2xl md:h-auto md:max-h-[86dvh]"
+        className="relative my-auto flex w-full max-w-4xl flex-col overflow-hidden rounded-3xl border border-[#ffb6c1] bg-white shadow-2xl md:max-h-[86dvh] md:flex-row"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -98,64 +99,73 @@ function DollyModal({ onClose }: { onClose: () => void }) {
           ✕
         </button>
 
-        <div className="flex min-h-0 flex-col overflow-hidden md:grid md:grid-cols-2">
-          <Link to="/checkout/membership" className="relative block h-28 shrink-0 md:h-auto">
-            <img
-              src={dollyAuction}
-              alt="Dolly Parton benefit auction lots"
-              className="h-full w-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#c71585]/30 to-transparent" />
-          </Link>
+        <div className="relative h-48 shrink-0 md:h-auto md:w-1/2">
+          <img
+            src={dollyVeuve}
+            alt="Veuve Monsigny Champagne Brut — the single lot of the Butterflies & Barrels benefit auction"
+            className="h-full w-full object-cover"
+            width={1024}
+            height={1280}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white/80 md:bg-gradient-to-t md:from-white/60 md:via-transparent md:to-transparent" />
+        </div>
 
-          <div className="flex min-h-0 flex-col bg-gradient-to-br from-white to-[#fff0f5]">
-            <div className="min-h-0 flex-1 overflow-y-auto p-4 md:p-12">
-              <span className="mb-1.5 inline-flex w-fit items-center gap-2 rounded-full border border-[#ffb6c1] bg-[#fff0f5] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-[#c71585]">
-                <span className="h-2 w-2 animate-pulse rounded-full bg-[#ff69b4]" />
-                Benefit Auction
-              </span>
+        <div className="flex flex-col justify-between bg-gradient-to-br from-white to-[#fff0f5] p-6 md:w-1/2 md:p-10">
+          <div>
+            <span className="mb-3 inline-flex w-fit items-center gap-2 rounded-full border border-[#ffb6c1] bg-[#fff0f5] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-[#c71585]">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-[#ff69b4]" />
+              Benefit Auction
+            </span>
 
-              <h2 className="font-display text-2xl font-medium tracking-tight text-[#1a1a1a] md:text-5xl">
-                Butterflies &amp; Barrels
-              </h2>
-              <p className="mt-0.5 font-display text-lg italic text-[#c71585] md:mt-2 md:text-2xl">
-                The Dolly Parton Benefit
-              </p>
+            <h2 id="dolly-modal-title" className="font-display text-3xl font-medium tracking-tight text-[#1a1a1a] md:text-5xl">
+              Butterflies &amp; Barrels
+            </h2>
+            <p className="mt-1 font-display text-lg italic text-[#c71585] md:mt-2 md:text-2xl">
+              The Dolly Parton Benefit
+            </p>
 
-              <p className="mt-2 text-xs leading-relaxed text-[#4a4a4a] md:mt-5 md:text-sm">
-                September 15, 2026 · Nashville &amp; Online. One bottle of Veuve Monsigny Champagne Brut goes under the hammer for the Dollywood Foundation and Imagination Library. 100% of hammer price to the cause.
-              </p>
+            <p className="mt-3 text-sm leading-relaxed text-[#4a4a4a] md:mt-5">
+              September 15, 2026 · Nashville &amp; Online. One bottle of{" "}
+              <strong className="text-[#1a1a1a]">Veuve Monsigny Champagne Brut</strong> goes under the
+              hammer for the Dollywood Foundation and Dolly Parton&apos;s Imagination Library. 100% of
+              hammer price to the cause.
+            </p>
 
-              <div className="mt-3 grid grid-cols-2 items-start gap-2 md:mt-6 md:grid-cols-4 md:gap-3">
-                {[
-                  { label: "Lots", value: "1" },
-                  { label: "Opens", value: "7PM CT" },
-                  { label: "Proceeds", value: "100%" },
-                  { label: "Paddles", value: "140" },
-                ].map((stat) => (
-                  <div
-                    key={stat.label}
-                    className="flex flex-col items-center justify-center rounded-xl border border-[#ffe4e1] bg-white p-2 text-center shadow-sm md:p-3"
-                  >
-                    <div className="text-[9px] uppercase tracking-[0.08em] text-[#c71585] md:text-[10px] md:tracking-[0.2em]">
-                      {stat.label}
-                    </div>
-                    <div className="whitespace-nowrap font-display text-sm text-[#1a1a1a] md:mt-1 md:text-base lg:text-xl">
-                      {stat.value}
-                    </div>
+            <div className="mt-5 grid grid-cols-2 gap-3 md:mt-7 md:grid-cols-4 md:gap-4">
+              {[
+                { label: "Lots", value: "1" },
+                { label: "Opens", value: "7PM CT" },
+                { label: "Proceeds", value: "100%" },
+                { label: "Paddles", value: "140" },
+              ].map((stat) => (
+                <div
+                  key={stat.label}
+                  className="flex flex-col items-center justify-center rounded-xl border border-[#ffe4e1] bg-white p-3 text-center shadow-sm"
+                >
+                  <div className="text-[9px] uppercase tracking-[0.2em] text-[#c71585]">
+                    {stat.label}
                   </div>
-                ))}
-              </div>
+                  <div className="whitespace-nowrap font-display text-base text-[#1a1a1a] md:text-lg">
+                    {stat.value}
+                  </div>
+                </div>
+              ))}
             </div>
+          </div>
 
-            <div className="border-t border-[#ffe4e1] bg-white/80 p-4 backdrop-blur-sm md:border-transparent md:bg-transparent md:p-12 md:pt-0">
-              <Link
-                to="/checkout/membership"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#ff1493] px-6 py-3 text-sm font-semibold uppercase tracking-[0.15em] text-white shadow-lg transition hover:bg-[#c71585] hover:shadow-xl md:px-8 md:py-4"
-              >
-                Reserve your paddle · $199
-              </Link>
-            </div>
+          <div className="mt-6 md:mt-8">
+            <Link
+              to="/checkout/membership"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#ff1493] px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.15em] text-white shadow-lg transition hover:bg-[#c71585] hover:shadow-xl"
+            >
+              Reserve your paddle · $199
+            </Link>
+            <Link
+              to="/auctions/dollywood-foundation-2026"
+              className="mt-3 block text-center text-xs tracking-tight text-[#c71585] underline underline-offset-4 hover:text-[#ff1493]"
+            >
+              View auction details
+            </Link>
           </div>
         </div>
       </div>
