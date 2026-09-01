@@ -294,6 +294,26 @@ export const trackPublicConversionEvent = createServerFn({ method: "POST" })
   });
 
 /**
+ * Authenticated admin: get conversion funnel counts for the last 90 days.
+ */
+export const getConversionFunnel = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { supabase, userId } = context;
+
+    const { data: isAdmin, error: roleError } = await supabase.rpc("has_role", {
+      _user_id: userId,
+      _role: "admin",
+    });
+    if (roleError) throw new Error(roleError.message);
+    if (!isAdmin) throw new Error("Admin access required.");
+
+    const { data, error } = await supabase.rpc("get_conversion_funnel");
+    if (error) throw new Error(error.message);
+    return data ?? [];
+  });
+
+/**
  * Authenticated: track a conversion event from a signed-in user.
  */
 export const trackConversionEvent = createServerFn({ method: "POST" })
