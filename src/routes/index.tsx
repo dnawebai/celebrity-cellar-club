@@ -123,12 +123,12 @@ function DollyModal({ onClose }: { onClose: () => void }) {
               </p>
 
               <p className="mt-2 text-xs leading-relaxed text-[#4a4a4a] md:mt-5 md:text-sm">
-                September 15, 2026 · Nashville &amp; Online. A single-owner Appalachian cellar goes under the hammer for the Dollywood Foundation and Imagination Library. 100% of hammer price to the cause.
+                September 15, 2026 · Nashville &amp; Online. One bottle of Veuve Monsigny Champagne Brut goes under the hammer for the Dollywood Foundation and Imagination Library. 100% of hammer price to the cause.
               </p>
 
               <div className="mt-3 grid grid-cols-2 items-start gap-2 md:mt-6 md:grid-cols-4 md:gap-3">
                 {[
-                  { label: "Lots", value: "22" },
+                  { label: "Lots", value: "1" },
                   { label: "Opens", value: "7PM CT" },
                   { label: "Proceeds", value: "100%" },
                   { label: "Paddles", value: "140" },

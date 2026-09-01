@@ -95,7 +95,8 @@ function DollywoodAuctionPage() {
             The Dolly Parton Benefit
           </p>
           <p className="mt-6 max-w-[70ch] text-base text-muted-foreground md:text-lg">
-            A single-owner Appalachian cellar goes under the hammer for the{" "}
+            One bottle of <strong className="text-foreground">Veuve Monsigny Champagne Brut</strong>{" "}
+            goes under the hammer for the{" "}
             <strong className="text-foreground">Dollywood Foundation</strong> and{" "}
             <strong className="text-foreground">Dolly Parton&apos;s Imagination Library</strong>. 100%
             of hammer price benefits the cause. Bidding is open to active Opus Drinks members.
