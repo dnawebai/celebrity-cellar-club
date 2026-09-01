@@ -126,7 +126,7 @@ function DollyModal({ onClose }: { onClose: () => void }) {
                 September 15, 2026 · Nashville &amp; Online. A single-owner Appalachian cellar goes under the hammer for the Dollywood Foundation and Imagination Library. 100% of hammer price to the cause.
               </p>
 
-              <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4 md:mt-6 md:gap-3">
+              <div className="mt-3 grid grid-cols-2 gap-2 md:mt-6 md:grid-cols-4 md:gap-3">
                 {[
                   { label: "Lots", value: "22" },
                   { label: "Opens", value: "7PM CT" },
