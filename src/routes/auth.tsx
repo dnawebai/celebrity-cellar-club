@@ -70,6 +70,13 @@ function AuthPage() {
         router.invalidate();
         navigate({ to: "/dashboard" });
       } else if (mode === "sign_up") {
+        trackEvent({
+          data: {
+            eventType: "sign_up_initiated",
+            path: window.location.pathname,
+            metadata: { email_domain: email.split("@")[1] },
+          },
+        }).catch(() => {});
         const { error } = await supabase.auth.signUp({
           email,
           password,
@@ -80,6 +87,13 @@ function AuthPage() {
         setSentAt(Date.now());
         setCooldown(60);
         setMsg(null);
+        trackEvent({
+          data: {
+            eventType: "email_confirmation_sent",
+            path: window.location.pathname,
+            metadata: { email_domain: email.split("@")[1] },
+          },
+        }).catch(() => {});
       } else {
         const { error } = await supabase.auth.resetPasswordForEmail(email, {
           redirectTo: `${window.location.origin}/reset-password`,
