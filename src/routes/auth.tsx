@@ -35,12 +35,21 @@ function AuthPage() {
   const navigate = useNavigate();
   const router = useRouter();
   const { user, loading } = useAuth();
+  const trackEvent = useServerFn(trackPublicConversionEvent);
 
   useEffect(() => {
     if (cooldown <= 0) return;
     const t = setInterval(() => setCooldown((c) => (c > 0 ? c - 1 : 0)), 1000);
     return () => clearInterval(t);
   }, [cooldown]);
+
+  useEffect(() => {
+    trackEvent({
+      eventType: "auth_page_viewed",
+      path: window.location.pathname + window.location.search,
+      referrer: document.referrer || undefined,
+    }).catch(() => {});
+  }, [trackEvent]);
 
   useEffect(() => {
     if (!loading && user) {
