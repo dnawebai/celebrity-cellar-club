@@ -49,6 +49,17 @@ function CheckoutReturnPage() {
               ? `$${(res.amountTotal / 100).toFixed(2)}`
               : undefined;
           setState({ kind: "paid", amount: amt, currency: (res.currency ?? "usd").toUpperCase() });
+          trackEvent({
+            data: {
+              eventType: "membership_purchased",
+              path: window.location.pathname + window.location.search,
+              metadata: {
+                amount_total: res.amountTotal,
+                currency: res.currency,
+                session_id,
+              },
+            },
+          }).catch(() => {});
           return;
         }
         if (attempt++ < 5) {
