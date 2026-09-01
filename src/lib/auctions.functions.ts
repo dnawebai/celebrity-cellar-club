@@ -265,7 +265,36 @@ export const getMyBids = createServerFn({ method: "GET" })
   });
 
 /**
- * Authenticated: track a conversion event from the client.
+ * Public: track a conversion event from an anonymous or known visitor.
+ */
+export const trackPublicConversionEvent = createServerFn({ method: "POST" })
+  .inputValidator((input: unknown) =>
+    z
+      .object({
+        eventType: z.string().min(1),
+        userId: z.string().uuid().optional(),
+        path: z.string().optional(),
+        referrer: z.string().optional(),
+        metadata: z.record(z.unknown()).optional(),
+      })
+      .parse(input),
+  )
+  .handler(async ({ data }) => {
+    const supabase = publicClient();
+    const { error } = await supabase.from("conversion_events").insert({
+      event_type: data.eventType,
+      user_id: data.userId ?? null,
+      path: data.path ?? null,
+      referrer: data.referrer ?? null,
+      metadata: (data.metadata ?? null) as any,
+    });
+
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
+
+/**
+ * Authenticated: track a conversion event from a signed-in user.
  */
 export const trackConversionEvent = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
