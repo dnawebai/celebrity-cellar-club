@@ -14,6 +14,77 @@ export type Database = {
   }
   public: {
     Tables: {
+      auction_lots: {
+        Row: {
+          auction_id: string
+          bid_increment_cents: number
+          created_at: string
+          current_bid_cents: number | null
+          description: string | null
+          ends_at: string | null
+          estimate_high_cents: number | null
+          estimate_low_cents: number | null
+          id: string
+          image_url: string | null
+          leading_bidder_id: string | null
+          lot_number: string
+          sort_order: number
+          starting_bid_cents: number
+          starts_at: string | null
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          auction_id: string
+          bid_increment_cents?: number
+          created_at?: string
+          current_bid_cents?: number | null
+          description?: string | null
+          ends_at?: string | null
+          estimate_high_cents?: number | null
+          estimate_low_cents?: number | null
+          id?: string
+          image_url?: string | null
+          leading_bidder_id?: string | null
+          lot_number: string
+          sort_order?: number
+          starting_bid_cents: number
+          starts_at?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          auction_id?: string
+          bid_increment_cents?: number
+          created_at?: string
+          current_bid_cents?: number | null
+          description?: string | null
+          ends_at?: string | null
+          estimate_high_cents?: number | null
+          estimate_low_cents?: number | null
+          id?: string
+          image_url?: string | null
+          leading_bidder_id?: string | null
+          lot_number?: string
+          sort_order?: number
+          starting_bid_cents?: number
+          starts_at?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "auction_lots_auction_id_fkey"
+            columns: ["auction_id"]
+            isOneToOne: false
+            referencedRelation: "auctions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       auction_source_log: {
         Row: {
           auction_id: string
@@ -41,6 +112,134 @@ export type Database = {
           source_url?: string | null
           viewed_at?: string
           viewed_by?: string | null
+        }
+        Relationships: []
+      }
+      auctions: {
+        Row: {
+          beneficiary: string | null
+          beneficiary_url: string | null
+          cover_image: string | null
+          created_at: string
+          currency: string
+          description: string | null
+          ends_at: string
+          id: string
+          is_featured: boolean
+          location: string | null
+          slug: string
+          starts_at: string
+          status: string
+          subtitle: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          beneficiary?: string | null
+          beneficiary_url?: string | null
+          cover_image?: string | null
+          created_at?: string
+          currency?: string
+          description?: string | null
+          ends_at: string
+          id?: string
+          is_featured?: boolean
+          location?: string | null
+          slug: string
+          starts_at: string
+          status?: string
+          subtitle?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          beneficiary?: string | null
+          beneficiary_url?: string | null
+          cover_image?: string | null
+          created_at?: string
+          currency?: string
+          description?: string | null
+          ends_at?: string
+          id?: string
+          is_featured?: boolean
+          location?: string | null
+          slug?: string
+          starts_at?: string
+          status?: string
+          subtitle?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      bids: {
+        Row: {
+          amount_cents: number
+          bidder_id: string
+          created_at: string
+          id: string
+          is_proxy: boolean
+          lot_id: string
+          proxy_max_cents: number | null
+        }
+        Insert: {
+          amount_cents: number
+          bidder_id: string
+          created_at?: string
+          id?: string
+          is_proxy?: boolean
+          lot_id: string
+          proxy_max_cents?: number | null
+        }
+        Update: {
+          amount_cents?: number
+          bidder_id?: string
+          created_at?: string
+          id?: string
+          is_proxy?: boolean
+          lot_id?: string
+          proxy_max_cents?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bids_lot_id_fkey"
+            columns: ["lot_id"]
+            isOneToOne: false
+            referencedRelation: "auction_lots"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      conversion_events: {
+        Row: {
+          anonymous_id: string | null
+          created_at: string
+          event_type: string
+          id: string
+          metadata: Json | null
+          path: string | null
+          referrer: string | null
+          user_id: string | null
+        }
+        Insert: {
+          anonymous_id?: string | null
+          created_at?: string
+          event_type: string
+          id?: string
+          metadata?: Json | null
+          path?: string | null
+          referrer?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          anonymous_id?: string | null
+          created_at?: string
+          event_type?: string
+          id?: string
+          metadata?: Json | null
+          path?: string | null
+          referrer?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
