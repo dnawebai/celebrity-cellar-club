@@ -37,6 +37,7 @@ import { Route as AuthenticatedConciergeRouteImport } from './routes/_authentica
 import { Route as AuthenticatedBidsRouteImport } from './routes/_authenticated/bids'
 import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
 import { Route as LovableEmailSuppressionRouteImport } from './routes/lovable/email/suppression'
+import { Route as LovableEmailEventsRouteImport } from './routes/lovable/email/events'
 import { Route as AuthenticatedCheckoutReturnRouteImport } from './routes/_authenticated/checkout.return'
 import { Route as AuthenticatedCheckoutMembershipRouteImport } from './routes/_authenticated/checkout.membership'
 import { Route as AuthenticatedAdminConversionsRouteImport } from './routes/_authenticated/admin/conversions'
@@ -190,6 +191,11 @@ const LovableEmailSuppressionRoute = LovableEmailSuppressionRouteImport.update({
   path: '/lovable/email/suppression',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LovableEmailEventsRoute = LovableEmailEventsRouteImport.update({
+  id: '/lovable/email/events',
+  path: '/lovable/email/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedCheckoutReturnRoute =
   AuthenticatedCheckoutReturnRouteImport.update({
     id: '/checkout/return',
@@ -291,6 +297,7 @@ export interface FileRoutesByFullPath {
   '/admin/conversions': typeof AuthenticatedAdminConversionsRoute
   '/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
   '/checkout/return': typeof AuthenticatedCheckoutReturnRoute
+  '/lovable/email/events': typeof LovableEmailEventsRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/api/public/cron/expiry-reminders': typeof ApiPublicCronExpiryRemindersRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -331,6 +338,7 @@ export interface FileRoutesByTo {
   '/admin/conversions': typeof AuthenticatedAdminConversionsRoute
   '/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
   '/checkout/return': typeof AuthenticatedCheckoutReturnRoute
+  '/lovable/email/events': typeof LovableEmailEventsRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/api/public/cron/expiry-reminders': typeof ApiPublicCronExpiryRemindersRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -374,6 +382,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/conversions': typeof AuthenticatedAdminConversionsRoute
   '/_authenticated/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
   '/_authenticated/checkout/return': typeof AuthenticatedCheckoutReturnRoute
+  '/lovable/email/events': typeof LovableEmailEventsRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/api/public/cron/expiry-reminders': typeof ApiPublicCronExpiryRemindersRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -417,6 +426,7 @@ export interface FileRouteTypes {
     | '/admin/conversions'
     | '/checkout/membership'
     | '/checkout/return'
+    | '/lovable/email/events'
     | '/lovable/email/suppression'
     | '/api/public/cron/expiry-reminders'
     | '/api/public/payments/webhook'
@@ -457,6 +467,7 @@ export interface FileRouteTypes {
     | '/admin/conversions'
     | '/checkout/membership'
     | '/checkout/return'
+    | '/lovable/email/events'
     | '/lovable/email/suppression'
     | '/api/public/cron/expiry-reminders'
     | '/api/public/payments/webhook'
@@ -499,6 +510,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/conversions'
     | '/_authenticated/checkout/membership'
     | '/_authenticated/checkout/return'
+    | '/lovable/email/events'
     | '/lovable/email/suppression'
     | '/api/public/cron/expiry-reminders'
     | '/api/public/payments/webhook'
@@ -531,6 +543,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   AdminMembersRoute: typeof AdminMembersRoute
   EmailUnsubscribeRoute: typeof EmailUnsubscribeRoute
+  LovableEmailEventsRoute: typeof LovableEmailEventsRoute
   LovableEmailSuppressionRoute: typeof LovableEmailSuppressionRoute
   ApiPublicCronExpiryRemindersRoute: typeof ApiPublicCronExpiryRemindersRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
@@ -739,6 +752,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LovableEmailSuppressionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lovable/email/events': {
+      id: '/lovable/email/events'
+      path: '/lovable/email/events'
+      fullPath: '/lovable/email/events'
+      preLoaderRoute: typeof LovableEmailEventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/checkout/return': {
       id: '/_authenticated/checkout/return'
       path: '/checkout/return'
@@ -913,6 +933,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   AdminMembersRoute: AdminMembersRoute,
   EmailUnsubscribeRoute: EmailUnsubscribeRoute,
+  LovableEmailEventsRoute: LovableEmailEventsRoute,
   LovableEmailSuppressionRoute: LovableEmailSuppressionRoute,
   ApiPublicCronExpiryRemindersRoute: ApiPublicCronExpiryRemindersRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
