@@ -1,17 +1,12 @@
-// Server-only helper to enqueue a transactional email via the same pgmq
-// queue the /lovable/email/transactional/send route uses. Callable from
-// server routes (webhooks, cron) that already have service-role privileges.
+// Server-only helper that sends a transactional email through Lovable's
+// managed email API and records the outcome in email_send_log.
+// Callable from server routes (webhooks, cron) and server functions.
 //
-// Do NOT import from client code; this file uses SUPABASE_SERVICE_ROLE_KEY.
+// Do NOT import from client code; this file uses SUPABASE_SERVICE_ROLE_KEY
+// and LOVABLE_API_KEY.
 
-import * as React from 'react'
-import { render } from '@react-email/render'
 import { createClient } from '@supabase/supabase-js'
-import { TEMPLATES } from '@/lib/email-templates/registry'
-
-const SITE_NAME = 'Opus Drinks'
-const SENDER_DOMAIN = 'notify.opusdrinks.com'
-const FROM_DOMAIN = 'notify.opusdrinks.com'
+import { sendTemplateEmail } from '@/lib/email-templates/send-email'
 
 let _client: any = null
 function client(): any {
@@ -24,70 +19,56 @@ function client(): any {
   return _client
 }
 
+async function log(row: {
+  template_name: string
+  recipient_email: string
+  status: 'sent' | 'suppressed' | 'failed'
+  error_message?: string
+  metadata?: Record<string, unknown>
+}) {
+  const { error } = await client().from('email_send_log').insert(row)
+  if (error) {
+    console.error('Failed to write email_send_log', {
+      code: error.code,
+      message: error.message,
+    })
+  }
+}
+
 export async function enqueueTransactionalEmail(params: {
   templateName: string
   recipientEmail: string
   templateData?: Record<string, unknown>
   idempotencyKey?: string
 }): Promise<{ ok: true } | { ok: false; error: string }> {
-  const entry = TEMPLATES[params.templateName]
-  if (!entry) return { ok: false, error: `Unknown template: ${params.templateName}` }
-
-  const supabase = client()
-
-  // Suppression check
-  const { data: suppressed } = await supabase
-    .from('suppressed_emails')
-    .select('email')
-    .eq('email', params.recipientEmail.toLowerCase())
-    .maybeSingle()
-  if (suppressed) return { ok: false, error: 'Recipient is suppressed' }
-
-  const messageId = crypto.randomUUID()
-  const idem = params.idempotencyKey ?? messageId
-
-  const props = { ...(entry.previewData ?? {}), ...(params.templateData ?? {}) }
-  const element = React.createElement(entry.component, props)
-  const html = await render(element)
-  const text = await render(element, { plainText: true })
-  const subject =
-    typeof entry.subject === 'function' ? entry.subject(props) : entry.subject
-
-  await supabase.from('email_send_log').insert({
-    message_id: messageId,
+  const base = {
     template_name: params.templateName,
     recipient_email: params.recipientEmail,
-    status: 'pending',
-    metadata: { idempotency_key: idem },
-  })
-
-  const { error } = await supabase.rpc('enqueue_email', {
-    queue_name: 'transactional_emails',
-    payload: {
-      message_id: messageId,
-      idempotency_key: idem,
-      to: params.recipientEmail,
-      from: `${SITE_NAME} <noreply@${FROM_DOMAIN}>`,
-      sender_domain: SENDER_DOMAIN,
-      subject,
-      html,
-      text,
-      purpose: 'transactional',
-      label: params.templateName,
-      queued_at: new Date().toISOString(),
-    },
-  })
-
-  if (error) {
-    await supabase.from('email_send_log').insert({
-      message_id: messageId,
-      template_name: params.templateName,
-      recipient_email: params.recipientEmail,
-      status: 'failed',
-      error_message: 'enqueue failed',
-    })
-    return { ok: false, error: error.message }
+    metadata: params.idempotencyKey
+      ? { idempotency_key: params.idempotencyKey }
+      : undefined,
   }
 
-  return { ok: true }
+  try {
+    const result = await sendTemplateEmail(
+      params.templateName,
+      params.recipientEmail,
+      {
+        templateData: params.templateData as Record<string, any> | undefined,
+        idempotencyKey: params.idempotencyKey,
+      },
+    )
+
+    if (!result.sent) {
+      await log({ ...base, status: 'suppressed' })
+      return { ok: false, error: 'Recipient is suppressed' }
+    }
+
+    await log({ ...base, status: 'sent' })
+    return { ok: true }
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Email send failed'
+    await log({ ...base, status: 'failed', error_message: message })
+    return { ok: false, error: message }
+  }
 }
