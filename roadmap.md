@@ -7,9 +7,9 @@
 3. [PENDING] Build auction email notifications: welcome email when a member signs up, and bid updates when prices change.
 4. [PENDING] Create a real auction item with a start date and let members bid on it (not just a placeholder event).
 5. [PENDING] Track conversion funnel: visitors → sign up → email confirmed → reach membership page.
-6. [PENDING] Polish Dolly Parton home modal: align stat labels and remove membership subtext.
 
 ## Completed
 
 - Home page Dolly Parton event as centered popup modal using white/pink colours; clicking goes to membership checkout.
 - Membership ($199), Stripe checkout, email receipts, RLS/security fixes, mobile nav, About/Terms/Privacy pages.
+- Polished Dolly modal: stat cards are vertically centered and same height, "7PM CT" no longer wraps, and membership subtext removed.
