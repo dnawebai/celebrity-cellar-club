@@ -45,6 +45,7 @@ import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/em
 import { Route as AuctionsAuctionIdLotsLotIdRouteImport } from './routes/auctions.$auctionId.lots.$lotId'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 import { Route as ApiPublicCronExpiryRemindersRouteImport } from './routes/api/public/cron/expiry-reminders'
+import { Route as AuthenticatedAuctionsDollywoodFoundation2026LotsLotIdRouteImport } from './routes/_authenticated/auctions.dollywood-foundation-2026.lots.$lotId'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -234,6 +235,12 @@ const ApiPublicCronExpiryRemindersRoute =
     path: '/api/public/cron/expiry-reminders',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AuthenticatedAuctionsDollywoodFoundation2026LotsLotIdRoute =
+  AuthenticatedAuctionsDollywoodFoundation2026LotsLotIdRouteImport.update({
+    id: '/auctions/dollywood-foundation-2026/lots/$lotId',
+    path: '/auctions/dollywood-foundation-2026/lots/$lotId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -271,6 +278,7 @@ export interface FileRoutesByFullPath {
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
   '/lovable/email/transactional/send': typeof LovableEmailTransactionalSendRoute
+  '/auctions/dollywood-foundation-2026/lots/$lotId': typeof AuthenticatedAuctionsDollywoodFoundation2026LotsLotIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -308,6 +316,7 @@ export interface FileRoutesByTo {
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
   '/lovable/email/transactional/send': typeof LovableEmailTransactionalSendRoute
+  '/auctions/dollywood-foundation-2026/lots/$lotId': typeof AuthenticatedAuctionsDollywoodFoundation2026LotsLotIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -347,6 +356,7 @@ export interface FileRoutesById {
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
   '/lovable/email/transactional/send': typeof LovableEmailTransactionalSendRoute
+  '/_authenticated/auctions/dollywood-foundation-2026/lots/$lotId': typeof AuthenticatedAuctionsDollywoodFoundation2026LotsLotIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -386,6 +396,7 @@ export interface FileRouteTypes {
     | '/lovable/email/queue/process'
     | '/lovable/email/transactional/preview'
     | '/lovable/email/transactional/send'
+    | '/auctions/dollywood-foundation-2026/lots/$lotId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -423,6 +434,7 @@ export interface FileRouteTypes {
     | '/lovable/email/queue/process'
     | '/lovable/email/transactional/preview'
     | '/lovable/email/transactional/send'
+    | '/auctions/dollywood-foundation-2026/lots/$lotId'
   id:
     | '__root__'
     | '/'
@@ -461,6 +473,7 @@ export interface FileRouteTypes {
     | '/lovable/email/queue/process'
     | '/lovable/email/transactional/preview'
     | '/lovable/email/transactional/send'
+    | '/_authenticated/auctions/dollywood-foundation-2026/lots/$lotId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -747,6 +760,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicCronExpiryRemindersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/auctions/dollywood-foundation-2026/lots/$lotId': {
+      id: '/_authenticated/auctions/dollywood-foundation-2026/lots/$lotId'
+      path: '/auctions/dollywood-foundation-2026/lots/$lotId'
+      fullPath: '/auctions/dollywood-foundation-2026/lots/$lotId'
+      preLoaderRoute: typeof AuthenticatedAuctionsDollywoodFoundation2026LotsLotIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -757,6 +777,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedWatchlistRoute: typeof AuthenticatedWatchlistRoute
   AuthenticatedCheckoutMembershipRoute: typeof AuthenticatedCheckoutMembershipRoute
   AuthenticatedCheckoutReturnRoute: typeof AuthenticatedCheckoutReturnRoute
+  AuthenticatedAuctionsDollywoodFoundation2026LotsLotIdRoute: typeof AuthenticatedAuctionsDollywoodFoundation2026LotsLotIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -766,6 +787,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedWatchlistRoute: AuthenticatedWatchlistRoute,
   AuthenticatedCheckoutMembershipRoute: AuthenticatedCheckoutMembershipRoute,
   AuthenticatedCheckoutReturnRoute: AuthenticatedCheckoutReturnRoute,
+  AuthenticatedAuctionsDollywoodFoundation2026LotsLotIdRoute:
+    AuthenticatedAuctionsDollywoodFoundation2026LotsLotIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

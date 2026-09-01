@@ -104,7 +104,7 @@ function DollywoodAuctionPage() {
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <Link
               to="/checkout/membership"
-              className="rounded-sm bg-ppink-600 px-6 py-3 text-center text-[11px] font-semibold uppercase tracking-[0.3em] text-white shadow-sm transition hover:bg-pink-700"
+              className="rounded-sm bg-pink-600 px-6 py-3 text-center text-[11px] font-semibold uppercase tracking-[0.3em] text-white shadow-sm transition hover:bg-pink-700"
             >
               Reserve Your Paddle · $199
             </Link>
