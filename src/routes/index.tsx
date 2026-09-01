@@ -80,13 +80,13 @@ const pillars = [
 function DollyModal({ onClose }: { onClose: () => void }) {
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-md"
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/75 p-4 backdrop-blur-md"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
     >
       <div
-        className="relative w-full max-w-4xl overflow-hidden rounded-[2rem] border-2 border-[#ffb6c1] bg-white shadow-2xl"
+        className="relative my-auto w-full max-w-4xl overflow-hidden rounded-[2rem] border-2 border-[#ffb6c1] bg-white shadow-2xl md:my-8"
         onClick={(e) => e.stopPropagation()}
       >
         <button
