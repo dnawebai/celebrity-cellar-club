@@ -540,6 +540,16 @@ export type Database = {
         Returns: number
       }
       expire_lapsed_memberships: { Args: never; Returns: number }
+      get_conversion_funnel: {
+        Args: never
+        Returns: {
+          event_type: string
+          last_30_days: number
+          last_7_days: number
+          total: number
+          unique_users: number
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
