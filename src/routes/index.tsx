@@ -137,7 +137,7 @@ function DollyModal({ onClose }: { onClose: () => void }) {
                     key={stat.label}
                     className="rounded-xl border border-[#ffe4e1] bg-white p-1.5 text-center shadow-sm md:p-3"
                   >
-                    <div className="text-[9px] uppercase tracking-[0.2em] text-[#c71585] md:text-[10px]">
+                    <div className="text-[9px] uppercase tracking-[0.08em] text-[#c71585] md:text-[10px] md:tracking-[0.12em] lg:tracking-[0.2em]">
                       {stat.label}
                     </div>
                     <div className="font-display text-sm text-[#1a1a1a] md:mt-1 md:text-xl">
