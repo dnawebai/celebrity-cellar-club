@@ -115,10 +115,10 @@ function DollyModal({ onClose }: { onClose: () => void }) {
                 Benefit Auction
               </span>
 
-              <h2 className="font-display text-xl font-medium tracking-tight text-[#1a1a1a] md:text-5xl">
+              <h2 className="font-display text-2xl font-medium tracking-tight text-[#1a1a1a] md:text-5xl">
                 Butterflies &amp; Barrels
               </h2>
-              <p className="mt-0.5 font-display text-base italic text-[#c71585] md:mt-2 md:text-2xl">
+              <p className="mt-0.5 font-display text-lg italic text-[#c71585] md:mt-2 md:text-2xl">
                 The Dolly Parton Benefit
               </p>
 
@@ -126,7 +126,7 @@ function DollyModal({ onClose }: { onClose: () => void }) {
                 September 15, 2026 · Nashville &amp; Online. A single-owner Appalachian cellar goes under the hammer for the Dollywood Foundation and Imagination Library. 100% of hammer price to the cause.
               </p>
 
-              <div className="mt-3 grid grid-cols-2 gap-2 md:mt-6 md:gap-3">
+              <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4 md:mt-6 md:gap-3">
                 {[
                   { label: "Lots", value: "22" },
                   { label: "Opens", value: "7PM CT" },
