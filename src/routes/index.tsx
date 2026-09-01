@@ -87,7 +87,7 @@ function DollyModal({ onClose }: { onClose: () => void }) {
     >
       <div
         data-testid="dolly-modal"
-        className="relative my-auto flex h-[85dvh] max-h-[85dvh] w-full max-w-4xl flex-col overflow-hidden rounded-[2rem] border-2 border-[#ffb6c1] bg-white shadow-2xl md:h-auto md:max-h-[86dvh]"
+        className="relative my-auto flex h-[80dvh] max-h-[80dvh] w-full max-w-4xl flex-col overflow-hidden rounded-[2rem] border-2 border-[#ffb6c1] bg-white shadow-2xl md:h-auto md:max-h-[86dvh]"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -98,8 +98,8 @@ function DollyModal({ onClose }: { onClose: () => void }) {
           ✕
         </button>
 
-        <div className="flex h-full flex-col overflow-hidden md:grid md:grid-cols-2">
-          <Link to="/checkout/membership" className="relative block h-32 shrink-0 md:h-auto">
+        <div className="flex min-h-0 flex-col overflow-hidden md:grid md:grid-cols-2">
+          <Link to="/checkout/membership" className="relative block h-28 shrink-0 md:h-auto">
             <img
               src={dollyAuction}
               alt="Dolly Parton benefit auction lots"
@@ -108,8 +108,8 @@ function DollyModal({ onClose }: { onClose: () => void }) {
             <div className="absolute inset-0 bg-gradient-to-t from-[#c71585]/30 to-transparent" />
           </Link>
 
-          <div className="flex h-full flex-col bg-gradient-to-br from-white to-[#fff0f5]">
-            <div className="flex-1 overflow-y-auto p-4 md:p-12">
+          <div className="flex min-h-0 flex-col bg-gradient-to-br from-white to-[#fff0f5]">
+            <div className="min-h-0 flex-1 overflow-y-auto p-4 md:p-12">
               <span className="mb-1.5 inline-flex w-fit items-center gap-2 rounded-full border border-[#ffb6c1] bg-[#fff0f5] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-[#c71585]">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-[#ff69b4]" />
                 Benefit Auction
