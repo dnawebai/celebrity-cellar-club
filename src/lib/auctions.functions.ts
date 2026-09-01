@@ -81,7 +81,7 @@ export const getLotForBidding = createServerFn({ method: "GET" })
 
     const { data: lot, error: lotError } = await supabase
       .from("auction_lots")
-      .select("*, auctions(*)")
+      .select("*, auctions(id, title, starts_at, ends_at, status)")
       .eq("id", data.lotId)
       .maybeSingle();
 
