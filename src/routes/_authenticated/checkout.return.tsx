@@ -23,6 +23,7 @@ type State =
 function CheckoutReturnPage() {
   const { session_id } = Route.useSearch();
   const verify = useServerFn(verifyCheckoutSession);
+  const trackEvent = useServerFn(trackConversionEvent);
   const qc = useQueryClient();
   const [state, setState] = useState<State>(
     session_id ? { kind: "loading" } : { kind: "missing" },
