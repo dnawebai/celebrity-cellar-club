@@ -77,7 +77,93 @@ const pillars = [
   { n: "04", title: "Sommelier", body: "Your private advisor. Pairings, vintages, allocation strategy — 24/7, in your pocket." },
 ];
 
+function DollyModal({ onClose }: { onClose: () => void }) {
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-md"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+    >
+      <div
+        className="relative w-full max-w-4xl overflow-hidden rounded-[2rem] border-2 border-[#ffb6c1] bg-white shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#c71585] shadow-lg transition hover:bg-[#fff0f5]"
+          aria-label="Close"
+        >
+          ✕
+        </button>
+
+        <div className="grid md:grid-cols-2">
+          <Link to="/checkout/membership" className="relative block h-64 md:h-auto">
+            <img
+              src={dollyAuction}
+              alt="Dolly Parton benefit auction lots"
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#c71585]/30 to-transparent" />
+          </Link>
+
+          <div className="flex flex-col justify-center bg-gradient-to-br from-white to-[#fff0f5] p-8 md:p-12">
+            <span className="mb-3 inline-flex w-fit items-center gap-2 rounded-full border border-[#ffb6c1] bg-[#fff0f5] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-[#c71585]">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-[#ff69b4]" />
+              Benefit Auction
+            </span>
+
+            <h2 className="font-display text-4xl font-medium tracking-tight text-[#1a1a1a] md:text-5xl">
+              Butterflies &amp; Barrels
+            </h2>
+            <p className="mt-2 font-display text-2xl italic text-[#c71585]">
+              The Dolly Parton Benefit
+            </p>
+
+            <p className="mt-5 text-sm leading-relaxed text-[#4a4a4a]">
+              September 15, 2026 · Nashville &amp; Online. A single-owner Appalachian cellar goes under the hammer for the Dollywood Foundation and Imagination Library. 100% of hammer price to the cause.
+            </p>
+
+            <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {[
+                { label: "Lots", value: "22" },
+                { label: "Opens", value: "7PM CT" },
+                { label: "Proceeds", value: "100%" },
+                { label: "Paddles", value: "140" },
+              ].map((stat) => (
+                <div
+                  key={stat.label}
+                  className="rounded-xl border border-[#ffe4e1] bg-white p-3 text-center shadow-sm"
+                >
+                  <div className="text-[10px] uppercase tracking-[0.2em] text-[#c71585]">
+                    {stat.label}
+                  </div>
+                  <div className="mt-1 font-display text-xl text-[#1a1a1a]">
+                    {stat.value}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <Link
+              to="/checkout/membership"
+              className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-[#ff1493] px-8 py-4 text-sm font-semibold uppercase tracking-[0.15em] text-white shadow-lg transition hover:bg-[#c71585] hover:shadow-xl"
+            >
+              Reserve your paddle · $199
+            </Link>
+
+            <p className="mt-3 text-center text-[11px] text-[#888]">
+              Membership required. One-time $199.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function HomePage() {
+  const [showDolly, setShowDolly] = useState(true);
   const stats = [
     { value: `${formatMembers(getActiveMembers())}+`, label: "Members" },
     { value: "$184M", label: "Transacted" },
@@ -86,6 +172,7 @@ function HomePage() {
   ];
   return (
     <SiteShell>
+      {showDolly && <DollyModal onClose={() => setShowDolly(false)} />}
       {/* ============ HERO ============ */}
       <section className="relative overflow-hidden border-b border-border">
         <div className="absolute inset-0 -z-10">
