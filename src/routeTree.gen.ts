@@ -26,6 +26,7 @@ import { Route as AuctionsRouteImport } from './routes/auctions'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuctionsIndexRouteImport } from './routes/auctions.index'
 import { Route as EmailUnsubscribeRouteImport } from './routes/email/unsubscribe'
 import { Route as AuctionsDollywoodFoundation2026RouteImport } from './routes/auctions.dollywood-foundation-2026'
 import { Route as AuctionsAuctionIdRouteImport } from './routes/auctions.$auctionId'
@@ -132,6 +133,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuctionsIndexRoute = AuctionsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuctionsRoute,
 } as any)
 const EmailUnsubscribeRoute = EmailUnsubscribeRouteImport.update({
   id: '/email/unsubscribe',
@@ -281,6 +287,7 @@ export interface FileRoutesByFullPath {
   '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
   '/auctions/dollywood-foundation-2026': typeof AuctionsDollywoodFoundation2026Route
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
+  '/auctions/': typeof AuctionsIndexRoute
   '/admin/conversions': typeof AuthenticatedAdminConversionsRoute
   '/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
   '/checkout/return': typeof AuthenticatedCheckoutReturnRoute
@@ -298,7 +305,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/auctions': typeof AuctionsRouteWithChildren
   '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
   '/charity': typeof CharityRoute
@@ -321,6 +327,7 @@ export interface FileRoutesByTo {
   '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
   '/auctions/dollywood-foundation-2026': typeof AuctionsDollywoodFoundation2026Route
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
+  '/auctions': typeof AuctionsIndexRoute
   '/admin/conversions': typeof AuthenticatedAdminConversionsRoute
   '/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
   '/checkout/return': typeof AuthenticatedCheckoutReturnRoute
@@ -363,6 +370,7 @@ export interface FileRoutesById {
   '/auctions/$auctionId': typeof AuctionsAuctionIdRouteWithChildren
   '/auctions/dollywood-foundation-2026': typeof AuctionsDollywoodFoundation2026Route
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
+  '/auctions/': typeof AuctionsIndexRoute
   '/_authenticated/admin/conversions': typeof AuthenticatedAdminConversionsRoute
   '/_authenticated/checkout/membership': typeof AuthenticatedCheckoutMembershipRoute
   '/_authenticated/checkout/return': typeof AuthenticatedCheckoutReturnRoute
@@ -405,6 +413,7 @@ export interface FileRouteTypes {
     | '/auctions/$auctionId'
     | '/auctions/dollywood-foundation-2026'
     | '/email/unsubscribe'
+    | '/auctions/'
     | '/admin/conversions'
     | '/checkout/membership'
     | '/checkout/return'
@@ -422,7 +431,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
-    | '/auctions'
     | '/auth'
     | '/calendar'
     | '/charity'
@@ -445,6 +453,7 @@ export interface FileRouteTypes {
     | '/auctions/$auctionId'
     | '/auctions/dollywood-foundation-2026'
     | '/email/unsubscribe'
+    | '/auctions'
     | '/admin/conversions'
     | '/checkout/membership'
     | '/checkout/return'
@@ -486,6 +495,7 @@ export interface FileRouteTypes {
     | '/auctions/$auctionId'
     | '/auctions/dollywood-foundation-2026'
     | '/email/unsubscribe'
+    | '/auctions/'
     | '/_authenticated/admin/conversions'
     | '/_authenticated/checkout/membership'
     | '/_authenticated/checkout/return'
@@ -651,6 +661,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/auctions/': {
+      id: '/auctions/'
+      path: '/'
+      fullPath: '/auctions/'
+      preLoaderRoute: typeof AuctionsIndexRouteImport
+      parentRoute: typeof AuctionsRoute
     }
     '/email/unsubscribe': {
       id: '/email/unsubscribe'
@@ -863,11 +880,13 @@ const AuctionsAuctionIdRouteWithChildren =
 interface AuctionsRouteChildren {
   AuctionsAuctionIdRoute: typeof AuctionsAuctionIdRouteWithChildren
   AuctionsDollywoodFoundation2026Route: typeof AuctionsDollywoodFoundation2026Route
+  AuctionsIndexRoute: typeof AuctionsIndexRoute
 }
 
 const AuctionsRouteChildren: AuctionsRouteChildren = {
   AuctionsAuctionIdRoute: AuctionsAuctionIdRouteWithChildren,
   AuctionsDollywoodFoundation2026Route: AuctionsDollywoodFoundation2026Route,
+  AuctionsIndexRoute: AuctionsIndexRoute,
 }
 
 const AuctionsRouteWithChildren = AuctionsRoute._addFileChildren(
